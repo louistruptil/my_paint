@@ -5,9 +5,24 @@
 ** main.c
 */
 
-#include "my.h"
+#include "my_paint.h"
 
-int main(void)
+static void help(void)
 {
-    return (0);
+    my_putstr("USAGE\n");
+    my_putstr("    ./my_paint\n\n");
+    my_putstr("DESCRIPTION\n");
+    my_putstr("    A simple paint software\n");
+}
+
+int main(int argc, char **argv, char **env)
+{
+    if (argc == 2 && my_strcmp(argv[1], "-h") == 0) {
+        help();
+        return 0;
+    }
+    for (int i = 0; env[i] != NULL; i++)
+        if (my_strncmp(env[i], "DISPLAY", 7) == 0)
+            return my_paint() ? 0 : 84;
+    return 84;
 }

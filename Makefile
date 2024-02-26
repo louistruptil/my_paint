@@ -15,9 +15,15 @@ RED = \033[0;31m
 GREEN = \033[0;32m
 NO_COLOR = \033[0m
 
-SRCS = ./src/main.c
+SRCS = ./src/main.c \
+       ./src/gui/button.c \
+       ./src/event.c \
+       ./src/window.c \
+       ./src/my_paint.c
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj
+
+LIB_SFML = -lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio
 
 all: $(LIBMY) $(EXECNAME)
 
@@ -27,7 +33,7 @@ $(LIBMY):
 
 $(EXECNAME): $(OBJS)
 	@echo -e "$(GREEN)Linking $(EXECNAME)...$(NO_COLOR)"
-	@$(CC) $(CFLAGS) $^ -L$(LIBMY_DIR) -lmy -o $@
+	@$(CC) $(CFLAGS) $^ -L$(LIBMY_DIR) -lmy $(LIB_SFML) -o $@
 
 $(OBJDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
