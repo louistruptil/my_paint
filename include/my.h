@@ -12,6 +12,8 @@
     #include <stdlib.h>
     #include <stdbool.h>
     #include <unistd.h>
+    #define EXIT_ERROR 84
+    #define EXIT_SUCCESS 0
 
 // Standard
 int my_putchar(char c);

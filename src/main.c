@@ -19,10 +19,10 @@ int main(int argc, char **argv, char **env)
 {
     if (argc == 2 && my_strcmp(argv[1], "-h") == 0) {
         help();
-        return 0;
+        return EXIT_SUCCESS;
     }
     for (int i = 0; env[i] != NULL; i++)
         if (my_strncmp(env[i], "DISPLAY", 7) == 0)
-            return my_paint() ? 0 : 84;
-    return 84;
+            return my_paint() ? EXIT_SUCCESS : EXIT_ERROR;
+    return EXIT_ERROR;
 }
