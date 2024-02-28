@@ -14,12 +14,13 @@ LIBMY_DIR = lib/my
 RED = \033[0;31m
 GREEN = \033[0;32m
 NO_COLOR = \033[0m
-
 SRCS = ./src/main.c \
        ./src/gui/button.c \
        ./src/event.c \
        ./src/window.c \
-       ./src/my_paint.c
+       ./src/my_paint.c \
+
+
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj
 

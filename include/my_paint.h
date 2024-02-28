@@ -11,6 +11,8 @@
     #include <SFML/Graphics.h>
     #include <SFML/Window.h>
     #include <SFML/System.h>
+    #include <SFML/Audio.h>
+    #include <SFML/Network.h>
     #include "my.h"
 
     #define WIN_WIDTH 1920
@@ -51,6 +53,13 @@ typedef struct gui_s {
     button_t *button[BUTTON_COUNT];
 } gui_t;
 
+typedef struct canva_s {
+    sfTexture *canva_texture;
+    sfUint8* canva_pixels;
+    sfSprite *canva_sprite;
+    sfBool canva_drawing;
+} canva_t;
+
 typedef struct window_s {
     sfRenderWindow *window;
     sfVideoMode mode;
@@ -61,6 +70,7 @@ typedef struct window_s {
 typedef struct my_paint_s {
     window_t window;
     gui_t gui;
+    canva_t canva;
 } my_paint_t;
 
 bool my_paint(void);
@@ -74,5 +84,6 @@ bool is_button_clicked(button_t *button, sfMouseButtonEvent *event);
 bool is_button_hover(button_t *button, sfMouseMoveEvent *event);
 void destroy_button(button_t *button);
 void display_button(sfRenderWindow *window, button_t *button);
+int draw();
 
 #endif //MY_PAINT_MY_PAINT_H
