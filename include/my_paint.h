@@ -14,6 +14,7 @@
     #include <SFML/Audio.h>
     #include <SFML/Network.h>
     #include "my.h"
+    #include <math.h>
 
     #define WIN_WIDTH 1920
     #define WIN_HEIGHT 1080
@@ -58,6 +59,8 @@ typedef struct canva_s {
     sfUint8* canva_pixels;
     sfSprite *canva_sprite;
     sfBool canva_drawing;
+    sfVector2i prev_mouse_pos;
+    sfVector2i curr_mouse_pos;
 } canva_t;
 
 typedef struct window_s {
@@ -67,10 +70,18 @@ typedef struct window_s {
     sfView *view;
 } window_t;
 
+typedef struct draw_params_s {
+    int min_x;
+    int min_y;
+    int max_x;
+    int max_y;
+} draw_params_t;
+
 typedef struct my_paint_s {
     window_t window;
     gui_t gui;
     canva_t canva;
+    draw_params_t draw_params;
 } my_paint_t;
 
 bool my_paint(void);
@@ -84,6 +95,6 @@ bool is_button_clicked(button_t *button, sfMouseButtonEvent *event);
 bool is_button_hover(button_t *button, sfMouseMoveEvent *event);
 void destroy_button(button_t *button);
 void display_button(sfRenderWindow *window, button_t *button);
-int draw();
+void drawing_loop(my_paint_t *my_paint, sfEvent event);
 
 #endif //MY_PAINT_MY_PAINT_H

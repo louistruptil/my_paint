@@ -21,8 +21,8 @@ int main(int argc, char **argv, char **env)
         help();
         return EXIT_SUCCESS;
     }
-   for (int i = 0; env[i] != NULL; i++)
+    for (int i = 0; env[i] != NULL; i++)
         if (my_strncmp(env[i], "DISPLAY", 7) == 0)
-            return my_paint() ? EXIT_SUCCESS : EXIT_ERROR;    
+            return my_paint() ? EXIT_SUCCESS : EXIT_ERROR;
     return EXIT_ERROR;
 }

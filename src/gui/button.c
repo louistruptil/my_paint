@@ -7,7 +7,7 @@
 
 #include "my_paint.h"
 
-bool create_text_button(button_options_t options, button_t *button)
+static bool create_text_button(button_options_t options, button_t *button)
 {
     sfFloatRect text_rect;
     float text_x;

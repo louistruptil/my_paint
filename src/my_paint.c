@@ -17,8 +17,10 @@ void destroy(my_paint_t *my_paint)
 
 void display_canva(my_paint_t *my_paint)
 {
-    sfTexture_updateFromPixels(my_paint->canva.canva_texture, my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
-    sfRenderWindow_drawSprite(my_paint->window.window, my_paint->canva.canva_sprite, NULL);
+    sfTexture_updateFromPixels(my_paint->canva.canva_texture,
+    my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
+    sfRenderWindow_drawSprite(my_paint->window.window,
+    my_paint->canva.canva_sprite, NULL);
 }
 
 void display(my_paint_t *my_paint)
@@ -47,12 +49,8 @@ static void init_canva(my_paint_t *my_paint)
     }
     my_paint->canva.canva_texture = sfTexture_create(1920, 1080);
     my_paint->canva.canva_sprite = sfSprite_create();
-    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2u textureSize = sfTexture_getSize(my_paint->canva.canva_texture);
-    float scaleX = (float)windowSize.x / textureSize.x;
-    float scaleY = (float)windowSize.y / textureSize.y;
-    sfSprite_setScale(my_paint->canva.canva_sprite, (sfVector2f){scaleX, scaleY});
-    sfSprite_setTexture(my_paint->canva.canva_sprite, my_paint->canva.canva_texture, sfTrue);
+    sfSprite_setTexture(my_paint->canva.canva_sprite,
+    my_paint->canva.canva_texture, sfTrue);
 }
 
 bool my_paint(void)

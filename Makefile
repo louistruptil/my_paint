@@ -19,12 +19,13 @@ SRCS = ./src/main.c \
        ./src/event.c \
        ./src/window.c \
        ./src/my_paint.c \
+	   ./src/draw.c \
 
 
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj
 
-LIB_SFML = -lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio
+LIB_SFML = -lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio -lm
 
 all: $(LIBMY) $(EXECNAME)
 
