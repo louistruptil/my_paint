@@ -113,6 +113,6 @@ void display_button(sfRenderWindow *window, button_t *button)
         sfRectangleShape_setPosition(button->rect, button->options.pos);
         sfRectangleShape_setSize(button->rect, button->options.size);
     }
-    if (button->text && button->font)
+    if (button->options.text && button->text && button->font)
         sfRenderWindow_drawText(window, button->text, NULL);
 }
