@@ -46,8 +46,11 @@ typedef struct button_s {
     sfFont *font;
     bool (*is_clicked)(struct button_s *, sfMouseButtonEvent *);
     bool (*is_hover)(struct button_s *, sfMouseMoveEvent *);
-    void (*action)(my_paint_t *my_paint);
+    void (*action)(my_paint_t *my_paint, struct button_s *);
+    void (*hover)(struct button_s *);
     enum e_gui_state state;
+    button_options_t options;
+    sfTexture *img_texture;
 } button_t;
 
 typedef struct gui_s {
@@ -90,7 +93,7 @@ window_t create_window(int width, int height, char *title);
 void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint);
 
 button_t *create_button(button_options_t options,
-    void (*action)(my_paint_t *));
+    void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *));
 bool is_button_clicked(button_t *button, sfMouseButtonEvent *event);
 bool is_button_hover(button_t *button, sfMouseMoveEvent *event);
 void destroy_button(button_t *button);

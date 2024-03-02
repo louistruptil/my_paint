@@ -7,16 +7,15 @@
 
 #include "my_paint.h"
 
-static void button_loop(sfEvent event, const my_paint_t *my_paint)
+static void button_loop(sfEvent event, my_paint_t *my_paint)
 {
     for (int i = 0; i < BUTTON_COUNT; i++) {
         if (my_paint->gui.button[i]->is_clicked(my_paint->gui.button[i],
             &event.mouseButton)) {
-            my_paint->gui.button[i]->action(my_paint);
+            my_paint->gui.button[i]->action(my_paint, my_paint->gui.button[i]);
         }
         if (my_paint->gui.button[i]->is_hover(my_paint->gui.button[i],
             &event.mouseMove)) {
-            my_putstr("Hover\n");
         }
     }
 }

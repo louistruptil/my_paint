@@ -5,6 +5,7 @@
 ** button.c
 */
 
+#include <stdio.h>
 #include "my_paint.h"
 
 static bool create_text_button(button_options_t options, button_t *button)
@@ -14,8 +15,7 @@ static bool create_text_button(button_options_t options, button_t *button)
     float text_y;
 
     button->font = sfFont_createFromFile("assets/font.ttf");
-    if (!button->font)
-        return false;
+    CHECK_NULL(button->font, false);
     button->text = sfText_create();
     sfText_setString(button->text, options.text);
     sfText_setFont(button->text, button->font);
@@ -27,24 +27,36 @@ static bool create_text_button(button_options_t options, button_t *button)
     return true;
 }
 
-button_t *create_button(button_options_t options, void (*action)(my_paint_t *))
+static bool create_img_button(button_options_t options, button_t *button)
+{
+    button->img_texture = sfTexture_createFromFile(options.img, NULL);
+    CHECK_NULL(button->img_texture, false);
+    sfRectangleShape_setTexture(button->rect, button->img_texture, sfTrue);
+    return true;
+}
+
+button_t *create_button(button_options_t options,
+    void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *))
 {
     button_t *button = malloc(sizeof(button_t));
 
-    if (!button)
-        return NULL;
+    CHECK_NULL(button, NULL);
     button->rect = sfRectangleShape_create();
     sfRectangleShape_setPosition(button->rect, options.pos);
     sfRectangleShape_setSize(button->rect, options.size);
-    sfRectangleShape_setFillColor(button->rect, options.color);
+    if (options.color.a != 0)
+        sfRectangleShape_setFillColor(button->rect, options.color);
     button->is_clicked = is_button_clicked;
     button->is_hover = is_button_hover;
     button->action = action;
+    button->hover = hover;
+    button->options = options;
     if (options.text)
         if (!create_text_button(options, button))
             return NULL;
-    if (options.img) {
-    }
+    if (options.img)
+        if (!create_img_button(options, button))
+            return NULL;
     return button;
 }
 
@@ -67,23 +79,40 @@ bool is_button_hover(button_t *button, sfMouseMoveEvent *event)
     sfFloatRect rect = sfRectangleShape_getGlobalBounds(button->rect);
     sfBool is_hover = sfFloatRect_contains(&rect, event->x, event->y);
 
-    button->state = is_hover ? HOVER : NONE;
+    if (is_hover && button->state != PRESSED) {
+        button->state = HOVER;
+        button->hover(button);
+    } else {
+        button->state = button->state == PRESSED ? PRESSED : NONE;
+    }
     return is_hover ? true : false;
 }
 
 void destroy_button(button_t *button)
 {
     sfRectangleShape_destroy(button->rect);
-    if (button->font) {
+    if (button->text && button->font) {
         sfFont_destroy(button->font);
         sfText_destroy(button->text);
     }
+    if (button->img_texture)
+        sfTexture_destroy(button->img_texture);
     free(button);
 }
 
 void display_button(sfRenderWindow *window, button_t *button)
 {
     sfRenderWindow_drawRectangleShape(window, button->rect, NULL);
-    if (button->font)
+    if (button->state == HOVER)
+        button->hover(button);
+    else {
+        if (button->options.color.a != 0)
+            sfRectangleShape_setFillColor(button->rect, button->options.color);
+        sfRectangleShape_setOutlineThickness(button->rect, 0);
+        sfRectangleShape_setOutlineColor(button->rect, sfWhite);
+        sfRectangleShape_setPosition(button->rect, button->options.pos);
+        sfRectangleShape_setSize(button->rect, button->options.size);
+    }
+    if (button->text && button->font)
         sfRenderWindow_drawText(window, button->text, NULL);
 }

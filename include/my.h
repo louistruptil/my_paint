@@ -15,6 +15,8 @@
     #define EXIT_ERROR 84
     #define EXIT_SUCCESS 0
 
+    #define CHECK_NULL(ptr, exit) if (!ptr) return exit
+
 // Standard
 int my_putchar(char c);
 int my_putstr(char *str);

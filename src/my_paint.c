@@ -33,9 +33,22 @@ void display(my_paint_t *my_paint)
     sfRenderWindow_display(my_paint->window.window);
 }
 
-void print_action(my_paint_t *my_paint)
+// Callack function when button clicked create one for each button
+static void print_action(my_paint_t *my_paint, button_t *button)
 {
     my_putstr("Button clicked\n");
+    for (int i = 0; i < 1920 * 1080 * 4; i += 4) {
+        my_paint->canva.canva_pixels[i] = 255;
+        my_paint->canva.canva_pixels[i + 1] = 255;
+        my_paint->canva.canva_pixels[i + 2] = 255;
+        my_paint->canva.canva_pixels[i + 3] = 255;
+    }
+}
+
+// Callack function when button hovered create one for each button
+static void hover_action(button_t *button)
+{
+    sfRectangleShape_setSize(button->rect, (sfVector2f){200, 200});
 }
 
 static void init_canva(my_paint_t *my_paint)
@@ -62,10 +75,11 @@ bool my_paint(void)
     my_paint->window = create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
     my_paint->gui.button[0] = create_button((button_options_t){
         {100, 100},
-        {750, 400},
-        sfRed,
-        "Hello"
-    }, print_action);
+        {100, 100},
+        sfTransparent,
+        NULL,
+        "assets/img.png"
+    }, print_action, hover_action);
     init_canva(my_paint);
     while (sfRenderWindow_isOpen(my_paint->window.window)) {
         event_loop(my_paint->window.window, my_paint->window.event, my_paint);

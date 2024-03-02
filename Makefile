@@ -6,7 +6,7 @@
 ##
 
 CC = gcc
-CFLAGS = -Wall -Iinclude
+CFLAGS = -W -Wall -Wextra -Wpedantic -Iinclude
 EXECNAME = my_paint
 LIBMY = libmy.a
 LIBMY_DIR = lib/my
