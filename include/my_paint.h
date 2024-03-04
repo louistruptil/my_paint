@@ -20,7 +20,10 @@
     #define WIN_HEIGHT 1080
     #define WIN_TITLE "My_Paint"
 
-    #define BUTTON_COUNT 1
+    #define BUTTON_COUNT 0
+    #define DROPDOWN_COUNT 1
+
+    #define WINDOW my_paint->window.window
 
 enum e_gui_state {
     NONE = 0,
@@ -53,8 +56,20 @@ typedef struct button_s {
     sfTexture *img_texture;
 } button_t;
 
+typedef struct drop_down_item_s {
+    struct button_s *button;
+    struct drop_down_item_s *next;
+} drop_down_item_t;
+
+typedef struct drop_down_s {
+    struct button_s *button;
+    drop_down_item_t *items;
+    bool is_open;
+} drop_down_t;
+
 typedef struct gui_s {
     button_t *button[BUTTON_COUNT];
+    drop_down_t *dropdown[DROPDOWN_COUNT];
 } gui_t;
 
 typedef struct canva_s {
@@ -98,6 +113,12 @@ bool is_button_clicked(button_t *button, sfMouseButtonEvent *event);
 bool is_button_hover(button_t *button, sfMouseMoveEvent *event);
 void destroy_button(button_t *button);
 void display_button(sfRenderWindow *window, button_t *button);
+
+drop_down_t *create_dropdown(button_options_t options);
+void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
+    void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *));
+void display_dropdown(sfRenderWindow *window, drop_down_t *dropdown);
+
 void drawing_loop(my_paint_t *my_paint, sfEvent event);
 
 #endif //MY_PAINT_MY_PAINT_H

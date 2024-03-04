@@ -11,7 +11,7 @@ void destroy(my_paint_t *my_paint)
 {
     for (int i = 0; i < BUTTON_COUNT; i++)
         destroy_button(my_paint->gui.button[i]);
-    sfRenderWindow_destroy(my_paint->window.window);
+    sfRenderWindow_destroy(WINDOW);
     free(my_paint);
 }
 
@@ -19,18 +19,21 @@ void display_canva(my_paint_t *my_paint)
 {
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
-    sfRenderWindow_drawSprite(my_paint->window.window,
+    sfRenderWindow_drawSprite(WINDOW,
     my_paint->canva.canva_sprite, NULL);
 }
 
 void display(my_paint_t *my_paint)
 {
-    sfRenderWindow_clear(my_paint->window.window, sfWhite);
+    sfRenderWindow_clear(WINDOW, sfWhite);
     display_canva(my_paint);
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        display_button(my_paint->window.window, my_paint->gui.button[i]);
+        display_button(WINDOW, my_paint->gui.button[i]);
     }
-    sfRenderWindow_display(my_paint->window.window);
+    for (int i = 0; i < DROPDOWN_COUNT; i++) {
+        display_dropdown(WINDOW, my_paint->gui.dropdown[i]);
+    }
+    sfRenderWindow_display(WINDOW);
 }
 
 // Callack function when button clicked create one for each button
@@ -73,16 +76,26 @@ bool my_paint(void)
     if (!my_paint)
         return false;
     my_paint->window = create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
-    my_paint->gui.button[0] = create_button((button_options_t){
+    my_paint->gui.dropdown[0] = create_dropdown((button_options_t){
         {100, 100},
         {100, 100},
-        sfTransparent,
-        NULL,
-        "assets/img.png"
+        sfBlue
+    });
+    add_item_to_dropdown(my_paint->gui.dropdown[0], (button_options_t){
+        {100, 100},
+        {100, 100},
+        sfRed,
+        "caca"
+    }, print_action, hover_action);
+    add_item_to_dropdown(my_paint->gui.dropdown[0], (button_options_t){
+        {100, 100},
+        {100, 100},
+        sfGreen,
+        "pipi"
     }, print_action, hover_action);
     init_canva(my_paint);
-    while (sfRenderWindow_isOpen(my_paint->window.window)) {
-        event_loop(my_paint->window.window, my_paint->window.event, my_paint);
+    while (sfRenderWindow_isOpen(WINDOW)) {
+        event_loop(WINDOW, my_paint->window.event, my_paint);
         display(my_paint);
     }
     destroy(my_paint);

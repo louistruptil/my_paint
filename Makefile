@@ -6,7 +6,7 @@
 ##
 
 CC = gcc
-CFLAGS = -W -Wall -Wextra -Wpedantic -Iinclude
+CFLAGS = -Iinclude
 EXECNAME = my_paint
 LIBMY = libmy.a
 LIBMY_DIR = lib/my
@@ -16,6 +16,7 @@ GREEN = \033[0;32m
 NO_COLOR = \033[0m
 SRCS = ./src/main.c \
        ./src/gui/button.c \
+       ./src/gui/dropdown.c \
        ./src/event.c \
        ./src/window.c \
        ./src/my_paint.c \
