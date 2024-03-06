@@ -63,7 +63,8 @@ static void btn_file(my_paint_t *my_paint)
         {51, 8},
         {70, 20},
         sfColor_fromRGB(0, 0, 0),
-        "file"
+        "file",
+        sfColor_fromRGB(200, 10, 100)
     });
     add_item_to_dropdown(my_paint->gui.dropdown[0], (button_options_t){
         {51, 8},

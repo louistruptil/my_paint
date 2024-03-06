@@ -19,6 +19,8 @@ static bool create_text_button(button_options_t options, button_t *button)
     button->text = sfText_create();
     sfText_setString(button->text, options.text);
     sfText_setFont(button->text, button->font);
+    sfText_setFillColor(button->text, options.text_color.r ? options.text_color :
+        sfWhite);
     sfText_setCharacterSize(button->text, options.size.y / 2);
     text_rect = sfText_getLocalBounds(button->text);
     text_x = options.pos.x + (options.size.x - text_rect.width) / 2;

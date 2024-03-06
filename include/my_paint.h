@@ -40,6 +40,7 @@ typedef struct button_options_s {
     sfVector2f size;
     sfColor color;
     char *text;
+    sfColor text_color;
     char *img;
 } button_options_t;
 
