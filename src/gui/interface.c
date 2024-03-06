@@ -87,19 +87,19 @@ static void btn_file(my_paint_t *my_paint)
 
 static void btn_edition(my_paint_t *my_paint)
 {
-    my_paint->gui.dropdown[0] = create_dropdown((button_options_t){
+    my_paint->gui.dropdown[1] = create_dropdown((button_options_t){
         {150, 8},
         {70, 20},
         sfColor_fromRGB(0, 0, 0),
         "edition"
     });
-    add_item_to_dropdown(my_paint->gui.dropdown[0], (button_options_t){
+    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
         {150, 8},
         {70, 20},
         sfColor_fromRGB(0, 0, 0),
         "pencil"
     }, tool_eq_pen, hover_action);
-    add_item_to_dropdown(my_paint->gui.dropdown[0], (button_options_t){
+    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
         {150, 8},
         {70, 20},
         sfColor_fromRGB(0, 0, 0),
@@ -109,19 +109,19 @@ static void btn_edition(my_paint_t *my_paint)
 
 static void btn_help(my_paint_t *my_paint)
 {
-    my_paint->gui.dropdown[1] = create_dropdown((button_options_t){
+    my_paint->gui.dropdown[2] = create_dropdown((button_options_t){
         {250, 8},
         {70, 20},
         sfColor_fromRGB(0, 0, 0),
         "help"
     });
-    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
+    add_item_to_dropdown(my_paint->gui.dropdown[2], (button_options_t){
         {250, 8},
         {70, 20},
         sfColor_fromRGB(0, 0, 0),
         "about"
     }, new_file, hover_action);
-    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
+    add_item_to_dropdown(my_paint->gui.dropdown[2], (button_options_t){
         {250, 8},
         {70, 20},
         sfColor_fromRGB(0, 0, 0),

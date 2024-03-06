@@ -21,7 +21,7 @@
     #define WIN_TITLE "My_Paint"
 
     #define BUTTON_COUNT 0
-    #define DROPDOWN_COUNT 1
+    #define DROPDOWN_COUNT 3
 
     #define WINDOW my_paint->window.window
 
