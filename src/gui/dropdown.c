@@ -12,6 +12,7 @@ drop_down_t *create_dropdown(button_options_t options)
     drop_down_t *dropdown = malloc(sizeof(drop_down_t));
 
     dropdown->button = create_button(options, NULL, NULL);
+    dropdown->is_open = false;
     return dropdown;
 }
 
