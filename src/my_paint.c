@@ -80,6 +80,7 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->tools.rgba[1] = 0;
     my_paint->tools.rgba[2] = 0;
     my_paint->tools.rgba[3] = 255;
+    my_paint->tools.square = 1;
     my_paint->tools.actual_tools = 0;
     my_paint->tools.tools[0] = my_strdup("pen");
     my_paint->tools.tools[1] = my_strdup("eraser");

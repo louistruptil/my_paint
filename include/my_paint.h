@@ -20,8 +20,8 @@
     #define WIN_HEIGHT 1080
     #define WIN_TITLE "My_Paint"
 
-    #define BUTTON_COUNT 0
-    #define DROPDOWN_COUNT 3
+    #define BUTTON_COUNT 1
+    #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
 
@@ -105,6 +105,7 @@ typedef struct tools_s {
     char *tools[2];
     int *rgba;
     int actual_tools;
+    int square;
 } tools_t;
 
 typedef struct my_paint_s {

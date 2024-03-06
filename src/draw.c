@@ -40,7 +40,35 @@ static void draw_in_bounds(my_paint_t *my_paint, int x, int y, int i)
     }
 }
 
-static void draw_at_point(my_paint_t *my_paint, int x, int y)
+static void draw_at_point_circle(my_paint_t *my_paint, int x, int y)
+{
+    int brush_size = 10;
+
+    my_paint->draw_params.min_x = 1920;
+    my_paint->draw_params.min_y = 1080;
+    my_paint->draw_params.max_x = 0;
+    my_paint->draw_params.max_y = 0;
+
+    for (int i = -brush_size; i <= brush_size; i++) {
+        for (int j = -brush_size; j <= brush_size; j++) {
+            if (i * i + j * j <= brush_size * brush_size) {
+                int xi = x + i;
+                int yj = y + j;
+                if (xi >= 0 && xi < 1920 && yj >= 0 && yj < 1080) {
+                    update_pixel(my_paint, xi, yj);
+                }
+            }
+        }
+    }
+
+    sfTexture_updateFromPixels(my_paint->canva.canva_texture,
+    my_paint->canva.canva_pixels, my_paint->draw_params.max_x -
+    my_paint->draw_params.min_x + 1,
+    my_paint->draw_params.max_y - my_paint->draw_params.min_y + 1,
+    my_paint->draw_params.min_x, my_paint->draw_params.min_y);
+}
+
+static void draw_at_point_square(my_paint_t *my_paint, int x, int y)
 {
     int brush_size = 10;
 
@@ -73,7 +101,10 @@ static void draw_not_pressed(my_paint_t *my_paint)
         t = (float)step / max_steps;
         x = my_paint->canva.prev_mouse_pos.x + t * dx;
         y = my_paint->canva.prev_mouse_pos.y + t * dy;
-        draw_at_point(my_paint, x, y);
+        if (my_paint->tools.square == 0) {
+            draw_at_point_circle(my_paint, x, y);
+        } else
+            draw_at_point_square(my_paint, x, y);
     }
 }
 
@@ -100,9 +131,15 @@ void drawing_loop(my_paint_t *my_paint, sfEvent event)
         my_paint->canva.curr_mouse_pos.x = mousePos.x * scale.x;
         my_paint->canva.curr_mouse_pos.y = mousePos.y * scale.y;
         if (was_mouse_pressed) {
-            draw_at_point(my_paint, my_paint->canva.curr_mouse_pos.x,
-            my_paint->canva.curr_mouse_pos.y);
-            was_mouse_pressed = sfFalse;
+            if (my_paint->tools.square == 0) {
+                draw_at_point_circle(my_paint, my_paint->canva.curr_mouse_pos.x,
+                my_paint->canva.curr_mouse_pos.y);
+                was_mouse_pressed = sfFalse;
+            } else {
+                draw_at_point_square(my_paint, my_paint->canva.curr_mouse_pos.x,
+                my_paint->canva.curr_mouse_pos.y);
+                was_mouse_pressed = sfFalse;
+            }
         } else {
             draw_not_pressed(my_paint);
         }
