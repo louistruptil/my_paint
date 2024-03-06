@@ -67,6 +67,6 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
             {0, 0, event.size.width, event.size.height}));
         button_loop(event, my_paint);
         dropdown_loop(event, my_paint);
-        drawing_loop(my_paint, event);
+        do_select_action(my_paint, event);
     }
 }

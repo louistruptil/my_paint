@@ -17,6 +17,8 @@ void destroy(my_paint_t *my_paint)
 
 void display_canva(my_paint_t *my_paint)
 {
+    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
+    sfSprite_setScale(my_paint->canva.canva_sprite, (sfVector2f){windowSize.x / 1920.0f, windowSize.y / 1080.0f});
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
     sfRenderWindow_drawSprite(WINDOW,
@@ -27,6 +29,8 @@ void display(my_paint_t *my_paint)
 {
     sfRenderWindow_clear(WINDOW, sfWhite);
     display_canva(my_paint);
+    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.left_bar, NULL);
+    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.top_bar, NULL);
     for (int i = 0; i < BUTTON_COUNT; i++) {
         display_button(WINDOW, my_paint->gui.button[i]);
     }
@@ -69,6 +73,18 @@ static void init_canva(my_paint_t *my_paint)
     my_paint->canva.canva_texture, sfTrue);
 }
 
+static void init_tool_tab(my_paint_t *my_paint)
+{
+    my_paint->tools.rgba = malloc(sizeof(int) * 4);
+    my_paint->tools.rgba[0] = 0;
+    my_paint->tools.rgba[1] = 0;
+    my_paint->tools.rgba[2] = 0;
+    my_paint->tools.rgba[3] = 255;
+    my_paint->tools.actual_tools = 0;
+    my_paint->tools.tools[0] = my_strdup("pen");
+    my_paint->tools.tools[1] = my_strdup("eraser");
+}
+
 bool my_paint(void)
 {
     my_paint_t *my_paint = malloc(sizeof(my_paint_t));
@@ -76,28 +92,10 @@ bool my_paint(void)
     if (!my_paint)
         return false;
     my_paint->window = create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
-    my_paint->gui.dropdown[0] = create_dropdown((button_options_t){
-        {100, 100},
-        {100, 100},
-        sfBlue
-    });
-    add_item_to_dropdown(my_paint->gui.dropdown[0], (button_options_t){
-        {100, 100},
-        {100, 100},
-        sfRed,
-        "caca"
-    }, print_action, hover_action);
-    add_item_to_dropdown(my_paint->gui.dropdown[0], (button_options_t){
-        {100, 100},
-        {100, 100},
-        sfGreen,
-        "pipi"
-    }, print_action, hover_action);
+    init_tool_tab(my_paint);
+    create_interface(my_paint);
     init_canva(my_paint);
-    while (sfRenderWindow_isOpen(WINDOW)) {
-        event_loop(WINDOW, my_paint->window.event, my_paint);
-        display(my_paint);
-    }
+    main_loop(my_paint);
     destroy(my_paint);
     return true;
 }

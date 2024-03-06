@@ -11,10 +11,10 @@ static void update_pixel(my_paint_t *my_paint, int xi, int yj)
 {
     int pixel_index = (yj * 1920 + xi) * 4;
 
-    my_paint->canva.canva_pixels[pixel_index] = 0;
-    my_paint->canva.canva_pixels[pixel_index + 1] = 0;
-    my_paint->canva.canva_pixels[pixel_index + 2] = 0;
-    my_paint->canva.canva_pixels[pixel_index + 3] = 255;
+    my_paint->canva.canva_pixels[pixel_index] = my_paint->tools.rgba[0];
+    my_paint->canva.canva_pixels[pixel_index + 1] = my_paint->tools.rgba[1];
+    my_paint->canva.canva_pixels[pixel_index + 2] = my_paint->tools.rgba[2];
+    my_paint->canva.canva_pixels[pixel_index + 3] = my_paint->tools.rgba[3];
     if (xi < my_paint->draw_params.min_x)
         my_paint->draw_params.min_x = xi;
     if (xi > my_paint->draw_params.max_x)
@@ -94,8 +94,11 @@ void drawing_loop(my_paint_t *my_paint, sfEvent event)
     button_pressed(&was_mouse_pressed, my_paint);
     if (my_paint->canva.canva_drawing) {
         my_paint->canva.prev_mouse_pos = my_paint->canva.curr_mouse_pos;
-        my_paint->canva.curr_mouse_pos =
-        sfMouse_getPositionRenderWindow(my_paint->window.window);
+        sfVector2i mousePos = sfMouse_getPositionRenderWindow(my_paint->window.window);
+        sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
+        sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
+        my_paint->canva.curr_mouse_pos.x = mousePos.x * scale.x;
+        my_paint->canva.curr_mouse_pos.y = mousePos.y * scale.y;
         if (was_mouse_pressed) {
             draw_at_point(my_paint, my_paint->canva.curr_mouse_pos.x,
             my_paint->canva.curr_mouse_pos.y);

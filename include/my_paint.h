@@ -95,18 +95,33 @@ typedef struct draw_params_s {
     int max_y;
 } draw_params_t;
 
+typedef struct interface_s {
+    sfRectangleShape *left_bar;
+    sfRectangleShape *top_bar;
+} interface_t;
+
+typedef struct tools_s {
+    char *tools[2];
+    int *rgba;
+    int actual_tools;
+} tools_t;
+
 typedef struct my_paint_s {
     window_t window;
     gui_t gui;
     canva_t canva;
     draw_params_t draw_params;
+    interface_t interface;
+    tools_t tools;
 } my_paint_t;
 
 bool my_paint(void);
 
 window_t create_window(int width, int height, char *title);
 void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint);
+int main_loop(my_paint_t *my_paint);
 
+int create_interface(my_paint_t *my_paint);
 button_t *create_button(button_options_t options,
     void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *));
 bool is_button_clicked(button_t *button, sfMouseButtonEvent *event);
@@ -118,7 +133,11 @@ drop_down_t *create_dropdown(button_options_t options);
 void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
     void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *));
 void display_dropdown(sfRenderWindow *window, drop_down_t *dropdown);
+int color_picker(my_paint_t *my_paint, sfEvent event);
 
 void drawing_loop(my_paint_t *my_paint, sfEvent event);
+void handle_resize_interface(my_paint_t *my_paint, sfEvent event);
+
+void do_select_action(my_paint_t *my_paint, sfEvent event);
 
 #endif //MY_PAINT_MY_PAINT_H
