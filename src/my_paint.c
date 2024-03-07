@@ -37,6 +37,8 @@ void display(my_paint_t *my_paint)
     for (int i = 0; i < DROPDOWN_COUNT; i++) {
         display_dropdown(WINDOW, my_paint->gui.dropdown[i]);
     }
+    if (my_paint->window.display_popup == 1)
+        sfRenderWindow_drawRectangleShape(WINDOW, my_paint->window.popup, NULL);
     sfRenderWindow_display(WINDOW);
 }
 

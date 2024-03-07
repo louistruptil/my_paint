@@ -151,6 +151,14 @@ static int set_circle(my_paint_t *my_paint)
     my_paint->tools.square = 0;
 }
 
+static int set_size(my_paint_t *my_paint)
+{
+    if (my_paint->window.display_popup == 0)
+        my_paint->window.display_popup = 1;
+    else
+        my_paint->window.display_popup = 0;
+}
+
 static void btn_pen(my_paint_t *my_paint)
 {
     my_paint->gui.dropdown[3] = create_dropdown((button_options_t){
@@ -191,6 +199,17 @@ static void btn_eraser(my_paint_t *my_paint)
     }, tool_eq_eraser, hover_action);
 }
 
+static void btn_size(my_paint_t *my_paint)
+{
+    my_paint->gui.button[1] = create_button((button_options_t) {
+        {11, 920},
+        {50, 50},
+        sfColor_fromRGB(85, 98, 120),
+        "SIZE",
+        sfColor_fromRGB(255, 255, 255),
+    }, set_size, hover_action);
+}
+
 static int create_interface_buttons(my_paint_t *my_paint)
 {
     btn_file(my_paint);
@@ -198,6 +217,20 @@ static int create_interface_buttons(my_paint_t *my_paint)
     btn_help(my_paint);
     btn_pen(my_paint);
     btn_eraser(my_paint);
+    btn_size(my_paint);
+}
+
+static int create_popup(my_paint_t *my_paint)
+{
+    my_paint->window.display_popup = 0;
+    my_paint->window.popup = sfRectangleShape_create();
+    sfVector2f popupSize = {300, 200};
+    sfRectangleShape_setSize(my_paint->window.popup, popupSize);
+    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f, windowSize.y / 2.0f - popupSize.y / 2.0f};
+    sfRectangleShape_setPosition(my_paint->window.popup, popupPosition);
+    sfColor color = sfColor_fromRGB(85, 98, 120);
+    sfRectangleShape_setFillColor(my_paint->window.popup, color);
 }
 
 int create_interface(my_paint_t *my_paint)
@@ -216,4 +249,5 @@ int create_interface(my_paint_t *my_paint)
     sfVector2f position2 = {0, 0};
     sfRectangleShape_setPosition(my_paint->interface.top_bar, position2);
     create_interface_buttons(my_paint);
+    create_popup(my_paint);
 }

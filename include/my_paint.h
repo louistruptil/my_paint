@@ -20,7 +20,7 @@
     #define WIN_HEIGHT 1080
     #define WIN_TITLE "My_Paint"
 
-    #define BUTTON_COUNT 1
+    #define BUTTON_COUNT 2
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
@@ -87,6 +87,8 @@ typedef struct window_s {
     sfVideoMode mode;
     sfEvent event;
     sfView *view;
+    int display_popup;
+    sfRectangleShape *popup;
 } window_t;
 
 typedef struct draw_params_s {
@@ -106,6 +108,7 @@ typedef struct tools_s {
     int *rgba;
     int actual_tools;
     int square;
+    int size;
 } tools_t;
 
 typedef struct my_paint_s {
