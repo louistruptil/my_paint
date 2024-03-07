@@ -89,6 +89,8 @@ typedef struct window_s {
     sfView *view;
     int display_popup;
     sfRectangleShape *popup;
+    sfText *popup_text;
+    char *popup_text_str;
 } window_t;
 
 typedef struct draw_params_s {
@@ -144,5 +146,7 @@ void drawing_loop(my_paint_t *my_paint, sfEvent event);
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event);
 
 void do_select_action(my_paint_t *my_paint, sfEvent event);
+void write_for_popup(my_paint_t *my_paint, sfEvent event);
+
 
 #endif //MY_PAINT_MY_PAINT_H

@@ -37,8 +37,10 @@ void display(my_paint_t *my_paint)
     for (int i = 0; i < DROPDOWN_COUNT; i++) {
         display_dropdown(WINDOW, my_paint->gui.dropdown[i]);
     }
-    if (my_paint->window.display_popup == 1)
+    if (my_paint->window.display_popup == 1) {
         sfRenderWindow_drawRectangleShape(WINDOW, my_paint->window.popup, NULL);
+        sfRenderWindow_drawText(WINDOW, my_paint->window.popup_text, NULL);
+    }
     sfRenderWindow_display(WINDOW);
 }
 
@@ -84,6 +86,8 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->tools.rgba[3] = 255;
     my_paint->tools.square = 1;
     my_paint->tools.actual_tools = 0;
+    my_paint->tools.size = 5;
+    my_paint->window.popup_text = my_strdup("");
     my_paint->tools.tools[0] = my_strdup("pen");
     my_paint->tools.tools[1] = my_strdup("eraser");
 }

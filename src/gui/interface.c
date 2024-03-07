@@ -231,6 +231,20 @@ static int create_popup(my_paint_t *my_paint)
     sfRectangleShape_setPosition(my_paint->window.popup, popupPosition);
     sfColor color = sfColor_fromRGB(85, 98, 120);
     sfRectangleShape_setFillColor(my_paint->window.popup, color);
+    my_paint->window.popup_text = sfText_create();
+    sfFloatRect textRect = sfText_getLocalBounds(my_paint->window.popup_text);
+    sfVector2f textPosition = {
+        popupPosition.x + (popupSize.x - textRect.width) / 2 - textRect.left,
+        popupPosition.y + (popupSize.y - textRect.height) / 2 - textRect.top
+    };
+    sfText_setPosition(my_paint->window.popup_text, textPosition);
+    sfText_setCharacterSize(my_paint->window.popup_text, 24);
+    sfText_setColor(my_paint->window.popup_text, sfWhite);
+    sfFont *font = sfFont_createFromFile("assets/font.ttf");
+    sfText_setFont(my_paint->window.popup_text, font);
+    my_paint->window.popup_text_str = malloc(sizeof(char) * 100);
+    my_paint->window.popup_text_str[0] = '\0';
+    sfText_setString(my_paint->window.popup_text, "");
 }
 
 int create_interface(my_paint_t *my_paint)

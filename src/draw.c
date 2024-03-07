@@ -29,9 +29,8 @@ static void draw_in_bounds(my_paint_t *my_paint, int x, int y, int i)
 {
     int xi;
     int yj;
-    int brush_size = 10;
 
-    for (int j = -brush_size; j <= brush_size; j++) {
+    for (int j = -my_paint->tools.size; j <= my_paint->tools.size; j++) {
         xi = x + i;
         yj = y + j;
         if (xi >= 0 && xi < 1920 && yj >= 0 && yj < 1080) {
@@ -42,16 +41,14 @@ static void draw_in_bounds(my_paint_t *my_paint, int x, int y, int i)
 
 static void draw_at_point_circle(my_paint_t *my_paint, int x, int y)
 {
-    int brush_size = 10;
-
     my_paint->draw_params.min_x = 1920;
     my_paint->draw_params.min_y = 1080;
     my_paint->draw_params.max_x = 0;
     my_paint->draw_params.max_y = 0;
 
-    for (int i = -brush_size; i <= brush_size; i++) {
-        for (int j = -brush_size; j <= brush_size; j++) {
-            if (i * i + j * j <= brush_size * brush_size) {
+    for (int i = -my_paint->tools.size; i <= my_paint->tools.size; i++) {
+        for (int j = -my_paint->tools.size; j <= my_paint->tools.size; j++) {
+            if (i * i + j * j <= my_paint->tools.size * my_paint->tools.size) {
                 int xi = x + i;
                 int yj = y + j;
                 if (xi >= 0 && xi < 1920 && yj >= 0 && yj < 1080) {
@@ -70,13 +67,11 @@ static void draw_at_point_circle(my_paint_t *my_paint, int x, int y)
 
 static void draw_at_point_square(my_paint_t *my_paint, int x, int y)
 {
-    int brush_size = 10;
-
     my_paint->draw_params.min_x = 1920;
     my_paint->draw_params.min_y = 1080;
     my_paint->draw_params.max_x = 0;
     my_paint->draw_params.max_y = 0;
-    for (int i = -brush_size; i <= brush_size; i++) {
+    for (int i = -my_paint->tools.size; i <= my_paint->tools.size; i++) {
         draw_in_bounds(my_paint, x, y, i);
     }
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
