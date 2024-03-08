@@ -24,6 +24,9 @@ SRCS = ./src/main.c \
 	   ./src/main_loop.c	\
 	   ./src/gui/interface.c	\
 	   ./src/action.c	\
+	   ./src/utils.c \
+	   ./src/fill_bucket.c \
+	   ./src/color_picker.c \
 
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj

@@ -26,6 +26,7 @@ static bool create_text_button(button_options_t options, button_t *button)
     text_x = options.pos.x + (options.size.x - text_rect.width) / 2;
     text_y = options.pos.y + (options.size.y - text_rect.height) / 3;
     sfText_setPosition(button->text, (sfVector2f){text_x, text_y});
+    button->img_texture = NULL;
     return true;
 }
 
@@ -34,6 +35,8 @@ static bool create_img_button(button_options_t options, button_t *button)
     button->img_texture = sfTexture_createFromFile(options.img, NULL);
     CHECK_NULL(button->img_texture, false);
     sfRectangleShape_setTexture(button->rect, button->img_texture, sfTrue);
+    button->text = NULL;
+    button->font = NULL;
     return true;
 }
 
@@ -92,6 +95,8 @@ bool is_button_hover(button_t *button, sfMouseMoveEvent *event)
 
 void destroy_button(button_t *button)
 {
+    printf("Button %s destroyed\n", button->options.text ? button->options.text :
+                                        "with no text");
     sfRectangleShape_destroy(button->rect);
     if (button->text && button->font) {
         sfFont_destroy(button->font);
