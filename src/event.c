@@ -5,6 +5,8 @@
 ** event.c
 */
 
+#include <stdio.h>
+
 #include "my_paint.h"
 
 static void button_loop(sfEvent event, my_paint_t *my_paint)
@@ -65,6 +67,12 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
         if (event.type == sfEvtResized)
             sfRenderWindow_setView(window, sfView_createFromRect((sfFloatRect)
             {0, 0, event.size.width, event.size.height}));
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyB) {
+            printf("mouse pos: %d %d\n", sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y);
+            flood_fill(my_paint, sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y, sfBlue);
+        }
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyL)
+            color_picker(my_paint, event);
         button_loop(event, my_paint);
         dropdown_loop(event, my_paint);
         do_select_action(my_paint, event);

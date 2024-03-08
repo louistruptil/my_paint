@@ -20,6 +20,9 @@
     #define WIN_HEIGHT 1080
     #define WIN_TITLE "My_Paint"
 
+    #define CANVA_WIDTH 1920
+    #define CANVA_HEIGHT 1080
+
     #define BUTTON_COUNT 2
     #define DROPDOWN_COUNT 4
 
@@ -144,6 +147,11 @@ int color_picker(my_paint_t *my_paint, sfEvent event);
 
 void drawing_loop(my_paint_t *my_paint, sfEvent event);
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event);
+
+sfColor get_pixel_color(const my_paint_t *my_paint, const int x, const int y);
+void set_pixel_color(my_paint_t *my_paint, const int x, const int y,
+    const sfColor color);
+void flood_fill(my_paint_t *my_paint, int x, int y, sfColor new_color);
 
 void do_select_action(my_paint_t *my_paint, sfEvent event);
 void write_for_popup(my_paint_t *my_paint, sfEvent event);

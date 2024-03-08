@@ -12,6 +12,7 @@ drop_down_t *create_dropdown(button_options_t options)
     drop_down_t *dropdown = malloc(sizeof(drop_down_t));
 
     dropdown->button = create_button(options, NULL, NULL);
+    dropdown->items = NULL;
     dropdown->is_open = false;
     return dropdown;
 }
@@ -25,7 +26,7 @@ void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
     if (tmp == NULL)
         options.pos.y += dropdown->button->options.size.y;
     else {
-        while (tmp->next != NULL)
+        while (tmp != NULL && tmp->next != NULL)
             tmp = tmp->next;
         options.pos.y = tmp->button->options.pos.y +
         tmp->button->options.size.y;
