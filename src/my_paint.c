@@ -25,22 +25,60 @@ void display_canva(my_paint_t *my_paint)
     my_paint->canva.canva_sprite, NULL);
 }
 
+static void display_ui(my_paint_t *my_paint)
+{
+    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
+
+    sfVector2f leftBarSize = {windowSize.x * 0.04, windowSize.y}; // 5% of window width
+    sfRectangleShape_setSize(my_paint->interface.left_bar, leftBarSize);
+    sfVector2f leftBarPos = {0, 0};
+    sfRectangleShape_setPosition(my_paint->interface.left_bar, leftBarPos);
+
+    sfVector2f topBarSize = {windowSize.x, windowSize.y * 0.04}; // 5% of window height
+    sfRectangleShape_setSize(my_paint->interface.top_bar, topBarSize);
+    sfVector2f topBarPos = {0, 0};
+    sfRectangleShape_setPosition(my_paint->interface.top_bar, topBarPos);
+
+    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.left_bar, NULL);
+    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.top_bar, NULL);
+}
+
+static void display_popup(my_paint_t *my_paint)
+{
+    if (my_paint->window.display_popup == 1) {
+        sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
+
+        sfVector2f popupSize = {windowSize.x * 0.3f, windowSize.y * 0.3f}; // 30% of window size
+        sfRectangleShape_setSize(my_paint->window.popup, popupSize);
+        sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f, windowSize.y / 2.0f - popupSize.y / 2.0f};
+        sfRectangleShape_setPosition(my_paint->window.popup, popupPosition);
+
+        sfText_setCharacterSize(my_paint->window.popup_text, popupSize.y * 0.1f); // 10% of popup height
+
+        sfFloatRect textRect = sfText_getLocalBounds(my_paint->window.popup_text);
+        sfVector2f textPosition = {
+            popupPosition.x + (popupSize.x - textRect.width) / 2 - textRect.left,
+            popupPosition.y + (popupSize.y - textRect.height) / 2 - textRect.top
+        };
+        sfText_setPosition(my_paint->window.popup_text, textPosition);
+
+        sfRenderWindow_drawRectangleShape(WINDOW, my_paint->window.popup, NULL);
+        sfRenderWindow_drawText(WINDOW, my_paint->window.popup_text, NULL);
+    }
+}
+
 void display(my_paint_t *my_paint)
 {
     sfRenderWindow_clear(WINDOW, sfWhite);
     display_canva(my_paint);
-    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.left_bar, NULL);
-    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.top_bar, NULL);
+    display_ui(my_paint);
     for (int i = 0; i < BUTTON_COUNT; i++) {
         display_button(WINDOW, my_paint->gui.button[i]);
     }
     for (int i = 0; i < DROPDOWN_COUNT; i++) {
         display_dropdown(WINDOW, my_paint->gui.dropdown[i]);
     }
-    if (my_paint->window.display_popup == 1) {
-        sfRenderWindow_drawRectangleShape(WINDOW, my_paint->window.popup, NULL);
-        sfRenderWindow_drawText(WINDOW, my_paint->window.popup_text, NULL);
-    }
+    display_popup(my_paint);
     sfRenderWindow_display(WINDOW);
 }
 

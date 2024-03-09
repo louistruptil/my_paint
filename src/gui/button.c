@@ -109,6 +109,19 @@ void destroy_button(button_t *button)
 
 void display_button(sfRenderWindow *window, button_t *button)
 {
+    sfVector2u windowSize = sfRenderWindow_getSize(window);
+    sfVector2f scale = {windowSize.x / 1920.0f, windowSize.y / 1080.0f};
+
+    sfVector2f buttonSize = button->options.size;
+    buttonSize.x *= scale.x;
+    buttonSize.y *= scale.y;
+    sfRectangleShape_setSize(button->rect, buttonSize);
+
+    sfVector2f buttonPos = button->options.pos;
+    buttonPos.x *= scale.x;
+    buttonPos.y *= scale.y;
+    sfRectangleShape_setPosition(button->rect, buttonPos);
+
     sfRenderWindow_drawRectangleShape(window, button->rect, NULL);
     if (button->state == HOVER)
         button->hover(button);
@@ -117,9 +130,15 @@ void display_button(sfRenderWindow *window, button_t *button)
             sfRectangleShape_setFillColor(button->rect, button->options.color);
         sfRectangleShape_setOutlineThickness(button->rect, 0);
         sfRectangleShape_setOutlineColor(button->rect, sfWhite);
-        sfRectangleShape_setPosition(button->rect, button->options.pos);
-        sfRectangleShape_setSize(button->rect, button->options.size);
     }
-    if (button->options.text && button->text && button->font)
+    if (button->options.text && button->text && button->font) {
+        sfText_setCharacterSize(button->text, 16 * scale.y);
+        sfFloatRect textRect = sfText_getLocalBounds(button->text);
+        sfVector2f textPos = {
+            buttonPos.x + (buttonSize.x - textRect.width) / 2 - textRect.left,
+            buttonPos.y + (buttonSize.y - textRect.height) / 2 - textRect.top
+        };
+        sfText_setPosition(button->text, textPos);
         sfRenderWindow_drawText(window, button->text, NULL);
+    }
 }
