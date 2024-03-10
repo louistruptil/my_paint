@@ -123,6 +123,7 @@ typedef struct my_paint_s {
     draw_params_t draw_params;
     interface_t interface;
     tools_t tools;
+    bool can_draw;
 } my_paint_t;
 
 bool my_paint(void);
@@ -137,12 +138,12 @@ button_t *create_button(button_options_t options,
 bool is_button_clicked(button_t *button, sfMouseButtonEvent *event);
 bool is_button_hover(button_t *button, sfMouseMoveEvent *event);
 void destroy_button(button_t *button);
-void display_button(sfRenderWindow *window, button_t *button);
+void display_button(my_paint_t *my_paint, button_t *button);
 
 drop_down_t *create_dropdown(button_options_t options);
 void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
     void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *));
-void display_dropdown(sfRenderWindow *window, drop_down_t *dropdown);
+void display_dropdown(my_paint_t *my_paint, drop_down_t *dropdown);
 int color_picker(my_paint_t *my_paint, sfEvent event);
 void color_bucket(my_paint_t *my_paint, sfEvent event);
 

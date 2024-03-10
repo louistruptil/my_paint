@@ -107,9 +107,9 @@ void destroy_button(button_t *button)
     free(button);
 }
 
-void display_button(sfRenderWindow *window, button_t *button)
+void display_button(my_paint_t *my_paint, button_t *button)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(window);
+    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
     sfVector2f scale = {windowSize.x / 1920.0f, windowSize.y / 1080.0f};
 
     sfVector2f buttonSize = button->options.size;
@@ -122,9 +122,13 @@ void display_button(sfRenderWindow *window, button_t *button)
     buttonPos.y *= scale.y;
     sfRectangleShape_setPosition(button->rect, buttonPos);
 
-    sfRenderWindow_drawRectangleShape(window, button->rect, NULL);
-    if (button->state == HOVER)
+    sfRenderWindow_drawRectangleShape(WINDOW, button->rect, NULL);
+    if (button->state == HOVER || button->state == PRESSED || button->state == RELEASED) {
+        my_paint->can_draw = false;
+    }
+    if (button->state == HOVER) {
         button->hover(button);
+    }
     else {
         if (button->options.color.a != 0)
             sfRectangleShape_setFillColor(button->rect, button->options.color);
@@ -139,6 +143,6 @@ void display_button(sfRenderWindow *window, button_t *button)
             buttonPos.y + (buttonSize.y - textRect.height) / 2 - textRect.top
         };
         sfText_setPosition(button->text, textPos);
-        sfRenderWindow_drawText(window, button->text, NULL);
+        sfRenderWindow_drawText(WINDOW, button->text, NULL);
     }
 }

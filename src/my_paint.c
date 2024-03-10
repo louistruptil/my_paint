@@ -72,11 +72,12 @@ void display(my_paint_t *my_paint)
     sfRenderWindow_clear(WINDOW, sfWhite);
     display_canva(my_paint);
     display_ui(my_paint);
+    my_paint->can_draw = true;
     for (int i = 0; i < BUTTON_COUNT; i++) {
-        display_button(WINDOW, my_paint->gui.button[i]);
+        display_button(my_paint, my_paint->gui.button[i]);
     }
     for (int i = 0; i < DROPDOWN_COUNT; i++) {
-        display_dropdown(WINDOW, my_paint->gui.dropdown[i]);
+        display_dropdown(my_paint, my_paint->gui.dropdown[i]);
     }
     display_popup(my_paint);
     sfRenderWindow_display(WINDOW);
@@ -137,6 +138,7 @@ bool my_paint(void)
     if (!my_paint)
         return false;
     my_paint->window = create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
+    my_paint->can_draw = true;
     init_tool_tab(my_paint);
     create_interface(my_paint);
     init_canva(my_paint);

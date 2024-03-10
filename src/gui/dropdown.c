@@ -40,17 +40,17 @@ void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
     tmp->next = new;
 }
 
-void display_dropdown(sfRenderWindow *window, drop_down_t *dropdown)
+void display_dropdown(my_paint_t *my_paint, drop_down_t *dropdown)
 {
     drop_down_t *tmp = dropdown;
     drop_down_item_t *tmp_items;
 
-    display_button(window, tmp->button);
+    display_button(my_paint, tmp->button);
     if (!dropdown->is_open)
         return;
     tmp_items = tmp->items;
     while (tmp_items != NULL) {
-        display_button(window, tmp_items->button);
+        display_button(my_paint, tmp_items->button);
         tmp_items = tmp_items->next;
     }
 }

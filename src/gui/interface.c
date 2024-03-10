@@ -31,7 +31,6 @@ int save_canva(my_paint_t *my_paint, sfEvent event)
 
 static void hover_action(button_t *button)
 {
-    printf("hover\n");
 }
 
 static void tool_eq_pen(my_paint_t *my_paint)

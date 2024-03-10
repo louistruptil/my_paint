@@ -4,6 +4,8 @@
 ** File description:
 ** my_paint.c
 */
+#include <stdio.h>
+
 #include "my_paint.h"
 
 static int draw_cmd(my_paint_t *my_paint, sfEvent event)
@@ -23,6 +25,8 @@ static int ereased_cmd(my_paint_t *my_paint, sfEvent event)
 
 void do_select_action(my_paint_t *my_paint, sfEvent event)
 {
+    if (!my_paint->can_draw)
+        return;
     if (my_paint->tools.actual_tools == 0)
         draw_cmd(my_paint, event);
     if (my_paint->tools.actual_tools == 1)
