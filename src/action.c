@@ -8,11 +8,6 @@
 
 static int draw_cmd(my_paint_t *my_paint, sfEvent event)
 {
-
-    my_paint->tools.rgba[0] = 0;
-    my_paint->tools.rgba[1] = 0;
-    my_paint->tools.rgba[2] = 0;
-    my_paint->tools.rgba[3] = 255;
     drawing_loop(my_paint, event);
 }
 
@@ -32,6 +27,8 @@ void do_select_action(my_paint_t *my_paint, sfEvent event)
         draw_cmd(my_paint, event);
     if (my_paint->tools.actual_tools == 1)
         ereased_cmd(my_paint, event);
+    if (my_paint->tools.actual_tools == 2)
+        color_picker(my_paint, event);
 }
 
 void write_for_popup(my_paint_t *my_paint, sfEvent event)
