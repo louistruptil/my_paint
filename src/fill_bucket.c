@@ -59,6 +59,12 @@ void flood_fill(my_paint_t *my_paint, int x, int y, sfColor new_color)
 
 void color_bucket(my_paint_t *my_paint, sfEvent event)
 {
-    if (event.type == sfEvtMouseButtonPressed && event.mouseButton.button == sfMouseLeft)
-        flood_fill(my_paint, sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y, sfBlue);
+    if (event.type == sfEvtMouseButtonPressed && event.mouseButton.button == sfMouseLeft) {
+        sfVector2i mousePos = sfMouse_getPositionRenderWindow(my_paint->window.window);
+        sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
+        sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
+        int scaledMouseX = mousePos.x * scale.x;
+        int scaledMouseY = mousePos.y * scale.y;
+        flood_fill(my_paint, scaledMouseX, scaledMouseY, sfBlue);
+    }
 }
