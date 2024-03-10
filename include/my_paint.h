@@ -23,7 +23,7 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 3
+    #define BUTTON_COUNT 4
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
@@ -144,6 +144,7 @@ void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
     void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *));
 void display_dropdown(sfRenderWindow *window, drop_down_t *dropdown);
 int color_picker(my_paint_t *my_paint, sfEvent event);
+void color_bucket(my_paint_t *my_paint, sfEvent event);
 
 void drawing_loop(my_paint_t *my_paint, sfEvent event);
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event);

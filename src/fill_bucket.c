@@ -56,3 +56,9 @@ void flood_fill(my_paint_t *my_paint, int x, int y, sfColor new_color)
     }
     free(stack);
 }
+
+void color_bucket(my_paint_t *my_paint, sfEvent event)
+{
+    if (event.type == sfEvtMouseButtonPressed && event.mouseButton.button == sfMouseLeft)
+        flood_fill(my_paint, sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y, sfBlue);
+}

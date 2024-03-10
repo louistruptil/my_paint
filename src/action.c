@@ -29,12 +29,14 @@ void do_select_action(my_paint_t *my_paint, sfEvent event)
         ereased_cmd(my_paint, event);
     if (my_paint->tools.actual_tools == 2)
         color_picker(my_paint, event);
+    if (my_paint->tools.actual_tools == 3)
+        color_bucket(my_paint, event);
 }
 
 void write_for_popup(my_paint_t *my_paint, sfEvent event)
 {
     if (event.type == sfEvtTextEntered) {
-        size_t len = strlen(my_paint->window.popup_text_str);
+        size_t len = my_strlen(my_paint->window.popup_text_str);
 
         if (event.text.unicode == '\b' && len > 0) { // Backspace
             my_paint->window.popup_text_str[len - 1] = '\0';

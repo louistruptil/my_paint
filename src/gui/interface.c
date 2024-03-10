@@ -49,6 +49,11 @@ static void tool_eq_picker(my_paint_t *my_paint)
     my_paint->tools.actual_tools = 2;
 }
 
+static void tool_eq_bucket(my_paint_t *my_paint)
+{
+    my_paint->tools.actual_tools = 3;
+}
+
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event)
 {
     if (event.type == sfEvtResized) {
@@ -227,6 +232,18 @@ static void btn_picker(my_paint_t *my_paint)
     }, tool_eq_picker, hover_action);
 }
 
+static void btn_bucket(my_paint_t *my_paint)
+{
+    my_paint->gui.button[3] = create_button((button_options_t) {
+        {20, 230},
+        {32, 32},
+        sfColor_fromRGB(255, 255, 255),
+        NULL,
+        sfColor_fromRGB(255, 255, 255),
+        "assets/bucket.png"
+    }, tool_eq_bucket, hover_action);
+}
+
 static int create_interface_buttons(my_paint_t *my_paint)
 {
     btn_file(my_paint);
@@ -236,6 +253,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     btn_eraser(my_paint);
     btn_size(my_paint);
     btn_picker(my_paint);
+    btn_bucket(my_paint);
 }
 
 static int create_popup(my_paint_t *my_paint)
