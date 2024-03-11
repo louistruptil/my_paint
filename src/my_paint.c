@@ -18,7 +18,10 @@ void destroy(my_paint_t *my_paint)
 void display_canva(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfSprite_setScale(my_paint->canva.canva_sprite, (sfVector2f){windowSize.x / my_paint->tools.canva_scale.x, windowSize.y / my_paint->tools.canva_scale.y});
+
+    sfSprite_setScale(my_paint->canva.canva_sprite,
+        (sfVector2f){windowSize.x / my_paint->tools.canva_scale.x,
+            windowSize.y / my_paint->tools.canva_scale.y});
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
     sfRenderWindow_drawSprite(WINDOW,
@@ -28,42 +31,57 @@ void display_canva(my_paint_t *my_paint)
 static void display_ui(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
+    sfVector2f leftBarSize;
+    sfVector2f leftBarPos;
+    sfVector2f topBarSize;
+    sfVector2f topBarPos;
 
-    sfVector2f leftBarSize = {windowSize.x * 0.04, windowSize.y}; // 5% of window width
+    leftBarSize = (sfVector2f){windowSize.x * 0.04, windowSize.y};
     sfRectangleShape_setSize(my_paint->interface.left_bar, leftBarSize);
-    sfVector2f leftBarPos = {0, 0};
+    leftBarPos = (sfVector2f){0, 0};
     sfRectangleShape_setPosition(my_paint->interface.left_bar, leftBarPos);
-
-    sfVector2f topBarSize = {windowSize.x, windowSize.y * 0.04}; // 5% of window height
+    topBarSize = (sfVector2f){windowSize.x, windowSize.y * 0.04};
     sfRectangleShape_setSize(my_paint->interface.top_bar, topBarSize);
-    sfVector2f topBarPos = {0, 0};
+    topBarPos = (sfVector2f){0, 0};
     sfRectangleShape_setPosition(my_paint->interface.top_bar, topBarPos);
+    sfRenderWindow_drawRectangleShape(WINDOW,
+        my_paint->interface.left_bar, NULL);
+    sfRenderWindow_drawRectangleShape(WINDOW,
+        my_paint->interface.top_bar, NULL);
+}
 
-    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.left_bar, NULL);
-    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->interface.top_bar, NULL);
+static void update_popup_position(my_paint_t *my_paint, sfVector2u windowSize)
+{
+    sfVector2f popupSize = {windowSize.x * 0.3f, windowSize.y * 0.3f};
+    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f,
+        windowSize.y / 2.0f - popupSize.y / 2.0f};
+    sfFloatRect textRect;
+    sfVector2f textPosition;
+
+    sfRectangleShape_setSize(my_paint->window.popup, popupSize);
+    sfRectangleShape_setPosition(my_paint->window.popup, popupPosition);
+    sfText_setCharacterSize(my_paint->window.popup_text,
+        popupSize.y * 0.1f);
+    textRect = sfText_getLocalBounds(my_paint->window.popup_text);
+    textPosition = (sfVector2f){popupPosition.x +
+        (popupSize.x - textRect.width) / 2 - textRect.left, popupPosition.y
+        + (popupSize.y - textRect.height) / 2 - textRect.top};
+    sfText_setPosition(my_paint->window.popup_text, textPosition);
+}
+
+static void draw_popup(my_paint_t *my_paint)
+{
+    sfRenderWindow_drawRectangleShape(WINDOW, my_paint->window.popup, NULL);
+    sfRenderWindow_drawText(WINDOW, my_paint->window.popup_text, NULL);
 }
 
 static void display_popup(my_paint_t *my_paint)
 {
+    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
+
     if (my_paint->window.display_popup == 1) {
-        sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
-
-        sfVector2f popupSize = {windowSize.x * 0.3f, windowSize.y * 0.3f}; // 30% of window size
-        sfRectangleShape_setSize(my_paint->window.popup, popupSize);
-        sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f, windowSize.y / 2.0f - popupSize.y / 2.0f};
-        sfRectangleShape_setPosition(my_paint->window.popup, popupPosition);
-
-        sfText_setCharacterSize(my_paint->window.popup_text, popupSize.y * 0.1f); // 10% of popup height
-
-        sfFloatRect textRect = sfText_getLocalBounds(my_paint->window.popup_text);
-        sfVector2f textPosition = {
-            popupPosition.x + (popupSize.x - textRect.width) / 2 - textRect.left,
-            popupPosition.y + (popupSize.y - textRect.height) / 2 - textRect.top
-        };
-        sfText_setPosition(my_paint->window.popup_text, textPosition);
-
-        sfRenderWindow_drawRectangleShape(WINDOW, my_paint->window.popup, NULL);
-        sfRenderWindow_drawText(WINDOW, my_paint->window.popup_text, NULL);
+        update_popup_position(my_paint, windowSize);
+        draw_popup(my_paint);
     }
 }
 
@@ -86,26 +104,12 @@ void display(my_paint_t *my_paint)
     sfRenderWindow_display(WINDOW);
 }
 
-// Callack function when button clicked create one for each button
-static void print_action(my_paint_t *my_paint, button_t *button)
-{
-    my_putstr("Button clicked\n");
-    for (int i = 0; i < 1920 * 1080 * 4; i += 4) {
-        my_paint->canva.canva_pixels[i] = 255;
-        my_paint->canva.canva_pixels[i + 1] = 255;
-        my_paint->canva.canva_pixels[i + 2] = 255;
-        my_paint->canva.canva_pixels[i + 3] = 255;
-    }
-}
-
-// Callack function when button hovered create one for each button
-static void hover_action(button_t *button)
-{
-    sfRectangleShape_setSize(button->rect, (sfVector2f){200, 200});
-}
-
 static void init_canva(my_paint_t *my_paint)
 {
+    sfVector2f spriteOrigin;
+    sfVector2u windowSize;
+    sfVector2f spritePos;
+
     my_paint->canva.canva_pixels = malloc(1920 * 1080 * 4);
     for (int i = 0; i < 1920 * 1080 * 4; i += 4) {
         my_paint->canva.canva_pixels[i] = 255;
@@ -115,15 +119,15 @@ static void init_canva(my_paint_t *my_paint)
     }
     my_paint->canva.canva_texture = sfTexture_create(1920, 1080);
     my_paint->canva.canva_sprite = sfSprite_create();
-    sfSprite_setTexture(my_paint->canva.canva_sprite, my_paint->canva.canva_texture, sfTrue);
-
-    sfVector2f spriteOrigin = {1920 / 2.0f, 1080 / 2.0f};
+    sfSprite_setTexture(my_paint->canva.canva_sprite,
+        my_paint->canva.canva_texture, sfTrue);
+    spriteOrigin = (sfVector2f){1920 / 2.0f, 1080 / 2.0f};
     sfSprite_setOrigin(my_paint->canva.canva_sprite, spriteOrigin);
-
-    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2f spritePos = {windowSize.x / 2.0f, windowSize.y / 2.0f};
+    windowSize = sfRenderWindow_getSize(my_paint->window.window);
+    spritePos = (sfVector2f){windowSize.x / 2.0f, windowSize.y / 2.0f};
     sfSprite_setPosition(my_paint->canva.canva_sprite, spritePos);
 }
+
 static void init_tool_tab(my_paint_t *my_paint)
 {
     my_paint->tools.rgba = malloc(sizeof(int) * 4);
@@ -145,9 +149,8 @@ bool my_paint(void)
 {
     my_paint_t *my_paint = malloc(sizeof(my_paint_t));
 
-    if (!my_paint)
-        return false;
-    my_paint->window = create_window(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE);
+    my_paint->window = create_window(WIN_WIDTH,
+        WIN_HEIGHT, WIN_TITLE);
     my_paint->can_draw = true;
     init_tool_tab(my_paint);
     create_interface(my_paint);

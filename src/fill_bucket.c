@@ -59,12 +59,24 @@ void flood_fill(my_paint_t *my_paint, int x, int y, sfColor new_color)
 
 void color_bucket(my_paint_t *my_paint, sfEvent event)
 {
-    if (event.type == sfEvtMouseButtonPressed && event.mouseButton.button == sfMouseLeft) {
-        sfVector2i mousePos = sfMouse_getPositionRenderWindow(my_paint->window.window);
-        sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-        sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
-        int scaledMouseX = mousePos.x * scale.x;
-        int scaledMouseY = mousePos.y * scale.y;
-        flood_fill(my_paint, scaledMouseX, scaledMouseY, sfColor_fromRGBA(my_paint->tools.rgba[0], my_paint->tools.rgba[1], my_paint->tools.rgba[2], my_paint->tools.rgba[3]));
+    sfVector2i mousePos;
+    sfVector2u windowSize;
+    sfVector2f scale;
+    int scaledMouseX;
+    int scaledMouseY;
+
+    if (event.type == sfEvtMouseButtonPressed &&
+        event.mouseButton.button == sfMouseLeft) {
+        mousePos = sfMouse_getPositionRenderWindow(my_paint->window.window);
+        windowSize = sfRenderWindow_getSize(my_paint->window.window);
+        scale.x = 1920.0f / windowSize.x;
+        scale.y = 1080.0f / windowSize.y;
+        scaledMouseX = mousePos.x * scale.x;
+        scaledMouseY = mousePos.y * scale.y;
+        flood_fill(my_paint, scaledMouseX, scaledMouseY,
+            sfColor_fromRGBA(my_paint->tools.rgba[0],
+            my_paint->tools.rgba[1],
+            my_paint->tools.rgba[2],
+            my_paint->tools.rgba[3]));
     }
 }

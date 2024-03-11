@@ -13,18 +13,19 @@ static void button_loop(sfEvent event, my_paint_t *my_paint)
 {
     for (int i = 0; i < BUTTON_COUNT; i++) {
         if (my_paint->gui.button[i]->is_clicked(my_paint->gui.button[i],
-            &event.mouseButton)) {
+            &event.mouseButton))
             my_paint->gui.button[i]->action(my_paint, my_paint->gui.button[i]);
-        }
         if (my_paint->gui.button[i]->is_hover(my_paint->gui.button[i],
             &event.mouseMove)) {
         }
     }
     for (int i = 0; i < 9; i++) {
-        if (my_paint->gui.color_palette[i]->is_clicked(my_paint->gui.color_palette[i], &event.mouseButton)) {
-            my_paint->gui.color_palette[i]->action(my_paint, my_paint->gui.color_palette[i]);
-        }
-        if (my_paint->gui.color_palette[i]->is_hover(my_paint->gui.color_palette[i], &event.mouseMove)) {
+        if (my_paint->gui.color_palette[i]->is_clicked
+            (my_paint->gui.color_palette[i], &event.mouseButton))
+            my_paint->gui.color_palette[i]->
+        action(my_paint, my_paint->gui.color_palette[i]);
+        if (my_paint->gui.color_palette[i]->
+            is_hover(my_paint->gui.color_palette[i], &event.mouseMove)) {
         }
     }
 }
@@ -86,17 +87,10 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
         if (event.type == sfEvtResized)
             sfRenderWindow_setView(window, sfView_createFromRect((sfFloatRect)
             {0, 0, event.size.width, event.size.height}));
-        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyB) {
-            printf("mouse pos: %d %d\n", sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y);
-            flood_fill(my_paint, sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y, sfBlue);
-        }
-        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyC) {
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyC)
             zoom_canvas(my_paint);
-        }
-        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyX) {
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyX)
             dezoom_canvas(my_paint);
-        }
-
         if (event.type == sfEvtKeyReleased && event.key.code == sfKeyL)
             color_picker(my_paint, event);
         button_loop(event, my_paint);

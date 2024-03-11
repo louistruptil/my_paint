@@ -141,6 +141,7 @@ bool is_button_clicked(button_t *button, sfMouseButtonEvent *event);
 bool is_button_hover(button_t *button, sfMouseMoveEvent *event);
 void destroy_button(button_t *button);
 void display_button(my_paint_t *my_paint, button_t *button);
+void display(my_paint_t *my_paint);
 
 drop_down_t *create_dropdown(button_options_t options);
 void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
@@ -160,5 +161,25 @@ void flood_fill(my_paint_t *my_paint, int x, int y, sfColor new_color);
 void do_select_action(my_paint_t *my_paint, sfEvent event);
 void write_for_popup(my_paint_t *my_paint, sfEvent event);
 
+void calculate_window_scale(my_paint_t *my_paint, sfVector2f *scale);
+void update_button_size(sfRectangleShape *rect, sfVector2f *buttonSize,
+    sfVector2f scale, sfVector2f size);
+void update_button_position(sfRectangleShape *rect,
+    sfVector2f *buttonPos, sfVector2f scale, sfVector2f pos);
+
+void btn_pen(my_paint_t *my_paint);
+void btn_bucket(my_paint_t *my_paint);
+void btn_picker(my_paint_t *my_paint);
+void btn_size(my_paint_t *my_paint);
+void btn_eraser(my_paint_t *my_paint);
+void tool_eq_bucket(my_paint_t *my_paint);
+void tool_eq_picker(my_paint_t *my_paint);
+void tool_eq_eraser(my_paint_t *my_paint);
+void tool_eq_pen(my_paint_t *my_paint);
+int save_canva(my_paint_t *my_paint, sfEvent event);
+void btn_help(my_paint_t *my_paint);
+void btn_edition(my_paint_t *my_paint);
+void btn_file(my_paint_t *my_paint);
+int create_popup(my_paint_t *my_paint);
 
 #endif //MY_PAINT_MY_PAINT_H

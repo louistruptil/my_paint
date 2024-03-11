@@ -16,7 +16,12 @@ GREEN = \033[0;32m
 NO_COLOR = \033[0m
 SRCS = ./src/main.c \
        ./src/gui/button.c \
+       ./src/gui/button_two.c \
        ./src/gui/dropdown.c \
+       ./src/gui/sidebar.c \
+       ./src/gui/topbar.c \
+       ./src/gui/btn_callback.c \
+       ./src/gui/popup.c \
        ./src/event.c \
        ./src/window.c \
        ./src/my_paint.c \

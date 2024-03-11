@@ -19,8 +19,8 @@ static bool create_text_button(button_options_t options, button_t *button)
     button->text = sfText_create();
     sfText_setString(button->text, options.text);
     sfText_setFont(button->text, button->font);
-    sfText_setFillColor(button->text, options.text_color.r ? options.text_color :
-        sfWhite);
+    sfText_setFillColor(button->text, options.text_color.r ?
+        options.text_color : sfWhite);
     sfText_setCharacterSize(button->text, options.size.y / 2);
     text_rect = sfText_getLocalBounds(button->text);
     text_x = options.pos.x + (options.size.x - text_rect.width) / 2;
@@ -34,7 +34,8 @@ static bool create_img_button(button_options_t options, button_t *button)
 {
     button->img_texture = sfTexture_createFromFile(options.img, NULL);
     CHECK_NULL(button->img_texture, false);
-    sfRectangleShape_setTexture(button->rect, button->img_texture, sfTrue);
+    sfRectangleShape_setTexture(button->rect, button->img_texture,
+        sfTrue);
     button->text = NULL;
     button->font = NULL;
     return true;
@@ -87,62 +88,54 @@ bool is_button_hover(button_t *button, sfMouseMoveEvent *event)
     if (is_hover && button->state != PRESSED) {
         button->state = HOVER;
         button->hover(button);
-    } else {
+    } else
         button->state = button->state == PRESSED ? PRESSED : NONE;
-    }
     return is_hover ? true : false;
 }
 
-void destroy_button(button_t *button)
+void render_button(my_paint_t *my_paint, button_t *button)
 {
-    printf("Button %s destroyed\n", button->options.text ? button->options.text :
-                                        "with no text");
-    sfRectangleShape_destroy(button->rect);
-    if (button->text && button->font) {
-        sfFont_destroy(button->font);
-        sfText_destroy(button->text);
+    sfVector2f scale;
+    sfVector2f buttonSize;
+    sfVector2f btn_pos;
+    sfFloatRect textRect;
+    sfVector2f textPos;
+
+    calculate_window_scale(my_paint, &scale);
+    update_button_size(button->rect, &buttonSize, scale, button->options.size);
+    update_button_position(button->rect, &btn_pos, scale, button->options.pos);
+    sfRenderWindow_drawRectangleShape(WINDOW, button->rect, NULL);
+    if (button->options.text && button->text && button->font) {
+        textRect = sfText_getLocalBounds(button->text);
+        sfText_setCharacterSize(button->text, 16 * scale.y);
+        textPos = (sfVector2f){
+            btn_pos.x + (buttonSize.x - textRect.width) / 2 - textRect.left,
+            btn_pos.y + (buttonSize.y - textRect.height) / 2 - textRect.top
+        };
+        sfText_setPosition(button->text, textPos);
+        sfRenderWindow_drawText(WINDOW, button->text, NULL);
     }
-    if (button->img_texture)
-        sfTexture_destroy(button->img_texture);
-    free(button);
 }
 
-void display_button(my_paint_t *my_paint, button_t *button)
+static void handle_button_state(my_paint_t *my_paint, button_t *button)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
-    sfVector2f scale = {windowSize.x / 1920.0f, windowSize.y / 1080.0f};
-
-    sfVector2f buttonSize = button->options.size;
-    buttonSize.x *= scale.x;
-    buttonSize.y *= scale.y;
-    sfRectangleShape_setSize(button->rect, buttonSize);
-
-    sfVector2f buttonPos = button->options.pos;
-    buttonPos.x *= scale.x;
-    buttonPos.y *= scale.y;
-    sfRectangleShape_setPosition(button->rect, buttonPos);
-
-    sfRenderWindow_drawRectangleShape(WINDOW, button->rect, NULL);
-    if (button->state == HOVER || button->state == PRESSED || button->state == RELEASED) {
+    if (button->state == HOVER || button->state == PRESSED
+        || button->state == RELEASED) {
         my_paint->can_draw = false;
     }
     if (button->state == HOVER) {
         button->hover(button);
-    }
-    else {
+        sfRectangleShape_setOutlineThickness(button->rect, 2);
+    } else {
         if (button->options.color.a != 0)
             sfRectangleShape_setFillColor(button->rect, button->options.color);
         sfRectangleShape_setOutlineThickness(button->rect, 0);
         sfRectangleShape_setOutlineColor(button->rect, sfWhite);
     }
-    if (button->options.text && button->text && button->font) {
-        sfText_setCharacterSize(button->text, 16 * scale.y);
-        sfFloatRect textRect = sfText_getLocalBounds(button->text);
-        sfVector2f textPos = {
-            buttonPos.x + (buttonSize.x - textRect.width) / 2 - textRect.left,
-            buttonPos.y + (buttonSize.y - textRect.height) / 2 - textRect.top
-        };
-        sfText_setPosition(button->text, textPos);
-        sfRenderWindow_drawText(WINDOW, button->text, NULL);
-    }
+}
+
+void display_button(my_paint_t *my_paint, button_t *button)
+{
+    render_button(my_paint, button);
+    handle_button_state(my_paint, button);
 }

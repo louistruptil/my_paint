@@ -39,25 +39,30 @@ static void draw_in_bounds(my_paint_t *my_paint, int x, int y, int i)
     }
 }
 
+static void draw_at_point_circle_two(my_paint_t *my_paint,
+    sfVector2i pos, int i, int j)
+{
+    int xi = pos.x + i;
+    int yj = pos.y + j;
+
+    if (i * i + j * j <= my_paint->tools.size * my_paint->tools.size) {
+        if (xi >= 0 && xi < 1920 && yj >= 0 && yj < 1080) {
+            update_pixel(my_paint, xi, yj);
+        }
+    }
+}
+
 static void draw_at_point_circle(my_paint_t *my_paint, int x, int y)
 {
     my_paint->draw_params.min_x = 1920;
     my_paint->draw_params.min_y = 1080;
     my_paint->draw_params.max_x = 0;
     my_paint->draw_params.max_y = 0;
-
     for (int i = -my_paint->tools.size; i <= my_paint->tools.size; i++) {
         for (int j = -my_paint->tools.size; j <= my_paint->tools.size; j++) {
-            if (i * i + j * j <= my_paint->tools.size * my_paint->tools.size) {
-                int xi = x + i;
-                int yj = y + j;
-                if (xi >= 0 && xi < 1920 && yj >= 0 && yj < 1080) {
-                    update_pixel(my_paint, xi, yj);
-                }
-            }
+            draw_at_point_circle_two(my_paint, (sfVector2i){x, y}, i, j);
         }
     }
-
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, my_paint->draw_params.max_x -
     my_paint->draw_params.min_x + 1,
@@ -71,9 +76,8 @@ static void draw_at_point_square(my_paint_t *my_paint, int x, int y)
     my_paint->draw_params.min_y = 1080;
     my_paint->draw_params.max_x = 0;
     my_paint->draw_params.max_y = 0;
-    for (int i = -my_paint->tools.size; i <= my_paint->tools.size; i++) {
+    for (int i = -my_paint->tools.size; i <= my_paint->tools.size; i++)
         draw_in_bounds(my_paint, x, y, i);
-    }
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, my_paint->draw_params.max_x -
     my_paint->draw_params.min_x + 1,
@@ -113,30 +117,35 @@ static void button_pressed(sfBool *was_mouse_pressed, my_paint_t *my_paint)
         my_paint->canva.canva_drawing = sfFalse;
 }
 
+static void drawning_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed)
+{
+    if (my_paint->tools.square == 0) {
+        draw_at_point_circle(my_paint, my_paint->canva.curr_mouse_pos.x,
+            my_paint->canva.curr_mouse_pos.y);
+        *was_mouse_pressed = sfFalse;
+    } else {
+        draw_at_point_square(my_paint, my_paint->canva.curr_mouse_pos.x,
+            my_paint->canva.curr_mouse_pos.y);
+        *was_mouse_pressed = sfFalse;
+    }
+}
+
 void drawing_loop(my_paint_t *my_paint, sfEvent event)
 {
     static sfBool was_mouse_pressed = sfFalse;
+    sfVector2i mousePos =
+        sfMouse_getPositionRenderWindow(my_paint->window.window);
+    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
 
     button_pressed(&was_mouse_pressed, my_paint);
     if (my_paint->canva.canva_drawing) {
         my_paint->canva.prev_mouse_pos = my_paint->canva.curr_mouse_pos;
-        sfVector2i mousePos = sfMouse_getPositionRenderWindow(my_paint->window.window);
-        sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-        sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
         my_paint->canva.curr_mouse_pos.x = mousePos.x * scale.x;
         my_paint->canva.curr_mouse_pos.y = mousePos.y * scale.y;
         if (was_mouse_pressed) {
-            if (my_paint->tools.square == 0) {
-                draw_at_point_circle(my_paint, my_paint->canva.curr_mouse_pos.x,
-                my_paint->canva.curr_mouse_pos.y);
-                was_mouse_pressed = sfFalse;
-            } else {
-                draw_at_point_square(my_paint, my_paint->canva.curr_mouse_pos.x,
-                my_paint->canva.curr_mouse_pos.y);
-                was_mouse_pressed = sfFalse;
-            }
-        } else {
+            drawning_loop_two(my_paint, &was_mouse_pressed);
+        } else
             draw_not_pressed(my_paint);
-        }
     }
 }
