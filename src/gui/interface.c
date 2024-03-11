@@ -4,6 +4,8 @@
 ** File description:
 ** my_paint.c
 */
+#include <stdio.h>
+
 #include "my_paint.h"
 
 static void open_file(my_paint_t *my_paint, button_t *button)
@@ -31,6 +33,7 @@ int save_canva(my_paint_t *my_paint, sfEvent event)
 
 static void hover_action(button_t *button)
 {
+    sfRectangleShape_setOutlineThickness(button->rect, 2);
 }
 
 static void tool_eq_pen(my_paint_t *my_paint)
@@ -51,6 +54,16 @@ static void tool_eq_picker(my_paint_t *my_paint)
 static void tool_eq_bucket(my_paint_t *my_paint)
 {
     my_paint->tools.actual_tools = 3;
+}
+
+static void select_color_action(my_paint_t *my_paint, button_t *button)
+{
+    printf("Color selected\n");
+    sfColor color = sfRectangleShape_getFillColor(button->rect);
+    my_paint->tools.rgba[0] = color.r;
+    my_paint->tools.rgba[1] = color.g;
+    my_paint->tools.rgba[2] = color.b;
+    my_paint->tools.rgba[3] = color.a;
 }
 
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event)
@@ -243,6 +256,23 @@ static void btn_bucket(my_paint_t *my_paint)
     }, tool_eq_bucket, hover_action);
 }
 
+void btn_color_palette(my_paint_t *my_paint)
+{
+    sfColor primary_colors[9] = {
+        sfWhite, sfBlack, sfRed, sfGreen, sfBlue, sfYellow, sfMagenta, sfCyan,
+        sfColor_fromRGB(85, 98, 120)
+    };
+
+    for (int i = 0; i < 9; i++) {
+        my_paint->gui.color_palette[i] = create_button((button_options_t) {
+            {20, 300 + (i * 35)},
+            {32, 32},
+            primary_colors[i],
+            NULL,
+        }, select_color_action, hover_action);
+    }
+}
+
 static int create_interface_buttons(my_paint_t *my_paint)
 {
     btn_file(my_paint);
@@ -253,6 +283,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     btn_size(my_paint);
     btn_picker(my_paint);
     btn_bucket(my_paint);
+    btn_color_palette(my_paint);
 }
 
 static int create_popup(my_paint_t *my_paint)

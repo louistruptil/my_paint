@@ -20,6 +20,13 @@ static void button_loop(sfEvent event, my_paint_t *my_paint)
             &event.mouseMove)) {
         }
     }
+    for (int i = 0; i < 9; i++) {
+        if (my_paint->gui.color_palette[i]->is_clicked(my_paint->gui.color_palette[i], &event.mouseButton)) {
+            my_paint->gui.color_palette[i]->action(my_paint, my_paint->gui.color_palette[i]);
+        }
+        if (my_paint->gui.color_palette[i]->is_hover(my_paint->gui.color_palette[i], &event.mouseMove)) {
+        }
+    }
 }
 
 static void dropdown_item_loop(sfEvent event, my_paint_t *my_paint,

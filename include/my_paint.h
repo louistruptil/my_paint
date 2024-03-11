@@ -74,6 +74,7 @@ typedef struct drop_down_s {
 typedef struct gui_s {
     button_t *button[BUTTON_COUNT];
     drop_down_t *dropdown[DROPDOWN_COUNT];
+    button_t *color_palette[9];
 } gui_t;
 
 typedef struct canva_s {

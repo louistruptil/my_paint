@@ -76,6 +76,9 @@ void display(my_paint_t *my_paint)
     for (int i = 0; i < BUTTON_COUNT; i++) {
         display_button(my_paint, my_paint->gui.button[i]);
     }
+    for (int i = 0; i < 9; i++) {
+        display_button(my_paint, my_paint->gui.color_palette[i]);
+    }
     for (int i = 0; i < DROPDOWN_COUNT; i++) {
         display_dropdown(my_paint, my_paint->gui.dropdown[i]);
     }
