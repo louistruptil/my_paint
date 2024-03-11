@@ -65,6 +65,6 @@ void color_bucket(my_paint_t *my_paint, sfEvent event)
         sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
         int scaledMouseX = mousePos.x * scale.x;
         int scaledMouseY = mousePos.y * scale.y;
-        flood_fill(my_paint, scaledMouseX, scaledMouseY, sfBlue);
+        flood_fill(my_paint, scaledMouseX, scaledMouseY, sfColor_fromRGBA(my_paint->tools.rgba[0], my_paint->tools.rgba[1], my_paint->tools.rgba[2], my_paint->tools.rgba[3]));
     }
 }
