@@ -18,16 +18,17 @@ void destroy(my_paint_t *my_paint)
 void display_canva(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f scale = {(float)windowSize.x / 1920, (float)windowSize.y / 1080};
 
-    sfSprite_setScale(my_paint->canva.canva_sprite,
-        (sfVector2f){windowSize.x / my_paint->tools.canva_scale.x,
-            windowSize.y / my_paint->tools.canva_scale.y});
+    sfSprite_setScale(my_paint->canva.canva_sprite, scale);
+    sfVector2f spritePos = {windowSize.x / 2.0f, windowSize.y / 2.0f};
+    sfSprite_setPosition(my_paint->canva.canva_sprite, spritePos);
+
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
-    sfRenderWindow_drawSprite(WINDOW,
+    sfRenderWindow_drawSprite(my_paint->window.window,
     my_paint->canva.canva_sprite, NULL);
 }
-
 static void display_ui(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
@@ -79,7 +80,7 @@ static void display_popup(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
 
-    if (my_paint->window.display_popup == 1) {
+    if (my_paint->window.display_popup != 0) {
         update_popup_position(my_paint, windowSize);
         draw_popup(my_paint);
     }
