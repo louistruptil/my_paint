@@ -111,3 +111,27 @@ void btn_bucket(my_paint_t *my_paint)
         "assets/bucket.png"
     }, tool_eq_bucket, hover_action);
 }
+
+void btn_zoom(my_paint_t *my_paint)
+{
+    my_paint->gui.button[4] = create_button((button_options_t) {
+        {20, 285},
+        {32, 32},
+        sfColor_fromRGB(255, 255, 255),
+        NULL,
+        sfColor_fromRGB(255, 255, 255),
+        "assets/zoom.png"
+    }, zoom_canvas, hover_action);
+}
+
+void btn_dezoom(my_paint_t *my_paint)
+{
+    my_paint->gui.button[3] = create_button((button_options_t) {
+        {20, 340},
+        {32, 32},
+        sfColor_fromRGB(255, 255, 255),
+        NULL,
+        sfColor_fromRGB(255, 255, 255),
+        "assets/dezoomer.png"
+    }, dezoom_canvas, hover_action);
+}
