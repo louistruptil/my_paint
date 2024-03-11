@@ -265,7 +265,7 @@ void btn_color_palette(my_paint_t *my_paint)
 
     for (int i = 0; i < 9; i++) {
         my_paint->gui.color_palette[i] = create_button((button_options_t) {
-            {20, 300 + (i * 35)},
+            {1600 + (i * 35), 5},
             {32, 32},
             primary_colors[i],
             NULL,
