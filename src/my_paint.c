@@ -18,17 +18,18 @@ void destroy(my_paint_t *my_paint)
 void display_canva(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2f scale = {(float)windowSize.x / 1920, (float)windowSize.y / 1080};
+    sfVector2f scale = {(float)windowSize.x / 1920,
+    (float)windowSize.y / 1080};
+    sfVector2f spritePos = {windowSize.x / 2.0f, windowSize.y / 2.0f};
 
     sfSprite_setScale(my_paint->canva.canva_sprite, scale);
-    sfVector2f spritePos = {windowSize.x / 2.0f, windowSize.y / 2.0f};
     sfSprite_setPosition(my_paint->canva.canva_sprite, spritePos);
-
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
     sfRenderWindow_drawSprite(my_paint->window.window,
     my_paint->canva.canva_sprite, NULL);
 }
+
 static void display_ui(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
