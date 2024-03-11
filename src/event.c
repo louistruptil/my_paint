@@ -66,6 +66,18 @@ static void dropdown_loop(sfEvent event, my_paint_t *my_paint)
     }
 }
 
+void zoom_canvas(my_paint_t *my_paint)
+{
+    my_paint->tools.canva_scale.x = 960;
+    my_paint->tools.canva_scale.y = 540;
+}
+
+void dezoom_canvas(my_paint_t *my_paint)
+{
+    my_paint->tools.canva_scale.x = 1920;
+    my_paint->tools.canva_scale.y = 1080;
+}
+
 void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
 {
     while (sfRenderWindow_pollEvent(window, &event)) {
@@ -78,6 +90,13 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
             printf("mouse pos: %d %d\n", sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y);
             flood_fill(my_paint, sfMouse_getPositionRenderWindow(WINDOW).x, sfMouse_getPositionRenderWindow(WINDOW).y, sfBlue);
         }
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyC) {
+            zoom_canvas(my_paint);
+        }
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyX) {
+            dezoom_canvas(my_paint);
+        }
+
         if (event.type == sfEvtKeyReleased && event.key.code == sfKeyL)
             color_picker(my_paint, event);
         button_loop(event, my_paint);

@@ -115,6 +115,7 @@ typedef struct tools_s {
     int actual_tools;
     int square;
     int size;
+    sfVector2f canva_scale;
 } tools_t;
 
 typedef struct my_paint_s {

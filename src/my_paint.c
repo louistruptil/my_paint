@@ -18,7 +18,7 @@ void destroy(my_paint_t *my_paint)
 void display_canva(my_paint_t *my_paint)
 {
     sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfSprite_setScale(my_paint->canva.canva_sprite, (sfVector2f){windowSize.x / 1920.0f, windowSize.y / 1080.0f});
+    sfSprite_setScale(my_paint->canva.canva_sprite, (sfVector2f){windowSize.x / my_paint->tools.canva_scale.x, windowSize.y / my_paint->tools.canva_scale.y});
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
     sfRenderWindow_drawSprite(WINDOW,
@@ -115,10 +115,15 @@ static void init_canva(my_paint_t *my_paint)
     }
     my_paint->canva.canva_texture = sfTexture_create(1920, 1080);
     my_paint->canva.canva_sprite = sfSprite_create();
-    sfSprite_setTexture(my_paint->canva.canva_sprite,
-    my_paint->canva.canva_texture, sfTrue);
-}
+    sfSprite_setTexture(my_paint->canva.canva_sprite, my_paint->canva.canva_texture, sfTrue);
 
+    sfVector2f spriteOrigin = {1920 / 2.0f, 1080 / 2.0f};
+    sfSprite_setOrigin(my_paint->canva.canva_sprite, spriteOrigin);
+
+    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f spritePos = {windowSize.x / 2.0f, windowSize.y / 2.0f};
+    sfSprite_setPosition(my_paint->canva.canva_sprite, spritePos);
+}
 static void init_tool_tab(my_paint_t *my_paint)
 {
     my_paint->tools.rgba = malloc(sizeof(int) * 4);
@@ -132,6 +137,8 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->window.popup_text = my_strdup("");
     my_paint->tools.tools[0] = my_strdup("pen");
     my_paint->tools.tools[1] = my_strdup("eraser");
+    my_paint->tools.canva_scale.x = 1920.0f;
+    my_paint->tools.canva_scale.y = 1080.0f;
 }
 
 bool my_paint(void)
