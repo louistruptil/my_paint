@@ -7,7 +7,6 @@
 
 #include "my_paint.h"
 
-
 void btn_zoom(my_paint_t *my_paint)
 {
     my_paint->gui.button[4] = create_button((button_options_t) {

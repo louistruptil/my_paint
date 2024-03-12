@@ -74,7 +74,7 @@ static void draw_at_point_circle(my_paint_t *my_paint, int x, int y)
     my_paint->draw_params.min_x, my_paint->draw_params.min_y);
 }
 
-static void draw_at_point_square(my_paint_t *my_paint, int x, int y)
+void draw_at_point_square(my_paint_t *my_paint, int x, int y)
 {
     my_paint->draw_params.min_x = 1920;
     my_paint->draw_params.min_y = 1080;
@@ -121,17 +121,18 @@ static void button_pressed(sfBool *was_mouse_pressed, my_paint_t *my_paint)
         my_paint->canva.canva_drawing = sfFalse;
 }
 
-static void drawning_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed)
+static void drawing_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed)
 {
-    if (my_paint->tools.square == 0) {
+    if (my_paint->tools.square == 0){
         draw_at_point_circle(my_paint, my_paint->canva.curr_mouse_pos.x,
             my_paint->canva.curr_mouse_pos.y);
         *was_mouse_pressed = sfFalse;
-    } else {
+    } else if (my_paint->tools.square == 1){
         draw_at_point_square(my_paint, my_paint->canva.curr_mouse_pos.x,
             my_paint->canva.curr_mouse_pos.y);
         *was_mouse_pressed = sfFalse;
-    }
+    } else
+        if_line(my_paint, was_mouse_pressed);
 }
 
 void drawing_loop(my_paint_t *my_paint, sfEvent event)
@@ -148,7 +149,7 @@ void drawing_loop(my_paint_t *my_paint, sfEvent event)
         my_paint->canva.curr_mouse_pos.x = mousePos.x * scale.x;
         my_paint->canva.curr_mouse_pos.y = mousePos.y * scale.y;
         if (was_mouse_pressed) {
-            drawning_loop_two(my_paint, &was_mouse_pressed);
+            drawing_loop_two(my_paint, &was_mouse_pressed);
         } else
             draw_not_pressed(my_paint);
     }

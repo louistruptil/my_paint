@@ -23,7 +23,7 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 8
+    #define BUTTON_COUNT 9
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
@@ -189,6 +189,7 @@ int color_picker(my_paint_t *my_paint, sfEvent event);
 void color_bucket(my_paint_t *my_paint, sfEvent event);
 void zoom_canvas(my_paint_t *my_paint);
 void dezoom_canvas(my_paint_t *my_paint);
+void if_line(my_paint_t *my_paint, sfBool *was_mouse_pressed);
 
 void drawing_loop(my_paint_t *my_paint, sfEvent event);
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event);
@@ -206,6 +207,7 @@ void update_button_size(sfRectangleShape *rect, sfVector2f *buttonSize,
     sfVector2f scale, sfVector2f size);
 void update_button_position(sfRectangleShape *rect,
     sfVector2f *buttonPos, sfVector2f scale, sfVector2f pos);
+void draw_at_point_square(my_paint_t *my_paint, int x, int y);
 
 void btn_pen(my_paint_t *my_paint);
 void btn_bucket(my_paint_t *my_paint);
@@ -222,6 +224,7 @@ void btn_edition(my_paint_t *my_paint);
 void btn_file(my_paint_t *my_paint);
 void btn_zoom(my_paint_t *my_paint);
 void btn_dezoom(my_paint_t *my_paint);
+void btn_line(my_paint_t *my_paint);
 void display_popup(my_paint_t *my_paint);
 int create_popup(my_paint_t *my_paint);
 int create_popup_open(my_paint_t *my_paint);
