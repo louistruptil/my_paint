@@ -17,17 +17,49 @@ static int ereased_cmd(my_paint_t *my_paint, sfEvent event)
     drawing_loop(my_paint, event);
 }
 
+static void select_color_on_selector_two(my_paint_t *my_paint,
+    sfVector2i mousePos, sfColor color)
+{
+    if (sfMouse_isButtonPressed(sfMouseLeft)) {
+        color = sfImage_getPixel(my_paint->gui.color_selector.image,
+            mousePos.x, mousePos.y);
+        my_paint->tools.rgba[0] = color.r;
+        my_paint->tools.rgba[1] = color.g;
+        my_paint->tools.rgba[2] = color.b;
+        my_paint->tools.rgba[3] = color.a;
+    }
+    sfRectangleShape_setFillColor(my_paint->gui.color_selector.selected_color,
+    sfColor_fromRGBA(my_paint->tools.rgba[0], my_paint->tools.rgba[1],
+    my_paint->tools.rgba[2], my_paint->tools.rgba[3]));
+}
+
 static void select_color_on_selector(my_paint_t *my_paint, sfEvent event)
 {
-    (void)event;
+    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
+    sfVector2f selectorPos = {(float)(windowSize.x - 355), 45};
+    sfVector2i mousePos = sfMouse_getPositionRenderWindow(WINDOW);
+    sfColor color;
+
+    sfRectangleShape_setPosition(my_paint->gui.color_selector.rect,
+        selectorPos);
+    if (mousePos.x < windowSize.x - 355 || mousePos.x > windowSize.x - 55)
+        return;
+    mousePos.x = (mousePos.x - (windowSize.x - 355)) * 1000 / 300;
+    mousePos.y = (mousePos.y - 45) * 981 / 300;
+    if (mousePos.x < 0 || mousePos.x > 1920 || mousePos.y < 0 ||
+        mousePos.y > 1080)
+        return;
+    select_color_on_selector_two(my_paint, mousePos, color);
 }
 
 void do_select_action(my_paint_t *my_paint, sfEvent event)
 {
     if (!my_paint->can_draw)
         return;
-    if (my_paint->tools.color_selector)
+    if (my_paint->tools.color_selector) {
         select_color_on_selector(my_paint, event);
+        return;
+    }
     if (my_paint->tools.actual_tools == 0)
         draw_cmd(my_paint, event);
     if (my_paint->tools.actual_tools == 1)

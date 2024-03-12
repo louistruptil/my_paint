@@ -37,16 +37,43 @@ static void color_selector_action(my_paint_t *my_paint, button_t *button)
     my_paint->tools.color_selector = !my_paint->tools.color_selector;
 }
 
+static void init_color_selector_two(my_paint_t *my_paint)
+{
+    sfRectangleShape_setOutlineThickness(my_paint->gui.color_selector.rect, 1);
+    sfRectangleShape_setOutlineColor(my_paint->gui.color_selector.rect,
+    sfColor_fromRGB(175, 175, 175));
+    my_paint->gui.color_selector.selected_color = sfRectangleShape_create();
+    sfRectangleShape_setSize(my_paint->gui.color_selector.selected_color,
+    (sfVector2f){300, 32});
+    sfRectangleShape_setPosition(my_paint->gui.color_selector.selected_color,
+    (sfVector2f){1600 - 35, 350});
+    sfRectangleShape_setFillColor(my_paint->gui.color_selector.selected_color,
+    sfColor_fromRGBA(my_paint->tools.rgba[0], my_paint->tools.rgba[1],
+    my_paint->tools.rgba[2], my_paint->tools.rgba[3]));
+    my_paint->gui.button[6] = create_button((button_options_t) {
+    {1600 - 35, 5},
+    {32, 32},
+    sfColor_fromRGB(255, 255, 255),
+    NULL,
+    sfColor_fromRGB(255, 255, 255),
+    "assets/rgb_color.png"
+    }, color_selector_action, hover_action);
+}
+
 static void init_color_selector(my_paint_t *my_paint)
 {
-    my_paint->gui.button[6] = create_button((button_options_t) {
-        {1600 - 35, 5},
-        {32, 32},
-        sfColor_fromRGB(255, 255, 255),
-        NULL,
-        sfColor_fromRGB(255, 255, 255),
-        "assets/rgb_color.png"
-    }, color_selector_action, hover_action);
+    my_paint->gui.color_selector.image = sfImage_createFromFile
+    ("assets/color_selector.jpg");
+    my_paint->gui.color_selector.texture = sfTexture_createFromImage
+    (my_paint->gui.color_selector.image, NULL);
+    my_paint->gui.color_selector.rect = sfRectangleShape_create();
+    sfRectangleShape_setSize(my_paint->gui.color_selector.rect,
+    (sfVector2f){300, 300});
+    sfRectangleShape_setPosition(my_paint->gui.color_selector.rect,
+    (sfVector2f){1600 - 35, 45});
+    sfRectangleShape_setTexture(my_paint->gui.color_selector.rect,
+    my_paint->gui.color_selector.texture, sfTrue);
+    init_color_selector_two(my_paint);
 }
 
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event)
