@@ -126,6 +126,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     create_popup(my_paint);
     create_popup_open(my_paint);
     create_popup_save(my_paint);
+    init_selection_tool(my_paint);
 }
 
 int create_interface(my_paint_t *my_paint)
@@ -148,4 +149,6 @@ int create_interface(my_paint_t *my_paint)
     sfRectangleShape_setFillColor(my_paint->interface.top_bar, color);
     sfRectangleShape_setPosition(my_paint->interface.top_bar, position);
     create_interface_buttons(my_paint);
+    create_popup(my_paint);
+    return 0;
 }

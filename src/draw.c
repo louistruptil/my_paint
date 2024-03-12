@@ -18,7 +18,7 @@ static void update_pixel(my_paint_t *my_paint, int xi, int yj)
     my_paint->canva.canva_pixels[pixel + 2] = my_paint->tools.actual_tools == 1
     ? 255 : my_paint->tools.rgba[2];
     my_paint->canva.canva_pixels[pixel + 3] = my_paint->tools.actual_tools == 1
-    ? 255 : my_paint->tools.rgba[3];
+    ? 0 : my_paint->tools.rgba[3];
     if (xi < my_paint->draw_params.min_x)
         my_paint->draw_params.min_x = xi;
     if (xi > my_paint->draw_params.max_x)

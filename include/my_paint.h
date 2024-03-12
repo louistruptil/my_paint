@@ -23,10 +23,11 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 7
+    #define BUTTON_COUNT 8
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
+    #define SELECT_RECT my_paint->tools.selection.rect
 
 enum e_gui_state {
     NONE = 0,
@@ -77,6 +78,13 @@ typedef struct color_selector_s {
     sfTexture *texture;
     sfRectangleShape *selected_color;
 } color_selector_t;
+
+typedef struct selection_s {
+    sfRectangleShape *rect;
+    sfVector2i pos;
+    sfVector2f size;
+    bool active;
+} selection_t;
 
 typedef struct gui_s {
     button_t *button[BUTTON_COUNT];
@@ -145,6 +153,7 @@ typedef struct tools_s {
     int size;
     sfVector2f canva_scale;
     bool color_selector;
+    selection_t selection;
 } tools_t;
 
 typedef struct my_paint_s {
@@ -219,5 +228,8 @@ int create_popup_open(my_paint_t *my_paint);
 int create_popup_save(my_paint_t *my_paint);
 void write_for_popupopen(my_paint_t *my_paint, sfEvent event);
 void write_for_popupsave(my_paint_t *my_paint, sfEvent event);
+
+bool init_selection_tool(my_paint_t *my_paint);
+void selection_tool(my_paint_t *my_paint, sfEvent event);
 
 #endif //MY_PAINT_MY_PAINT_H

@@ -71,6 +71,8 @@ void display(my_paint_t *my_paint)
             my_paint->gui.color_selector.selected_color, NULL);
     }
     display_popup(my_paint);
+    if (my_paint->tools.actual_tools == 4)
+        sfRenderWindow_drawRectangleShape(WINDOW, SELECT_RECT, NULL);
     sfRenderWindow_display(WINDOW);
 }
 
@@ -85,7 +87,7 @@ static void init_canva(my_paint_t *my_paint)
         my_paint->canva.canva_pixels[i] = 255;
         my_paint->canva.canva_pixels[i + 1] = 255;
         my_paint->canva.canva_pixels[i + 2] = 255;
-        my_paint->canva.canva_pixels[i + 3] = 255;
+        my_paint->canva.canva_pixels[i + 3] = 0;
     }
     my_paint->canva.canva_texture = sfTexture_create(1920, 1080);
     my_paint->canva.canva_sprite = sfSprite_create();
