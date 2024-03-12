@@ -145,6 +145,12 @@ typedef struct interface_s {
     sfRectangleShape *top_bar;
 } interface_t;
 
+typedef struct copy_s {
+    sfUint8 *canva;
+    sfVector2f size;
+    sfVector2i pos;
+} copy_t;
+
 typedef struct tools_s {
     char *tools[2];
     int *rgba;
@@ -154,6 +160,7 @@ typedef struct tools_s {
     sfVector2f canva_scale;
     bool color_selector;
     selection_t selection;
+    copy_t copy;
 } tools_t;
 
 typedef struct my_paint_s {
@@ -231,5 +238,9 @@ void write_for_popupsave(my_paint_t *my_paint, sfEvent event);
 
 bool init_selection_tool(my_paint_t *my_paint);
 void selection_tool(my_paint_t *my_paint, sfEvent event);
+void adjust_selection_coordinates(selection_t *selection,
+    sfVector2u windowSize);
+void copy_selection(my_paint_t *my_paint, sfEvent event);
+void paste(my_paint_t *my_paint, sfEvent event);
 
 #endif //MY_PAINT_MY_PAINT_H

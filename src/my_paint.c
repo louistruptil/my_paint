@@ -118,6 +118,7 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->tools.canva_scale.x = 1920.0f;
     my_paint->tools.canva_scale.y = 1080.0f;
     my_paint->tools.color_selector = false;
+    my_paint->tools.copy.canva = malloc(1920 * 1080 * 4);
 }
 
 bool my_paint(void)
