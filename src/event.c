@@ -87,6 +87,8 @@ static int popup_gestion(my_paint_t *my_paint, sfEvent event)
         write_for_popup(my_paint, event);
     if (my_paint->window.popup_open.display_popup == 1)
         write_for_popupopen(my_paint, event);
+    if (my_paint->window.popup_save.display_popup == 1)
+        write_for_popupsave(my_paint, event);
 }
 
 void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)

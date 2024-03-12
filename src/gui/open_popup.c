@@ -45,7 +45,7 @@ static int cpy_tab(my_paint_t *my_paint, sfRenderTexture *renderTexture,
     sfSprite_destroy(sprite);
 }
 
-static int save_image(my_paint_t *my_paint, sfEvent event)
+static int open_files(my_paint_t *my_paint, sfEvent event)
 {
     sfImage *image = sfImage_createFromFile
     (my_paint->window.popup_open.popup_text_str);
@@ -80,7 +80,7 @@ void write_for_popupopen(my_paint_t *my_paint, sfEvent event)
             my_paint->window.popup_open.popup_text_str);
     }
     if (event.type == sfEvtKeyPressed && event.key.code == sfKeyReturn) {
-        if (save_image(my_paint, event) == 1)
+        if (open_files(my_paint, event) == 1)
             return;
     }
 }
