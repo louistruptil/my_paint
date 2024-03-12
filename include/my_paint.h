@@ -98,12 +98,20 @@ typedef struct popup_size_s {
     char *popup_text_str;
 } popup_size_t;
 
+typedef struct popup_open_s {
+    int display_popup;
+    sfRectangleShape *popup;
+    sfText *popup_text;
+    char *popup_text_str;
+} popup_open_t;
+
 typedef struct window_s {
     sfRenderWindow *window;
     sfVideoMode mode;
     sfEvent event;
     sfView *view;
     popup_size_t popup_size;
+    popup_open_t popup_open;
 } window_t;
 
 typedef struct draw_params_s {
@@ -194,6 +202,9 @@ void btn_edition(my_paint_t *my_paint);
 void btn_file(my_paint_t *my_paint);
 void btn_zoom(my_paint_t *my_paint);
 void btn_dezoom(my_paint_t *my_paint);
+void display_popup(my_paint_t *my_paint);
 int create_popup(my_paint_t *my_paint);
+int create_popup_open(my_paint_t *my_paint);
+void write_for_popupopen(my_paint_t *my_paint, sfEvent event);
 
 #endif //MY_PAINT_MY_PAINT_H

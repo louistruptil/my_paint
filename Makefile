@@ -33,6 +33,8 @@ SRCS = ./src/main.c \
 	   ./src/utils.c \
 	   ./src/fill_bucket.c \
 	   ./src/color_picker.c \
+	   ./src/gui/open_popup.c \
+	   ./src/gui/display_popup.c \
 
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj

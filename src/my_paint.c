@@ -52,44 +52,6 @@ static void display_ui(my_paint_t *my_paint)
         my_paint->interface.top_bar, NULL);
 }
 
-static void update_popup_position(my_paint_t *my_paint, sfVector2u windowSize)
-{
-    sfVector2f popupSize = {windowSize.x * 0.3f, windowSize.y * 0.3f};
-    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f,
-        windowSize.y / 2.0f - popupSize.y / 2.0f};
-    sfFloatRect textRect;
-    sfVector2f textPosition;
-
-    sfRectangleShape_setSize(my_paint->window.popup_size.popup, popupSize);
-    sfRectangleShape_setPosition(my_paint->window.popup_size.popup,
-    popupPosition);
-    sfText_setCharacterSize(my_paint->window.popup_size.popup_text,
-        popupSize.y * 0.1f);
-    textRect = sfText_getLocalBounds(my_paint->window.popup_size.popup_text);
-    textPosition = (sfVector2f){popupPosition.x +
-        (popupSize.x - textRect.width) / 2 - textRect.left, popupPosition.y
-        + (popupSize.y - textRect.height) / 2 - textRect.top};
-    sfText_setPosition(my_paint->window.popup_size.popup_text, textPosition);
-}
-
-static void draw_popup(my_paint_t *my_paint)
-{
-    sfRenderWindow_drawRectangleShape(WINDOW,
-    my_paint->window.popup_size.popup, NULL);
-    sfRenderWindow_drawText(WINDOW,
-    my_paint->window.popup_size.popup_text, NULL);
-}
-
-static void display_popup(my_paint_t *my_paint)
-{
-    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
-
-    if (my_paint->window.popup_size.display_popup != 0) {
-        update_popup_position(my_paint, windowSize);
-        draw_popup(my_paint);
-    }
-}
-
 void display(my_paint_t *my_paint)
 {
     sfRenderWindow_clear(WINDOW, sfWhite);
@@ -144,6 +106,7 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->tools.actual_tools = 0;
     my_paint->tools.size = 5;
     my_paint->window.popup_size.popup_text = (sfText *)my_strdup("");
+    my_paint->window.popup_open.popup_text = (sfText *)my_strdup("");
     my_paint->tools.tools[0] = my_strdup("pen");
     my_paint->tools.tools[1] = my_strdup("eraser");
     my_paint->tools.canva_scale.x = 1920.0f;

@@ -81,6 +81,14 @@ void dezoom_canvas(my_paint_t *my_paint)
     my_paint->tools.canva_scale.y = 1080;
 }
 
+static int popup_gestion(my_paint_t *my_paint, sfEvent event)
+{
+    if (my_paint->window.popup_size.display_popup == 1)
+        write_for_popup(my_paint, event);
+    if (my_paint->window.popup_open.display_popup == 1)
+        write_for_popupopen(my_paint, event);
+}
+
 void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
 {
     while (sfRenderWindow_pollEvent(window, &event)) {
@@ -98,7 +106,6 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
         button_loop(event, my_paint);
         dropdown_loop(event, my_paint);
         do_select_action(my_paint, event);
-        if (my_paint->window.popup_size.display_popup == 1)
-            write_for_popup(my_paint, event);
+        popup_gestion(my_paint, event);
     }
 }

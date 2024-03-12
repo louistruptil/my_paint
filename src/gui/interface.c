@@ -10,7 +10,11 @@
 
 int save_canva(my_paint_t *my_paint, sfEvent event)
 {
-    printf("SAVE\n");
+    sfImage *image = sfTexture_copyToImage(my_paint->canva.canva_texture);
+
+    sfImage_saveToFile(image, "test.png");
+    sfImage_destroy(image);
+    return 0;
 }
 
 static void hover_action(button_t *button)
@@ -116,5 +120,5 @@ int create_interface(my_paint_t *my_paint)
     sfRectangleShape_setPosition(my_paint->interface.top_bar, position);
     create_interface_buttons(my_paint);
     create_popup(my_paint);
-    return 0;
+    create_popup_open(my_paint);
 }

@@ -9,7 +9,10 @@
 
 static void open_file(my_paint_t *my_paint, button_t *button)
 {
-    my_putstr("Open files\n");
+    if (my_paint->window.popup_open.display_popup == 0)
+        my_paint->window.popup_open.display_popup = 1;
+    else
+        my_paint->window.popup_open.display_popup = 0;
 }
 
 static void new_file(my_paint_t *my_paint, button_t *button)
