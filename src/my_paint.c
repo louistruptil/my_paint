@@ -71,6 +71,8 @@ void display(my_paint_t *my_paint)
             my_paint->gui.color_selector.selected_color, NULL);
     }
     display_popup(my_paint);
+    if (my_paint->tools.actual_tools == 4)
+        sfRenderWindow_drawRectangleShape(WINDOW, SELECT_RECT, NULL);
     sfRenderWindow_display(WINDOW);
 }
 
