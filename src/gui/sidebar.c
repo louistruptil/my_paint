@@ -26,10 +26,10 @@ static int set_circle(my_paint_t *my_paint)
 
 static int set_size(my_paint_t *my_paint)
 {
-    if (my_paint->window.display_popup == 0)
-        my_paint->window.display_popup = 1;
+    if (my_paint->window.popup_size.display_popup == 0)
+        my_paint->window.popup_size.display_popup = 1;
     else
-        my_paint->window.display_popup = 0;
+        my_paint->window.popup_size.display_popup = 0;
 }
 
 static void btn_pen_two(my_paint_t *my_paint)

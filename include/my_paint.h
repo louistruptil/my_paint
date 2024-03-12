@@ -91,15 +91,19 @@ typedef struct canva_s {
     sfVector2i curr_mouse_pos;
 } canva_t;
 
+typedef struct popup_size_s {
+    int display_popup;
+    sfRectangleShape *popup;
+    sfText *popup_text;
+    char *popup_text_str;
+} popup_size_t;
+
 typedef struct window_s {
     sfRenderWindow *window;
     sfVideoMode mode;
     sfEvent event;
     sfView *view;
-    int display_popup;
-    sfRectangleShape *popup;
-    sfText *popup_text;
-    char *popup_text_str;
+    popup_size_t popup_size;
 } window_t;
 
 typedef struct draw_params_s {
