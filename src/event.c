@@ -108,6 +108,7 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
         button_loop(event, my_paint);
         dropdown_loop(event, my_paint);
         do_select_action(my_paint, event);
+        paste(my_paint, event);
         popup_gestion(my_paint, event);
     }
 }

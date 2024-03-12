@@ -7,10 +7,10 @@
 
 #include "my_paint.h"
 
-static void adjust_selection_coordinates(selection_t *selection,
-    sfVector2u windowSize)
+void adjust_selection_coordinates(selection_t *selection,
+    sfVector2u window_size)
 {
-    sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
+    sfVector2f scale = {1920.0f / window_size.x, 1080.0f / window_size.y};
 
     selection->pos.x *= scale.x;
     selection->pos.y *= scale.y;
@@ -68,6 +68,7 @@ static void selection_tool_part_two(my_paint_t *my_paint,
     sfRectangleShape_setSize(my_paint->tools.selection.rect,
         my_paint->tools.selection.size);
     delete_selection(my_paint, event);
+    copy_selection(my_paint, event);
 }
 
 void selection_tool(my_paint_t *my_paint, sfEvent event)
