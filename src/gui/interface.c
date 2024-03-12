@@ -120,6 +120,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     btn_color_palette(my_paint);
     btn_zoom(my_paint);
     btn_dezoom(my_paint);
+    init_selection_tool(my_paint);
 }
 
 int create_interface(my_paint_t *my_paint)

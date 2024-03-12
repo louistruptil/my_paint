@@ -68,6 +68,8 @@ void do_select_action(my_paint_t *my_paint, sfEvent event)
         color_picker(my_paint, event);
     if (my_paint->tools.actual_tools == 3)
         color_bucket(my_paint, event);
+    if (my_paint->tools.actual_tools == 4)
+        selection_tool(my_paint, event);
 }
 
 void write_for_popup(my_paint_t *my_paint, sfEvent event)
