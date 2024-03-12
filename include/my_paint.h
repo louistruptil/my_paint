@@ -245,5 +245,7 @@ void adjust_selection_coordinates(selection_t *selection,
     sfVector2u windowSize);
 void copy_selection(my_paint_t *my_paint, sfEvent event);
 void paste(my_paint_t *my_paint, sfEvent event);
+void delete_selection_from_canvas(my_paint_t *my_paint,
+    selection_t select);
 
 #endif //MY_PAINT_MY_PAINT_H

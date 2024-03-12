@@ -75,4 +75,11 @@ void copy_selection(my_paint_t *my_paint, sfEvent event)
         adjust_selection_coordinates(&selection, window_size);
         copy_selection_from_canvas(my_paint, selection);
     }
+    if (event.type == sfEvtKeyPressed && event.key.code == sfKeyX &&
+        (sfKeyboard_isKeyPressed(sfKeyLControl) ||
+        sfKeyboard_isKeyPressed(sfKeyRControl))) {
+        adjust_selection_coordinates(&selection, window_size);
+        copy_selection_from_canvas(my_paint, selection);
+        delete_selection_from_canvas(my_paint, selection);
+    }
 }

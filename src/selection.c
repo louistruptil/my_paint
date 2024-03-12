@@ -26,7 +26,7 @@ void adjust_selection_coordinates(selection_t *selection,
     }
 }
 
-static void delete_selection_from_canvas(my_paint_t *my_paint,
+void delete_selection_from_canvas(my_paint_t *my_paint,
     selection_t select)
 {
     int index;
