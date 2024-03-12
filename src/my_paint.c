@@ -87,7 +87,7 @@ static void init_canva(my_paint_t *my_paint)
         my_paint->canva.canva_pixels[i] = 255;
         my_paint->canva.canva_pixels[i + 1] = 255;
         my_paint->canva.canva_pixels[i + 2] = 255;
-        my_paint->canva.canva_pixels[i + 3] = 255;
+        my_paint->canva.canva_pixels[i + 3] = 0;
     }
     my_paint->canva.canva_texture = sfTexture_create(1920, 1080);
     my_paint->canva.canva_sprite = sfSprite_create();
