@@ -98,7 +98,7 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
         button_loop(event, my_paint);
         dropdown_loop(event, my_paint);
         do_select_action(my_paint, event);
-        if (my_paint->window.display_popup == 1)
+        if (my_paint->window.popup_size.display_popup == 1)
             write_for_popup(my_paint, event);
     }
 }
