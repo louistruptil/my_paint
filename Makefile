@@ -32,6 +32,7 @@ SRCS = ./src/main.c \
 	   ./src/action.c	\
 	   ./src/utils.c \
 	   ./src/fill_bucket.c \
+	   ./src/selection.c \
 	   ./src/color_picker.c \
 	   ./src/gui/open_popup.c \
 	   ./src/gui/save_popup.c \
