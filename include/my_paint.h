@@ -23,7 +23,7 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 6
+    #define BUTTON_COUNT 7
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
@@ -75,6 +75,11 @@ typedef struct gui_s {
     button_t *button[BUTTON_COUNT];
     drop_down_t *dropdown[DROPDOWN_COUNT];
     button_t *color_palette[9];
+    union color_selector {
+        sfSprite *sprite;
+        sfImage *image;
+        sfTexture *texture;
+    } color_selector;
 } gui_t;
 
 typedef struct canva_s {
@@ -116,6 +121,7 @@ typedef struct tools_s {
     int square;
     int size;
     sfVector2f canva_scale;
+    bool color_selector;
 } tools_t;
 
 typedef struct my_paint_s {

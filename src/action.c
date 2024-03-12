@@ -17,10 +17,17 @@ static int ereased_cmd(my_paint_t *my_paint, sfEvent event)
     drawing_loop(my_paint, event);
 }
 
+static void select_color_on_selector(my_paint_t *my_paint, sfEvent event)
+{
+    (void)event;
+}
+
 void do_select_action(my_paint_t *my_paint, sfEvent event)
 {
     if (!my_paint->can_draw)
         return;
+    if (my_paint->tools.color_selector)
+        select_color_on_selector(my_paint, event);
     if (my_paint->tools.actual_tools == 0)
         draw_cmd(my_paint, event);
     if (my_paint->tools.actual_tools == 1)

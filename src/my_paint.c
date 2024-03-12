@@ -145,6 +145,7 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->tools.tools[1] = my_strdup("eraser");
     my_paint->tools.canva_scale.x = 1920.0f;
     my_paint->tools.canva_scale.y = 1080.0f;
+    my_paint->tools.color_selector = false;
 }
 
 bool my_paint(void)

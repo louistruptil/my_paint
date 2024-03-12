@@ -32,6 +32,23 @@ static void select_color_action(my_paint_t *my_paint, button_t *button)
     my_paint->tools.rgba[3] = color.a;
 }
 
+static void color_selector_action(my_paint_t *my_paint, button_t *button)
+{
+    my_paint->tools.color_selector = !my_paint->tools.color_selector;
+}
+
+static void init_color_selector(my_paint_t *my_paint)
+{
+    my_paint->gui.button[6] = create_button((button_options_t) {
+        {1600 - 35, 5},
+        {32, 32},
+        sfColor_fromRGB(255, 255, 255),
+        NULL,
+        sfColor_fromRGB(255, 255, 255),
+        "assets/rgb_color.png"
+    }, color_selector_action, hover_action);
+}
+
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event)
 {
     sfVector2u windowSize;
@@ -64,6 +81,7 @@ void btn_color_palette(my_paint_t *my_paint)
             NULL,
         }, select_color_action, hover_action);
     }
+    init_color_selector(my_paint);
 }
 
 static int create_interface_buttons(my_paint_t *my_paint)
