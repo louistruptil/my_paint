@@ -58,14 +58,17 @@ void display(my_paint_t *my_paint)
     display_canva(my_paint);
     display_ui(my_paint);
     my_paint->can_draw = true;
-    for (int i = 0; i < BUTTON_COUNT; i++) {
+    for (int i = 0; i < BUTTON_COUNT; i++)
         display_button(my_paint, my_paint->gui.button[i]);
-    }
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; i++)
         display_button(my_paint, my_paint->gui.color_palette[i]);
-    }
-    for (int i = 0; i < DROPDOWN_COUNT; i++) {
+    for (int i = 0; i < DROPDOWN_COUNT; i++)
         display_dropdown(my_paint, my_paint->gui.dropdown[i]);
+    if (my_paint->tools.color_selector) {
+        sfRenderWindow_drawRectangleShape(WINDOW,
+            my_paint->gui.color_selector.rect, NULL);
+        sfRenderWindow_drawRectangleShape(WINDOW,
+            my_paint->gui.color_selector.selected_color, NULL);
     }
     display_popup(my_paint);
     sfRenderWindow_display(WINDOW);
