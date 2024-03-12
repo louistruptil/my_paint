@@ -29,6 +29,9 @@
     #define WINDOW my_paint->window.window
     #define SELECT_RECT my_paint->tools.selection.rect
 
+    #define min(a, b) ((a) < (b) ? (a) : (b))
+    #define max(a, b) ((a) > (b) ? (a) : (b))
+
 enum e_gui_state {
     NONE = 0,
     HOVER,

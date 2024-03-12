@@ -110,7 +110,32 @@ static void draw_not_pressed(my_paint_t *my_paint)
             draw_at_point_square(my_paint, x, y);
     }
 }
+static void draw_rectangle(my_paint_t *my_paint, sfEvent event)
+{
+    static sfVector2i start_point;
+    static sfVector2i end_point;
+    static sfBool is_drawing = sfFalse;
 
+    if (event.type == sfEvtMouseButtonPressed) {
+        start_point = (sfVector2i){event.mouseButton.x, event.mouseButton.y};
+        is_drawing = sfTrue;
+    }
+    if (event.type == sfEvtMouseButtonReleased && is_drawing) {
+        end_point = (sfVector2i){event.mouseButton.x, event.mouseButton.y};
+        is_drawing = sfFalse;
+
+        int left = min(start_point.x, end_point.x);
+        int right = max(start_point.x, end_point.x);
+        int top = min(start_point.y, end_point.y);
+        int bottom = max(start_point.y, end_point.y);
+
+        for (int y = top; y <= bottom; ++y) {
+            for (int x = left; x <= right; ++x) {
+                update_pixel(my_paint, x, y);
+            }
+        }
+    }
+}
 static void button_pressed(sfBool *was_mouse_pressed, my_paint_t *my_paint)
 {
     if (sfMouse_isButtonPressed(sfMouseLeft)) {
@@ -121,19 +146,23 @@ static void button_pressed(sfBool *was_mouse_pressed, my_paint_t *my_paint)
         my_paint->canva.canva_drawing = sfFalse;
 }
 
-static void drawing_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed)
+static void drawing_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed,
+    sfEvent event)
 {
-    if (my_paint->tools.square == 0){
-        draw_at_point_circle(my_paint, my_paint->canva.curr_mouse_pos.x,
-            my_paint->canva.curr_mouse_pos.y);
+    if (*was_mouse_pressed) {
+        if (my_paint->tools.square == 0) {
+            draw_at_point_circle(my_paint, my_paint->canva.curr_mouse_pos.x,
+                my_paint->canva.curr_mouse_pos.y);
+        } else if (my_paint->tools.square == 1) {
+            draw_at_point_square(my_paint, my_paint->canva.curr_mouse_pos.x,
+                my_paint->canva.curr_mouse_pos.y);
+        } else {
+            draw_rectangle(my_paint, event);
+        }
         *was_mouse_pressed = sfFalse;
-    } else if (my_paint->tools.square == 1){
-        draw_at_point_square(my_paint, my_paint->canva.curr_mouse_pos.x,
-            my_paint->canva.curr_mouse_pos.y);
-        *was_mouse_pressed = sfFalse;
-    } else
-        if_line(my_paint, was_mouse_pressed);
+    }
 }
+
 
 void drawing_loop(my_paint_t *my_paint, sfEvent event)
 {
@@ -149,7 +178,7 @@ void drawing_loop(my_paint_t *my_paint, sfEvent event)
         my_paint->canva.curr_mouse_pos.x = mousePos.x * scale.x;
         my_paint->canva.curr_mouse_pos.y = mousePos.y * scale.y;
         if (was_mouse_pressed) {
-            drawing_loop_two(my_paint, &was_mouse_pressed);
+            drawing_loop_two(my_paint, &was_mouse_pressed, event);
         } else
             draw_not_pressed(my_paint);
     }
