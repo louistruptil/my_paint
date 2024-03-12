@@ -7,6 +7,52 @@
 
 #include "my_paint.h"
 
+static void adjust_selection_coordinates(selection_t *selection,
+    sfVector2u windowSize)
+{
+    sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
+
+    selection->pos.x *= scale.x;
+    selection->pos.y *= scale.y;
+    selection->size.x *= scale.x;
+    selection->size.y *= scale.y;
+    if (selection->size.x < 0) {
+        selection->pos.x += selection->size.x;
+        selection->size.x = -selection->size.x;
+    }
+    if (selection->size.y < 0) {
+        selection->pos.y += selection->size.y;
+        selection->size.y = -selection->size.y;
+    }
+}
+
+static void delete_selection_from_canvas(my_paint_t *my_paint,
+    selection_t select)
+{
+    int index;
+
+    for (int y = select.pos.y; y < select.pos.y + select.size.y; y++) {
+        for (int x = select.pos.x; x < select.pos.x + select.size.x; x++) {
+            index = (x + y * 1920) * 4;
+            my_paint->canva.canva_pixels[index] = 0;
+            my_paint->canva.canva_pixels[index + 1] = 0;
+            my_paint->canva.canva_pixels[index + 2] = 0;
+            my_paint->canva.canva_pixels[index + 3] = 0;
+        }
+    }
+}
+
+static void delete_selection(my_paint_t *my_paint, sfEvent event)
+{
+    selection_t selection = my_paint->tools.selection;
+    sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
+
+    if (event.type == sfEvtKeyPressed && event.key.code == sfKeyDelete) {
+        adjust_selection_coordinates(&selection, window_size);
+        delete_selection_from_canvas(my_paint, selection);
+    }
+}
+
 static void selection_tool_part_two(my_paint_t *my_paint,
     sfEvent event, sfVector2i mousePos)
 {
@@ -21,6 +67,7 @@ static void selection_tool_part_two(my_paint_t *my_paint,
             sfColor_fromRGBA(25, 25, 50, 65));
     sfRectangleShape_setSize(my_paint->tools.selection.rect,
         my_paint->tools.selection.size);
+    delete_selection(my_paint, event);
 }
 
 void selection_tool(my_paint_t *my_paint, sfEvent event)
