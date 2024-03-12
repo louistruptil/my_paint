@@ -60,6 +60,8 @@ static void dropdown_loop(sfEvent event, my_paint_t *my_paint)
             my_paint->gui.dropdown[i]->is_open =
             !my_paint->gui.dropdown[i]->is_open;
         }
+        my_paint->gui.dropdown[i]->button->is_hover
+        (my_paint->gui.dropdown[i]->button, &event.mouseMove);
         if (!my_paint->gui.dropdown[i]->is_open)
             continue;
         tmp_items = my_paint->gui.dropdown[i]->items;

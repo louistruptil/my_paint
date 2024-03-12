@@ -140,7 +140,7 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->tools.square = 1;
     my_paint->tools.actual_tools = 0;
     my_paint->tools.size = 5;
-    my_paint->window.popup_text = my_strdup("");
+    my_paint->window.popup_text = (sfText *)my_strdup("");
     my_paint->tools.tools[0] = my_strdup("pen");
     my_paint->tools.tools[1] = my_strdup("eraser");
     my_paint->tools.canva_scale.x = 1920.0f;

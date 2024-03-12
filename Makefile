@@ -22,6 +22,7 @@ SRCS = ./src/main.c \
        ./src/gui/topbar.c \
        ./src/gui/btn_callback.c \
        ./src/gui/popup.c \
+       ./src/gui/zoom.c \
        ./src/event.c \
        ./src/window.c \
        ./src/my_paint.c \

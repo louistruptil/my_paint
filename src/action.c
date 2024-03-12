@@ -14,10 +14,6 @@ static int draw_cmd(my_paint_t *my_paint, sfEvent event)
 
 static int ereased_cmd(my_paint_t *my_paint, sfEvent event)
 {
-    my_paint->tools.rgba[0] = 255;
-    my_paint->tools.rgba[1] = 255;
-    my_paint->tools.rgba[2] = 255;
-    my_paint->tools.rgba[3] = 255;
     drawing_loop(my_paint, event);
 }
 

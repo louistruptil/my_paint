@@ -9,12 +9,16 @@
 
 static void update_pixel(my_paint_t *my_paint, int xi, int yj)
 {
-    int pixel_index = (yj * 1920 + xi) * 4;
+    int pixel = (yj * 1920 + xi) * 4;
 
-    my_paint->canva.canva_pixels[pixel_index] = my_paint->tools.rgba[0];
-    my_paint->canva.canva_pixels[pixel_index + 1] = my_paint->tools.rgba[1];
-    my_paint->canva.canva_pixels[pixel_index + 2] = my_paint->tools.rgba[2];
-    my_paint->canva.canva_pixels[pixel_index + 3] = my_paint->tools.rgba[3];
+    my_paint->canva.canva_pixels[pixel] = my_paint->tools.actual_tools == 1 ?
+        255 : my_paint->tools.rgba[0];
+    my_paint->canva.canva_pixels[pixel + 1] = my_paint->tools.actual_tools == 1
+    ? 255 : my_paint->tools.rgba[1];
+    my_paint->canva.canva_pixels[pixel + 2] = my_paint->tools.actual_tools == 1
+    ? 255 : my_paint->tools.rgba[2];
+    my_paint->canva.canva_pixels[pixel + 3] = my_paint->tools.actual_tools == 1
+    ? 255 : my_paint->tools.rgba[3];
     if (xi < my_paint->draw_params.min_x)
         my_paint->draw_params.min_x = xi;
     if (xi > my_paint->draw_params.max_x)

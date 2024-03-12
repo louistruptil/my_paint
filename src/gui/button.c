@@ -87,7 +87,8 @@ bool is_button_hover(button_t *button, sfMouseMoveEvent *event)
 
     if (is_hover && button->state != PRESSED) {
         button->state = HOVER;
-        button->hover(button);
+        if (button->hover)
+            button->hover(button);
     } else
         button->state = button->state == PRESSED ? PRESSED : NONE;
     return is_hover ? true : false;
@@ -124,7 +125,8 @@ static void handle_button_state(my_paint_t *my_paint, button_t *button)
         my_paint->can_draw = false;
     }
     if (button->state == HOVER) {
-        button->hover(button);
+        if (button->hover)
+            button->hover(button);
         sfRectangleShape_setOutlineThickness(button->rect, 2);
     } else {
         if (button->options.color.a != 0)

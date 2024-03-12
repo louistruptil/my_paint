@@ -5,6 +5,8 @@
 ** dropdown.c
 */
 
+#include <stdio.h>
+
 #include "my_paint.h"
 
 drop_down_t *create_dropdown(button_options_t options)
