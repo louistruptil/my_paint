@@ -54,16 +54,16 @@ static void cleanup_popup(my_paint_t *my_paint)
     free(my_paint->window.popup_size.popup_text_str);
 }
 
-int create_popup(my_paint_t *my_paint)
-{
-    my_paint->window.popup_size.display_popup = 0;
-    initialize_popup(my_paint);
-    sfText_setString(my_paint->window.popup_size.popup_text, "");
-    my_paint->window.popup_size.popup_text_str = malloc(sizeof(char) * 100);
-    if (my_paint->window.popup_size.popup_text_str == NULL) {
-        cleanup_popup(my_paint);
-        return 0;
-    }
-    my_paint->window.popup_size.popup_text_str[0] = '\0';
-    return 1;
-}
+// int create_popup(my_paint_t *my_paint)
+// {
+//     my_paint->window.popup_size.display_popup = 0;
+//     initialize_popup(my_paint);
+//     sfText_setString(my_paint->window.popup_size.popup_text, "");
+//     my_paint->window.popup_size.popup_text_str = malloc(sizeof(char) * 100);
+//     if (my_paint->window.popup_size.popup_text_str == NULL) {
+//         cleanup_popup(my_paint);
+//         return 0;
+//     }
+//     my_paint->window.popup_size.popup_text_str[0] = '\0';
+//     return 1;
+// }
