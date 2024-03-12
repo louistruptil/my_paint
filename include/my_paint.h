@@ -23,7 +23,7 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 5
+    #define BUTTON_COUNT 6
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window

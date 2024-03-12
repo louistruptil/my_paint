@@ -126,7 +126,7 @@ void btn_zoom(my_paint_t *my_paint)
 
 void btn_dezoom(my_paint_t *my_paint)
 {
-    my_paint->gui.button[3] = create_button((button_options_t) {
+    my_paint->gui.button[5] = create_button((button_options_t) {
         {20, 340},
         {32, 32},
         sfColor_fromRGB(255, 255, 255),
