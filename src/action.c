@@ -28,9 +28,6 @@ static void select_color_on_selector_two(my_paint_t *my_paint,
         my_paint->tools.rgba[2] = color.b;
         my_paint->tools.rgba[3] = color.a;
     }
-    sfRectangleShape_setFillColor(my_paint->gui.color_selector.selected_color,
-    sfColor_fromRGBA(my_paint->tools.rgba[0], my_paint->tools.rgba[1],
-    my_paint->tools.rgba[2], my_paint->tools.rgba[3]));
 }
 
 static void select_color_on_selector(my_paint_t *my_paint, sfEvent event)
@@ -42,6 +39,9 @@ static void select_color_on_selector(my_paint_t *my_paint, sfEvent event)
 
     sfRectangleShape_setPosition(my_paint->gui.color_selector.rect,
         selectorPos);
+    sfRectangleShape_setFillColor(my_paint->gui.color_selector.selected_color,
+    sfColor_fromRGBA(my_paint->tools.rgba[0], my_paint->tools.rgba[1],
+    my_paint->tools.rgba[2], my_paint->tools.rgba[3]));
     if (mousePos.x < windowSize.x - 355 || mousePos.x > windowSize.x - 55)
         return;
     mousePos.x = (mousePos.x - (windowSize.x - 355)) * 1000 / 300;
