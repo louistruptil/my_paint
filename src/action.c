@@ -45,9 +45,9 @@ static void select_color_on_selector(my_paint_t *my_paint, sfEvent event)
     if (mousePos.x < windowSize.x - 355 || mousePos.x > windowSize.x - 55)
         return;
     mousePos.x = (mousePos.x - (windowSize.x - 355)) * 1000 / 300;
-    mousePos.y = (mousePos.y - 45) * 981 / 300;
+    mousePos.y = (mousePos.y - 45) * 980 / 300;
     if (mousePos.x < 0 || mousePos.x > 1920 || mousePos.y < 0 ||
-        mousePos.y > 1080)
+        mousePos.y > 980)
         return;
     select_color_on_selector_two(my_paint, mousePos, color);
 }
