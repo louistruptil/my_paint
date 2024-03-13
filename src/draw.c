@@ -139,6 +139,9 @@ static void drawing_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed,
         if (my_paint->tools.square == 3) {
             draw_rectangle(my_paint, event, WINDOW);
         }
+        if (my_paint->tools.square == 4) {
+            draw_circle(my_paint, event, WINDOW);
+        }
         *was_mouse_pressed = sfFalse;
     }
 }

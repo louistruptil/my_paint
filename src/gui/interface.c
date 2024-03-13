@@ -129,6 +129,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     init_selection_tool(my_paint);
     btn_line(my_paint);
     btn_recta(my_paint);
+    btn_cir(my_paint);
 }
 
 int create_interface(my_paint_t *my_paint)
