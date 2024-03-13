@@ -16,12 +16,12 @@ static void line_act(my_paint_t *my_paint)
 void btn_line(my_paint_t *my_paint)
 {
     my_paint->gui.button[8] = create_button((button_options_t) {
-        {20, 450},
+        {20, 615},
         {32, 32},
         sfColor_fromRGB(255, 255, 255),
         NULL,
         sfColor_fromRGB(255, 255, 255),
-        "assets/line.png"
+        "assets/shape.png"
     }, line_act, NULL);
 }
 

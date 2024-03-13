@@ -133,15 +133,14 @@ static void drawing_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed,
             draw_at_point_square(my_paint, my_paint->canva.curr_mouse_pos.x,
                 my_paint->canva.curr_mouse_pos.y);
         }
-        if (my_paint->tools.square == 2){
+        if (my_paint->tools.square == 2)
             if_line(my_paint, was_mouse_pressed);
-        }
-        if (my_paint->tools.square == 3) {
+        if (my_paint->tools.square == 3)
             draw_rectangle(my_paint, event, WINDOW);
-        }
-        if (my_paint->tools.square == 4) {
+        if (my_paint->tools.square == 4)
             draw_circle(my_paint, event, WINDOW);
-        }
+        if (my_paint->tools.square == 5)
+            draw_sim_line(my_paint, event, WINDOW);
         *was_mouse_pressed = sfFalse;
     }
 }

@@ -23,7 +23,7 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 11
+    #define BUTTON_COUNT 12
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
@@ -247,6 +247,9 @@ void write_for_popupopen(my_paint_t *my_paint, sfEvent event);
 void write_for_popupsave(my_paint_t *my_paint, sfEvent event);
 void btn_recta(my_paint_t *my_paint);
 void btn_cir(my_paint_t *my_paint);
+void btn_lin(my_paint_t *my_paint);
+void draw_sim_line(my_paint_t *my_paint, sfEvent event,
+    sfRenderWindow* window);
 
 bool init_selection_tool(my_paint_t *my_paint);
 void selection_tool(my_paint_t *my_paint, sfEvent event);

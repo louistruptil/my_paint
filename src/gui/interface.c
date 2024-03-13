@@ -130,6 +130,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     btn_line(my_paint);
     btn_recta(my_paint);
     btn_cir(my_paint);
+    btn_lin(my_paint);
 }
 
 int create_interface(my_paint_t *my_paint)

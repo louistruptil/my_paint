@@ -42,6 +42,7 @@ SRCS = ./src/main.c \
 	   ./src/line.c \
 	   ./src/rectangle.c \
 	   ./src/circle.c \
+	   ./src/simpleline.c
 
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj
