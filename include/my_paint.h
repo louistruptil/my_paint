@@ -176,6 +176,37 @@ typedef struct my_paint_s {
     bool can_draw;
 } my_paint_t;
 
+enum e_assets_type {
+    IMAGE,
+    FONT,
+};
+
+typedef struct assets_s {
+    char *path;
+    enum e_assets_type type;
+} assets_t;
+
+static const assets_t ASSETS[] = {
+    {"assets/bucket.png", IMAGE},
+    {"assets/circle.png", IMAGE},
+    {"assets/circle_drow.png", IMAGE},
+    {"assets/color_picker.png", IMAGE},
+    {"assets/color_selector.jpg", IMAGE},
+    {"assets/dezoomer.png", IMAGE},
+    {"assets/eraser.png", IMAGE},
+    {"assets/font.ttf", FONT},
+    {"assets/img.png", IMAGE},
+    {"assets/line.png", IMAGE},
+    {"assets/pen.png", IMAGE},
+    {"assets/rectangle.png", IMAGE},
+    {"assets/rgb_color.png", IMAGE},
+    {"assets/selection.png", IMAGE},
+    {"assets/shape.png", IMAGE},
+    {"assets/square.png", IMAGE},
+    {"assets/zoom.png", IMAGE},
+    {NULL, 0}
+};
+
 bool my_paint(void);
 
 window_t create_window(int width, int height, char *title);
@@ -259,5 +290,6 @@ void copy_selection(my_paint_t *my_paint, sfEvent event);
 void paste(my_paint_t *my_paint, sfEvent event);
 void delete_selection_from_canvas(my_paint_t *my_paint,
     selection_t select);
+bool error_handling(my_paint_t *my_paint);
 
 #endif //MY_PAINT_MY_PAINT_H

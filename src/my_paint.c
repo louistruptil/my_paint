@@ -125,6 +125,8 @@ bool my_paint(void)
 {
     my_paint_t *my_paint = malloc(sizeof(my_paint_t));
 
+    if (!error_handling(my_paint))
+        return false;
     my_paint->window = create_window(WIN_WIDTH,
         WIN_HEIGHT, WIN_TITLE);
     my_paint->can_draw = true;
