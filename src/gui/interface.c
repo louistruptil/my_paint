@@ -8,14 +8,6 @@
 #include <stdio.h>
 #include "my_paint.h"
 
-void save_canva(my_paint_t *my_paint, button_t *button)
-{
-    if (my_paint->window.popup_save.display_popup == 0)
-        my_paint->window.popup_save.display_popup = 1;
-    else
-        my_paint->window.popup_save.display_popup = 0;
-}
-
 static void hover_action(button_t *button)
 {
     (void)button;
@@ -110,6 +102,16 @@ void btn_color_palette(my_paint_t *my_paint)
     init_color_selector(my_paint);
 }
 
+static int btn_2(my_paint_t *my_paint)
+{
+    btn_line(my_paint);
+    btn_recta(my_paint);
+    btn_cir(my_paint);
+    btn_lin(my_paint);
+    btn_undo(my_paint);
+    btn_redo(my_paint);
+}
+
 static int create_interface_buttons(my_paint_t *my_paint)
 {
     btn_file(my_paint);
@@ -127,10 +129,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     create_popup_open(my_paint);
     create_popup_save(my_paint);
     init_selection_tool(my_paint);
-    btn_line(my_paint);
-    btn_recta(my_paint);
-    btn_cir(my_paint);
-    btn_lin(my_paint);
+    btn_2(my_paint);
 }
 
 int create_interface(my_paint_t *my_paint)

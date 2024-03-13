@@ -7,6 +7,14 @@
 
 #include "my_paint.h"
 
+void save_canva(my_paint_t *my_paint, button_t *button)
+{
+    if (my_paint->window.popup_save.display_popup == 0)
+        my_paint->window.popup_save.display_popup = 1;
+    else
+        my_paint->window.popup_save.display_popup = 0;
+}
+
 static sfRectangleShape *create_popup_rectangle(sfVector2f size,
     sfVector2f position, sfColor color)
 {
@@ -34,17 +42,23 @@ static void initialize_popup(my_paint_t *my_paint)
 {
     sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
     sfVector2f popup_size = {300, 200};
-    sfVector2f popupPosition = {window_size.x / 2.0f - popup_size.x / 2.0f,
+    sfVector2f popup_position = {window_size.x / 2.0f - popup_size.x / 2.0f,
         window_size.y / 2.0f - popup_size.y / 2.0f};
     sfColor color = sfColor_fromRGB(85, 98, 120);
     sfFont *font = sfFont_createFromFile("assets/font.ttf");
-    sfVector2f text_position = {popupPosition.x + (popup_size.x - 200) / 2,
-        popupPosition.y + (popup_size.y - 24) / 2};
+    sfVector2f text_position = {popup_position.x + (popup_size.x - 200) / 2,
+        popup_position.y + (popup_size.y - 24) / 2};
+    sfVector2f text_position2 = {popup_position.x + popup_size.x / 2,
+        popup_position.y + popup_size.y / 4};
 
     my_paint->window.popup_save.popup = create_popup_rectangle(popup_size,
-        popupPosition, color);
+        popup_position, color);
     my_paint->window.popup_save.popup_text = create_popup_text(text_position,
     font, 24, sfWhite);
+    my_paint->window.popup_save.popup_expl = create_popup_text(text_position2,
+    font, 18, sfWhite);
+    sfText_setString(my_paint->window.popup_save.popup_expl,
+        "Enter the name of the file and press enter");
 }
 
 static void cleanup_popup(my_paint_t *my_paint)
@@ -71,8 +85,19 @@ int create_popup_save(my_paint_t *my_paint)
 int save_files(my_paint_t *my_paint, sfEvent event)
 {
     sfImage *image = sfTexture_copyToImage(my_paint->canva.canva_texture);
+    char *filename = my_paint->window.popup_save.popup_text_str;
+    char *new_filename;
 
-    sfImage_saveToFile(image, my_paint->window.popup_save.popup_text_str);
+    if (my_strchr(filename, '.') == NULL) {
+        new_filename = malloc(strlen(filename) + 5);
+        if (new_filename == NULL) {
+            return -1;
+        }
+        my_strcpy(new_filename, filename);
+        my_strcat(new_filename, ".jpg");
+        filename = new_filename;
+    }
+    sfImage_saveToFile(image, filename);
     sfImage_destroy(image);
     my_paint->window.popup_save.popup_text_str[0] = '\0';
     my_paint->window.popup_save.display_popup = 0;
