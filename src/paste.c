@@ -5,6 +5,8 @@
 ** paste.c
 */
 
+#include <stdio.h>
+
 #include "my_paint.h"
 
 static void calculate_copy_area(my_paint_t *my_paint, int *startPixelX,
@@ -28,6 +30,8 @@ static void copy_pixel(my_paint_t *my_paint, int x, int y,
     int copy_index = ((y - startPixel.y) * my_paint->tools.copy.size.x +
         (x - startPixel.x)) * 4;
 
+    if (x < 0 || y < 0 || x >= 1920 || y >= 1080)
+        return;
     my_paint->canva.canva_pixels[pixel] =
         my_paint->tools.copy.canva[copy_index];
     my_paint->canva.canva_pixels[pixel + 1] =
