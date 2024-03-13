@@ -8,24 +8,24 @@
 #include <stdio.h>
 #include "my_paint.h"
 
-static void update_popup_position(my_paint_t *my_paint, sfVector2u windowSize)
+static void update_popup_position(my_paint_t *my_paint, sfVector2u window_size)
 {
-    sfVector2f popupSize = {windowSize.x * 0.3f, windowSize.y * 0.3f};
-    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f,
-        windowSize.y / 2.0f - popupSize.y / 2.0f};
-    sfFloatRect textRect;
-    sfVector2f textPosition;
+    sfVector2f popup_size = {window_size.x * 0.3f, window_size.y * 0.3f};
+    sfVector2f popup_position = {window_size.x / 2.0f - popup_size.x / 2.0f,
+        window_size.y / 2.0f - popup_size.y / 2.0f};
+    sfFloatRect text_rect;
+    sfVector2f text_position;
 
-    sfRectangleShape_setSize(my_paint->window.popup_size.popup, popupSize);
+    sfRectangleShape_setSize(my_paint->window.popup_size.popup, popup_size);
     sfRectangleShape_setPosition(my_paint->window.popup_size.popup,
-    popupPosition);
+    popup_position);
     sfText_setCharacterSize(my_paint->window.popup_size.popup_text,
-        popupSize.y * 0.1f);
-    textRect = sfText_getLocalBounds(my_paint->window.popup_size.popup_text);
-    textPosition = (sfVector2f){popupPosition.x +
-        (popupSize.x - textRect.width) / 2 - textRect.left, popupPosition.y
-        + (popupSize.y - textRect.height) / 2 - textRect.top};
-    sfText_setPosition(my_paint->window.popup_size.popup_text, textPosition);
+        popup_size.y * 0.1f);
+    text_rect = sfText_getLocalBounds(my_paint->window.popup_size.popup_text);
+    text_position = (sfVector2f){popup_position.x +
+        (popup_size.x - text_rect.width) / 2 - text_rect.left, popup_position.y
+        + (popup_size.y - text_rect.height) / 2 - text_rect.top};
+    sfText_setPosition(my_paint->window.popup_size.popup_text, text_position);
 }
 
 static void draw_popup(my_paint_t *my_paint)
@@ -37,24 +37,24 @@ static void draw_popup(my_paint_t *my_paint)
 }
 
 static void update_popup_position_open(my_paint_t *my_paint,
-    sfVector2u windowSize)
+    sfVector2u window_size)
 {
-    sfVector2f popupSize = {windowSize.x * 0.3f, windowSize.y * 0.3f};
-    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f,
-        windowSize.y / 2.0f - popupSize.y / 2.0f};
-    sfFloatRect textRect;
-    sfVector2f textPosition;
+    sfVector2f popup_size = {window_size.x * 0.3f, window_size.y * 0.3f};
+    sfVector2f popup_position = {window_size.x / 2.0f - popup_size.x / 2.0f,
+        window_size.y / 2.0f - popup_size.y / 2.0f};
+    sfFloatRect text_rect;
+    sfVector2f text_position;
 
-    sfRectangleShape_setSize(my_paint->window.popup_open.popup, popupSize);
+    sfRectangleShape_setSize(my_paint->window.popup_open.popup, popup_size);
     sfRectangleShape_setPosition(my_paint->window.popup_open.popup,
-    popupPosition);
+    popup_position);
     sfText_setCharacterSize(my_paint->window.popup_open.popup_text,
-        popupSize.y * 0.1f);
-    textRect = sfText_getLocalBounds(my_paint->window.popup_open.popup_text);
-    textPosition = (sfVector2f){popupPosition.x +
-        (popupSize.x - textRect.width) / 2 - textRect.left, popupPosition.y
-        + (popupSize.y - textRect.height) / 2 - textRect.top};
-    sfText_setPosition(my_paint->window.popup_open.popup_text, textPosition);
+        popup_size.y * 0.1f);
+    text_rect = sfText_getLocalBounds(my_paint->window.popup_open.popup_text);
+    text_position = (sfVector2f){popup_position.x +
+        (popup_size.x - text_rect.width) / 2 - text_rect.left, popup_position.y
+        + (popup_size.y - text_rect.height) / 2 - text_rect.top};
+    sfText_setPosition(my_paint->window.popup_open.popup_text, text_position);
 }
 
 static void draw_popup_open(my_paint_t *my_paint)
@@ -66,24 +66,24 @@ static void draw_popup_open(my_paint_t *my_paint)
 }
 
 static void update_popup_position_save(my_paint_t *my_paint,
-    sfVector2u windowSize)
+    sfVector2u window_size)
 {
-    sfVector2f popupSize = {windowSize.x * 0.3f, windowSize.y * 0.3f};
-    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f,
-        windowSize.y / 2.0f - popupSize.y / 2.0f};
-    sfFloatRect textRect;
-    sfVector2f textPosition;
+    sfVector2f popup_size = {window_size.x * 0.3f, window_size.y * 0.3f};
+    sfVector2f popup_position = {window_size.x / 2.0f - popup_size.x / 2.0f,
+        window_size.y / 2.0f - popup_size.y / 2.0f};
+    sfFloatRect text_rect;
+    sfVector2f text_position;
 
-    sfRectangleShape_setSize(my_paint->window.popup_save.popup, popupSize);
+    sfRectangleShape_setSize(my_paint->window.popup_save.popup, popup_size);
     sfRectangleShape_setPosition(my_paint->window.popup_save.popup,
-    popupPosition);
+    popup_position);
     sfText_setCharacterSize(my_paint->window.popup_save.popup_text,
-        popupSize.y * 0.1f);
-    textRect = sfText_getLocalBounds(my_paint->window.popup_save.popup_text);
-    textPosition = (sfVector2f){popupPosition.x +
-        (popupSize.x - textRect.width) / 2 - textRect.left, popupPosition.y
-        + (popupSize.y - textRect.height) / 2 - textRect.top};
-    sfText_setPosition(my_paint->window.popup_save.popup_text, textPosition);
+        popup_size.y * 0.1f);
+    text_rect = sfText_getLocalBounds(my_paint->window.popup_save.popup_text);
+    text_position = (sfVector2f){popup_position.x +
+        (popup_size.x - text_rect.width) / 2 - text_rect.left, popup_position.y
+        + (popup_size.y - text_rect.height) / 2 - text_rect.top};
+    sfText_setPosition(my_paint->window.popup_save.popup_text, text_position);
 }
 
 static void draw_popup_save(my_paint_t *my_paint)
@@ -96,18 +96,18 @@ static void draw_popup_save(my_paint_t *my_paint)
 
 void display_popup(my_paint_t *my_paint)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
+    sfVector2u window_size = sfRenderWindow_getSize(WINDOW);
 
     if (my_paint->window.popup_size.display_popup != 0) {
-        update_popup_position(my_paint, windowSize);
+        update_popup_position(my_paint, window_size);
         draw_popup(my_paint);
     }
     if (my_paint->window.popup_open.display_popup != 0) {
-        update_popup_position_open(my_paint, windowSize);
+        update_popup_position_open(my_paint, window_size);
         draw_popup_open(my_paint);
     }
     if (my_paint->window.popup_save.display_popup != 0) {
-        update_popup_position_save(my_paint, windowSize);
+        update_popup_position_save(my_paint, window_size);
         draw_popup_save(my_paint);
     }
 }

@@ -45,11 +45,11 @@ void draw_rectangle(my_paint_t *my_paint, sfEvent event,
     static sfVector2i start_point;
     static sfVector2i end_point;
     static sfBool is_first_click = sfTrue;
-    sfVector2i pixelPos;
+    sfVector2i pixel_pos;
 
     if (event.type == sfEvtMouseButtonPressed) {
-        pixelPos.x = event.mouseButton.x;
-        pixelPos.y = event.mouseButton.y;
+        pixel_pos.x = event.mouseButton.x;
+        pixel_pos.y = event.mouseButton.y;
         if (is_first_click) {
             start_point = my_paint->canva.curr_mouse_pos;
             is_first_click = sfFalse;

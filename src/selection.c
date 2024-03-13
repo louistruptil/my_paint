@@ -54,13 +54,13 @@ static void delete_selection(my_paint_t *my_paint, sfEvent event)
 }
 
 static void selection_tool_part_two(my_paint_t *my_paint,
-    sfEvent event, sfVector2i mousePos)
+    sfEvent event, sfVector2i mouse_pos)
 {
     if (sfMouse_isButtonPressed(sfMouseLeft)) {
         my_paint->tools.selection.size.x =
-            mousePos.x - my_paint->tools.selection.pos.x;
+            mouse_pos.x - my_paint->tools.selection.pos.x;
         my_paint->tools.selection.size.y =
-            mousePos.y - my_paint->tools.selection.pos.y;
+            mouse_pos.y - my_paint->tools.selection.pos.y;
     }
     if (event.type == sfEvtMouseButtonReleased)
         sfRectangleShape_setFillColor(my_paint->tools.selection.rect,
@@ -73,10 +73,10 @@ static void selection_tool_part_two(my_paint_t *my_paint,
 
 void selection_tool(my_paint_t *my_paint, sfEvent event)
 {
-    sfVector2i mousePos = sfMouse_getPositionRenderWindow(WINDOW);
+    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(WINDOW);
 
     if (event.type == sfEvtMouseButtonPressed) {
-        my_paint->tools.selection.pos = mousePos;
+        my_paint->tools.selection.pos = mouse_pos;
         sfRectangleShape_setSize(my_paint->tools.selection.rect,
             (sfVector2f){0, 0});
         sfRectangleShape_setPosition(my_paint->tools.selection.rect,
@@ -85,7 +85,7 @@ void selection_tool(my_paint_t *my_paint, sfEvent event)
         sfRectangleShape_setFillColor(my_paint->tools.selection.rect,
             sfColor_fromRGBA(175, 175, 175, 100));
     }
-    selection_tool_part_two(my_paint, event, mousePos);
+    selection_tool_part_two(my_paint, event, mouse_pos);
 }
 
 static void tool_eq_selection(my_paint_t *my_paint, button_t *button)

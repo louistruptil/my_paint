@@ -9,26 +9,26 @@
 
 void calculate_window_scale(my_paint_t *my_paint, sfVector2f *scale)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
+    sfVector2u window_size = sfRenderWindow_getSize(WINDOW);
 
-    scale->x = windowSize.x / 1920.0f;
-    scale->y = windowSize.y / 1080.0f;
+    scale->x = window_size.x / 1920.0f;
+    scale->y = window_size.y / 1080.0f;
 }
 
-void update_button_size(sfRectangleShape *rect, sfVector2f *buttonSize,
+void update_button_size(sfRectangleShape *rect, sfVector2f *button_size,
     sfVector2f scale, sfVector2f size)
 {
-    buttonSize->x = size.x * scale.x;
-    buttonSize->y = size.y * scale.y;
-    sfRectangleShape_setSize(rect, *buttonSize);
+    button_size->x = size.x * scale.x;
+    button_size->y = size.y * scale.y;
+    sfRectangleShape_setSize(rect, *button_size);
 }
 
 void update_button_position(sfRectangleShape *rect,
-    sfVector2f *buttonPos, sfVector2f scale, sfVector2f pos)
+    sfVector2f *button_pos, sfVector2f scale, sfVector2f pos)
 {
-    buttonPos->x = pos.x * scale.x;
-    buttonPos->y = pos.y * scale.y;
-    sfRectangleShape_setPosition(rect, *buttonPos);
+    button_pos->x = pos.x * scale.x;
+    button_pos->y = pos.y * scale.y;
+    sfRectangleShape_setPosition(rect, *button_pos);
 }
 
 void destroy_button(button_t *button)

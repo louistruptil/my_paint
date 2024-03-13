@@ -9,12 +9,12 @@
 
 int color_picker(my_paint_t *my_paint, sfEvent event)
 {
-    sfVector2i mousePos =
+    sfVector2i mouse_pos =
         sfMouse_getPositionRenderWindow(my_paint->window.window);
-    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
-    int mouseX = mousePos.x * scale.x;
-    int mouseY = mousePos.y * scale.y;
+    sfVector2u winodw_pos = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f scale = {1920.0f / winodw_pos.x, 1080.0f / winodw_pos.y};
+    int mouseX = mouse_pos.x * scale.x;
+    int mouseY = mouse_pos.y * scale.y;
     int pixel = (mouseY * 1920 + mouseX) * 4;
 
     if (event.type == sfEvtMouseButtonPressed &&

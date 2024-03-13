@@ -148,16 +148,16 @@ static void drawing_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed,
 void drawing_loop(my_paint_t *my_paint, sfEvent event)
 {
     static sfBool was_mouse_pressed = sfFalse;
-    sfVector2i mousePos =
+    sfVector2i mouse_pos =
         sfMouse_getPositionRenderWindow(my_paint->window.window);
-    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2f scale = {1920.0f / windowSize.x, 1080.0f / windowSize.y};
+    sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f scale = {1920.0f / window_size.x, 1080.0f / window_size.y};
 
     button_pressed(&was_mouse_pressed, my_paint);
     if (my_paint->canva.canva_drawing) {
         my_paint->canva.prev_mouse_pos = my_paint->canva.curr_mouse_pos;
-        my_paint->canva.curr_mouse_pos.x = mousePos.x * scale.x;
-        my_paint->canva.curr_mouse_pos.y = mousePos.y * scale.y;
+        my_paint->canva.curr_mouse_pos.x = mouse_pos.x * scale.x;
+        my_paint->canva.curr_mouse_pos.y = mouse_pos.y * scale.y;
         if (was_mouse_pressed) {
             drawing_loop_two(my_paint, &was_mouse_pressed, event);
         } else

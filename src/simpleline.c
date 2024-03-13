@@ -33,16 +33,16 @@ static sfVector2i get_world_pos(my_paint_t *my_paint, sfRenderWindow* window)
 }
 
 static void update_start_point(sfVector2i *start_point,
-    sfVector2i worldPos, sfBool *is_first_click)
+    sfVector2i world_pos, sfBool *is_first_click)
 {
-    *start_point = (sfVector2i){worldPos.x, worldPos.y};
+    *start_point = (sfVector2i){world_pos.x, world_pos.y};
     *is_first_click = sfFalse;
 }
 
 static void update_end_point(sfVector2i *end_point,
-    sfVector2i worldPos, sfBool *is_first_click)
+    sfVector2i world_pos, sfBool *is_first_click)
 {
-    *end_point = (sfVector2i){worldPos.x, worldPos.y};
+    *end_point = (sfVector2i){world_pos.x, world_pos.y};
     *is_first_click = sfTrue;
 }
 
@@ -76,14 +76,14 @@ void draw_sim_line(my_paint_t *my_paint, sfEvent event, sfRenderWindow* window)
     static sfVector2i start_point;
     static sfVector2i end_point;
     static sfBool is_first_click = sfTrue;
-    sfVector2i worldPos;
+    sfVector2i world_pos;
 
     if (event.type == sfEvtMouseButtonPressed) {
-        worldPos = get_world_pos(my_paint, window);
+        world_pos = get_world_pos(my_paint, window);
         if (is_first_click) {
-            update_start_point(&start_point, worldPos, &is_first_click);
+            update_start_point(&start_point, world_pos, &is_first_click);
         } else {
-            update_end_point(&end_point, worldPos, &is_first_click);
+            update_end_point(&end_point, world_pos, &is_first_click);
             calculate_line(my_paint, start_point, end_point);
         }
     }

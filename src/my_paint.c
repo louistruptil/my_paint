@@ -22,13 +22,13 @@ void destroy(my_paint_t *my_paint)
 
 void display_canva(my_paint_t *my_paint)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2f scale = {(float)windowSize.x / my_paint->tools.canva_scale.x,
-    (float)windowSize.y / my_paint->tools.canva_scale.y};
-    sfVector2f spritePos = {windowSize.x / 2.0f, windowSize.y / 2.0f};
+    sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f scale = {(float)window_size.x / my_paint->tools.canva_scale.x,
+    (float)window_size.y / my_paint->tools.canva_scale.y};
+    sfVector2f sprite_pos = {window_size.x / 2.0f, window_size.y / 2.0f};
 
     sfSprite_setScale(my_paint->canva.canva_sprite, scale);
-    sfSprite_setPosition(my_paint->canva.canva_sprite, spritePos);
+    sfSprite_setPosition(my_paint->canva.canva_sprite, sprite_pos);
     sfTexture_updateFromPixels(my_paint->canva.canva_texture,
     my_paint->canva.canva_pixels, 1920, 1080, 0, 0);
     sfRenderWindow_drawSprite(my_paint->window.window,
@@ -37,20 +37,20 @@ void display_canva(my_paint_t *my_paint)
 
 static void display_ui(my_paint_t *my_paint)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
-    sfVector2f leftBarSize;
-    sfVector2f leftBarPos;
-    sfVector2f topBarSize;
-    sfVector2f topBarPos;
+    sfVector2u window_size = sfRenderWindow_getSize(WINDOW);
+    sfVector2f left_bar_size;
+    sfVector2f left_bar_pos;
+    sfVector2f top_bar_size;
+    sfVector2f top_bar_pos;
 
-    leftBarSize = (sfVector2f){windowSize.x * 0.04, windowSize.y};
-    sfRectangleShape_setSize(my_paint->interface.left_bar, leftBarSize);
-    leftBarPos = (sfVector2f){0, 0};
-    sfRectangleShape_setPosition(my_paint->interface.left_bar, leftBarPos);
-    topBarSize = (sfVector2f){windowSize.x, windowSize.y * 0.04};
-    sfRectangleShape_setSize(my_paint->interface.top_bar, topBarSize);
-    topBarPos = (sfVector2f){0, 0};
-    sfRectangleShape_setPosition(my_paint->interface.top_bar, topBarPos);
+    left_bar_size = (sfVector2f){window_size.x * 0.04, window_size.y};
+    sfRectangleShape_setSize(my_paint->interface.left_bar, left_bar_size);
+    left_bar_pos = (sfVector2f){0, 0};
+    sfRectangleShape_setPosition(my_paint->interface.left_bar, left_bar_pos);
+    top_bar_size = (sfVector2f){window_size.x, window_size.y * 0.04};
+    sfRectangleShape_setSize(my_paint->interface.top_bar, top_bar_size);
+    top_bar_pos = (sfVector2f){0, 0};
+    sfRectangleShape_setPosition(my_paint->interface.top_bar, top_bar_pos);
     sfRenderWindow_drawRectangleShape(WINDOW,
         my_paint->interface.left_bar, NULL);
     sfRenderWindow_drawRectangleShape(WINDOW,
@@ -83,9 +83,9 @@ void display(my_paint_t *my_paint)
 
 static void init_canva(my_paint_t *my_paint)
 {
-    sfVector2f spriteOrigin;
-    sfVector2u windowSize;
-    sfVector2f spritePos;
+    sfVector2f sprite_origin;
+    sfVector2u window_size;
+    sfVector2f sprite_pos;
 
     my_paint->canva.canva_pixels = malloc(1920 * 1080 * 4);
     for (int i = 0; i < 1920 * 1080 * 4; i += 4) {
@@ -98,11 +98,11 @@ static void init_canva(my_paint_t *my_paint)
     my_paint->canva.canva_sprite = sfSprite_create();
     sfSprite_setTexture(my_paint->canva.canva_sprite,
         my_paint->canva.canva_texture, sfTrue);
-    spriteOrigin = (sfVector2f){1920 / 2.0f, 1080 / 2.0f};
-    sfSprite_setOrigin(my_paint->canva.canva_sprite, spriteOrigin);
-    windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    spritePos = (sfVector2f){windowSize.x / 2.0f, windowSize.y / 2.0f};
-    sfSprite_setPosition(my_paint->canva.canva_sprite, spritePos);
+    sprite_origin = (sfVector2f){1920 / 2.0f, 1080 / 2.0f};
+    sfSprite_setOrigin(my_paint->canva.canva_sprite, sprite_origin);
+    window_size = sfRenderWindow_getSize(my_paint->window.window);
+    sprite_pos = (sfVector2f){window_size.x / 2.0f, window_size.y / 2.0f};
+    sfSprite_setPosition(my_paint->canva.canva_sprite, sprite_pos);
 }
 
 static void init_tool_tab(my_paint_t *my_paint)

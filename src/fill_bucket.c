@@ -59,21 +59,21 @@ void flood_fill(my_paint_t *my_paint, int x, int y, sfColor new_color)
 
 void color_bucket(my_paint_t *my_paint, sfEvent event)
 {
-    sfVector2i mousePos;
-    sfVector2u windowSize;
+    sfVector2i mouse_pos;
+    sfVector2u window_size;
     sfVector2f scale;
-    int scaledMouseX;
-    int scaledMouseY;
+    int scaled_mouse_x;
+    int scaled_mouse_y;
 
     if (event.type == sfEvtMouseButtonPressed &&
         event.mouseButton.button == sfMouseLeft) {
-        mousePos = sfMouse_getPositionRenderWindow(my_paint->window.window);
-        windowSize = sfRenderWindow_getSize(my_paint->window.window);
-        scale.x = 1920.0f / windowSize.x;
-        scale.y = 1080.0f / windowSize.y;
-        scaledMouseX = mousePos.x * scale.x;
-        scaledMouseY = mousePos.y * scale.y;
-        flood_fill(my_paint, scaledMouseX, scaledMouseY,
+        mouse_pos = sfMouse_getPositionRenderWindow(my_paint->window.window);
+        window_size = sfRenderWindow_getSize(my_paint->window.window);
+        scale.x = 1920.0f / window_size.x;
+        scale.y = 1080.0f / window_size.y;
+        scaled_mouse_x = mouse_pos.x * scale.x;
+        scaled_mouse_y = mouse_pos.y * scale.y;
+        flood_fill(my_paint, scaled_mouse_x, scaled_mouse_y,
             sfColor_fromRGBA(my_paint->tools.rgba[0],
             my_paint->tools.rgba[1],
             my_paint->tools.rgba[2],

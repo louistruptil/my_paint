@@ -18,11 +18,11 @@ static int ereased_cmd(my_paint_t *my_paint, sfEvent event)
 }
 
 static void select_color_on_selector_two(my_paint_t *my_paint,
-    sfVector2i mousePos, sfColor color)
+    sfVector2i mouse_pos, sfColor color)
 {
     if (sfMouse_isButtonPressed(sfMouseLeft)) {
         color = sfImage_getPixel(my_paint->gui.color_selector.image,
-            mousePos.x, mousePos.y);
+            mouse_pos.x, mouse_pos.y);
         my_paint->tools.rgba[0] = color.r;
         my_paint->tools.rgba[1] = color.g;
         my_paint->tools.rgba[2] = color.b;
@@ -32,24 +32,24 @@ static void select_color_on_selector_two(my_paint_t *my_paint,
 
 static void select_color_on_selector(my_paint_t *my_paint, sfEvent event)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(WINDOW);
-    sfVector2f selectorPos = {(float)(windowSize.x - 355), 45};
-    sfVector2i mousePos = sfMouse_getPositionRenderWindow(WINDOW);
+    sfVector2u window_size = sfRenderWindow_getSize(WINDOW);
+    sfVector2f selector_pos = {(float)(window_size.x - 355), 45};
+    sfVector2i mouse_pos = sfMouse_getPositionRenderWindow(WINDOW);
     sfColor color;
 
     sfRectangleShape_setPosition(my_paint->gui.color_selector.rect,
-        selectorPos);
+        selector_pos);
     sfRectangleShape_setFillColor(my_paint->gui.color_selector.selected_color,
     sfColor_fromRGBA(my_paint->tools.rgba[0], my_paint->tools.rgba[1],
     my_paint->tools.rgba[2], my_paint->tools.rgba[3]));
-    if (mousePos.x < windowSize.x - 355 || mousePos.x > windowSize.x - 55)
+    if (mouse_pos.x < window_size.x - 355 || mouse_pos.x > window_size.x - 55)
         return;
-    mousePos.x = (mousePos.x - (windowSize.x - 355)) * 1000 / 300;
-    mousePos.y = (mousePos.y - 45) * 980 / 300;
-    if (mousePos.x < 0 || mousePos.x > 1920 || mousePos.y < 0 ||
-        mousePos.y > 980)
+    mouse_pos.x = (mouse_pos.x - (window_size.x - 355)) * 1000 / 300;
+    mouse_pos.y = (mouse_pos.y - 45) * 980 / 300;
+    if (mouse_pos.x < 0 || mouse_pos.x > 1920 || mouse_pos.y < 0 ||
+        mouse_pos.y > 980)
         return;
-    select_color_on_selector_two(my_paint, mousePos, color);
+    select_color_on_selector_two(my_paint, mouse_pos, color);
 }
 
 void do_select_action(my_paint_t *my_paint, sfEvent event)

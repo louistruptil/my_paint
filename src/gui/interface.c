@@ -77,17 +77,17 @@ static void init_color_selector(my_paint_t *my_paint)
 
 void handle_resize_interface(my_paint_t *my_paint, sfEvent event)
 {
-    sfVector2u windowSize;
+    sfVector2u window_size;
     sfVector2f position;
 
     if (event.type == sfEvtResized) {
-        windowSize = (sfVector2u){event.size.width, event.size.height};
+        window_size = (sfVector2u){event.size.width, event.size.height};
         sfRectangleShape_setSize(my_paint->interface.left_bar,
-            (sfVector2f){50, windowSize.y});
+            (sfVector2f){50, window_size.y});
         position = (sfVector2f){0, 0};
         sfRectangleShape_setPosition(my_paint->interface.left_bar, position);
         sfRectangleShape_setSize(my_paint->interface.top_bar,
-            (sfVector2f){windowSize.x, 35});
+            (sfVector2f){window_size.x, 35});
         sfRectangleShape_setPosition(my_paint->interface.top_bar, position);
     }
 }
@@ -135,21 +135,21 @@ static int create_interface_buttons(my_paint_t *my_paint)
 
 int create_interface(my_paint_t *my_paint)
 {
-    sfVector2u windowSize;
+    sfVector2u window_size;
     sfVector2f position;
     sfColor color;
 
     my_paint->interface.left_bar = sfRectangleShape_create();
-    windowSize = sfRenderWindow_getSize(my_paint->window.window);
+    window_size = sfRenderWindow_getSize(my_paint->window.window);
     sfRectangleShape_setSize(my_paint->interface.left_bar,
-        (sfVector2f){75, windowSize.y});
+        (sfVector2f){75, window_size.y});
     color = (sfColor){3, 6, 48, 255};
     sfRectangleShape_setFillColor(my_paint->interface.left_bar, color);
     position = (sfVector2f){0, 0};
     sfRectangleShape_setPosition(my_paint->interface.left_bar, position);
     my_paint->interface.top_bar = sfRectangleShape_create();
     sfRectangleShape_setSize(my_paint->interface.top_bar,
-        (sfVector2f){windowSize.x, 35});
+        (sfVector2f){window_size.x, 35});
     sfRectangleShape_setFillColor(my_paint->interface.top_bar, color);
     sfRectangleShape_setPosition(my_paint->interface.top_bar, position);
     create_interface_buttons(my_paint);

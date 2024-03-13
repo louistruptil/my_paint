@@ -19,12 +19,12 @@ static sfRectangleShape *create_popup_rectangle(sfVector2f size,
 }
 
 static sfText *create_popup_text(sfVector2f position, sfFont *font,
-    unsigned int characterSize, sfColor color)
+    unsigned int character_size, sfColor color)
 {
     sfText *text = sfText_create();
 
     sfText_setFont(text, font);
-    sfText_setCharacterSize(text, characterSize);
+    sfText_setCharacterSize(text, character_size);
     sfText_setColor(text, color);
     sfText_setPosition(text, position);
     return text;
@@ -32,18 +32,18 @@ static sfText *create_popup_text(sfVector2f position, sfFont *font,
 
 static void initialize_popup(my_paint_t *my_paint)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2f popupSize = {300, 200};
-    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f,
-        windowSize.y / 2.0f - popupSize.y / 2.0f};
+    sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f popup_size = {300, 200};
+    sfVector2f popupPosition = {window_size.x / 2.0f - popup_size.x / 2.0f,
+        window_size.y / 2.0f - popup_size.y / 2.0f};
     sfColor color = sfColor_fromRGB(85, 98, 120);
     sfFont *font = sfFont_createFromFile("assets/font.ttf");
-    sfVector2f textPosition = {popupPosition.x + (popupSize.x - 200) / 2,
-        popupPosition.y + (popupSize.y - 24) / 2};
+    sfVector2f text_position = {popupPosition.x + (popup_size.x - 200) / 2,
+        popupPosition.y + (popup_size.y - 24) / 2};
 
-    my_paint->window.popup_save.popup = create_popup_rectangle(popupSize,
-                                                    popupPosition, color);
-    my_paint->window.popup_save.popup_text = create_popup_text(textPosition,
+    my_paint->window.popup_save.popup = create_popup_rectangle(popup_size,
+        popupPosition, color);
+    my_paint->window.popup_save.popup_text = create_popup_text(text_position,
     font, 24, sfWhite);
 }
 

@@ -17,31 +17,31 @@ static sfSprite *create_sprite(sfImage *image)
 {
     sfTexture *texture;
     sfSprite *sprite;
-    sfVector2u imageSize;
+    sfVector2u image_size;
     sfVector2f scale;
 
     texture = sfTexture_createFromImage(image, NULL);
     sprite = sfSprite_create();
-    imageSize = sfImage_getSize(image);
-    scale.x = 1920.0f / imageSize.x;
-    scale.y = 1080.0f / imageSize.y;
+    image_size = sfImage_getSize(image);
+    scale.x = 1920.0f / image_size.x;
+    scale.y = 1080.0f / image_size.y;
     sfSprite_setScale(sprite, scale);
     sfSprite_setTexture(sprite, texture, sfTrue);
     return sprite;
 }
 
-static int cpy_tab(my_paint_t *my_paint, sfRenderTexture *renderTexture,
+static int cpy_tab(my_paint_t *my_paint, sfRenderTexture *render_texture,
     sfSprite *sprite)
 {
-    sfImage *resizedImage = sfTexture_copyToImage
-    (sfRenderTexture_getTexture(renderTexture));
-    const sfUint8 *pixels = sfImage_getPixelsPtr(resizedImage);
+    sfImage *resized_image = sfTexture_copyToImage
+    (sfRenderTexture_getTexture(render_texture));
+    const sfUint8 *pixels = sfImage_getPixelsPtr(resized_image);
 
     my_cpy(my_paint->canva.canva_pixels, pixels, 1920 * 1080 * 4);
     my_paint->window.popup_open.popup_text_str[0] = '\0';
     my_paint->window.popup_open.display_popup = 0;
-    sfImage_destroy(resizedImage);
-    sfRenderTexture_destroy(renderTexture);
+    sfImage_destroy(resized_image);
+    sfRenderTexture_destroy(render_texture);
     sfSprite_destroy(sprite);
 }
 
@@ -50,16 +50,16 @@ static int open_files(my_paint_t *my_paint, sfEvent event)
     sfImage *image = sfImage_createFromFile
     (my_paint->window.popup_open.popup_text_str);
     sfSprite *sprite;
-    sfRenderTexture * renderTexture;
+    sfRenderTexture *render_texture;
 
     if (!image)
         return 0;
     sprite = create_sprite(image);
-    renderTexture = sfRenderTexture_create(1920, 1080, sfFalse);
-    sfRenderTexture_drawSprite(renderTexture, sprite, NULL);
-    sfRenderTexture_display(renderTexture);
+    render_texture = sfRenderTexture_create(1920, 1080, sfFalse);
+    sfRenderTexture_drawSprite(render_texture, sprite, NULL);
+    sfRenderTexture_display(render_texture);
     sfImage_destroy(image);
-    cpy_tab(my_paint, renderTexture, sprite);
+    cpy_tab(my_paint, render_texture, sprite);
 }
 
 void write_for_popupopen(my_paint_t *my_paint, sfEvent event)
@@ -110,18 +110,18 @@ static sfText *create_popup_text(sfVector2f position, sfFont *font,
 
 static void initialize_popup(my_paint_t *my_paint)
 {
-    sfVector2u windowSize = sfRenderWindow_getSize(my_paint->window.window);
-    sfVector2f popupSize = {300, 200};
-    sfVector2f popupPosition = {windowSize.x / 2.0f - popupSize.x / 2.0f,
-        windowSize.y / 2.0f - popupSize.y / 2.0f};
+    sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
+    sfVector2f popup_size = {300, 200};
+    sfVector2f popup_position = {window_size.x / 2.0f - popup_size.x / 2.0f,
+        window_size.y / 2.0f - popup_size.y / 2.0f};
     sfColor color = sfColor_fromRGB(85, 98, 120);
     sfFont *font = sfFont_createFromFile("assets/font.ttf");
-    sfVector2f textPosition = {popupPosition.x + (popupSize.x - 200) / 2,
-        popupPosition.y + (popupSize.y - 24) / 2};
+    sfVector2f text_position = {popup_position.x + (popup_size.x - 200) / 2,
+        popup_position.y + (popup_size.y - 24) / 2};
 
-    my_paint->window.popup_open.popup = create_popup_rectangle(popupSize,
-                                                    popupPosition, color);
-    my_paint->window.popup_open.popup_text = create_popup_text(textPosition,
+    my_paint->window.popup_open.popup = create_popup_rectangle(popup_size,
+                                                    popup_position, color);
+    my_paint->window.popup_open.popup_text = create_popup_text(text_position,
     font, 24, sfWhite);
 }
 

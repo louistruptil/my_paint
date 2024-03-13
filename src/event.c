@@ -6,7 +6,6 @@
 */
 
 #include <stdio.h>
-
 #include "my_paint.h"
 
 static void button_loop(sfEvent event, my_paint_t *my_paint)
