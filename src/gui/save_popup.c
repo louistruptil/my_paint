@@ -7,6 +7,14 @@
 
 #include "my_paint.h"
 
+void save_canva(my_paint_t *my_paint, button_t *button)
+{
+    if (my_paint->window.popup_save.display_popup == 0)
+        my_paint->window.popup_save.display_popup = 1;
+    else
+        my_paint->window.popup_save.display_popup = 0;
+}
+
 static sfRectangleShape *create_popup_rectangle(sfVector2f size,
     sfVector2f position, sfColor color)
 {
@@ -71,8 +79,19 @@ int create_popup_save(my_paint_t *my_paint)
 int save_files(my_paint_t *my_paint, sfEvent event)
 {
     sfImage *image = sfTexture_copyToImage(my_paint->canva.canva_texture);
+    char *filename = my_paint->window.popup_save.popup_text_str;
+    char *new_filename;
 
-    sfImage_saveToFile(image, my_paint->window.popup_save.popup_text_str);
+    if (my_strchr(filename, '.') == NULL) {
+        new_filename = malloc(strlen(filename) + 5);
+        if (new_filename == NULL) {
+            return -1;
+        }
+        my_strcpy(new_filename, filename);
+        my_strcat(new_filename, ".jpg");
+        filename = new_filename;
+    }
+    sfImage_saveToFile(image, filename);
     sfImage_destroy(image);
     my_paint->window.popup_save.popup_text_str[0] = '\0';
     my_paint->window.popup_save.display_popup = 0;
