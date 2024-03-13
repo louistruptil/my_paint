@@ -44,7 +44,9 @@ SRCS = ./src/main.c \
 	   ./src/circle.c \
 	   ./src/destroy.c \
 	   ./src/simpleline.c \
-	   ./src/error_handling.c
+	   ./src/error_handling.c \
+	   ./src/undo.c \
+	   ./src/redo.c \
 
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj

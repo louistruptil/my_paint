@@ -23,7 +23,7 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 12
+    #define BUTTON_COUNT 14
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
@@ -204,6 +204,8 @@ static const assets_t ASSETS[] = {
     {"assets/shape.png", IMAGE},
     {"assets/square.png", IMAGE},
     {"assets/zoom.png", IMAGE},
+    {"assets/undo.png", IMAGE},
+    {"assets/redo.png", IMAGE},
     {NULL, 0}
 };
 
@@ -281,6 +283,8 @@ void btn_cir(my_paint_t *my_paint);
 void btn_lin(my_paint_t *my_paint);
 void draw_sim_line(my_paint_t *my_paint, sfEvent event,
     sfRenderWindow* window);
+void btn_undo(my_paint_t *my_paint);
+void btn_redo(my_paint_t *my_paint);
 
 bool init_selection_tool(my_paint_t *my_paint);
 void selection_tool(my_paint_t *my_paint, sfEvent event);
