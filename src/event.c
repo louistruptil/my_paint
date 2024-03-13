@@ -10,6 +10,8 @@
 
 static void button_loop(sfEvent event, my_paint_t *my_paint)
 {
+    if (my_paint->gui.button[10] == NULL)
+        return;
     for (int i = 0; i < BUTTON_COUNT; i++) {
         if (my_paint->gui.button[i]->is_clicked(my_paint->gui.button[i],
             &event.mouseButton))

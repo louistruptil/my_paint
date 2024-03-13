@@ -41,6 +41,14 @@ static bool create_img_button(button_options_t options, button_t *button)
     return true;
 }
 
+static void create_btn_set_value(button_options_t options,
+    void(*hover)(button_t *), button_t *button)
+{
+    button->hover = hover;
+    button->options = options;
+    button->state = NONE;
+}
+
 button_t *create_button(button_options_t options,
     void (*action)(my_paint_t *, button_t *), void (*hover)(button_t *))
 {
@@ -55,8 +63,7 @@ button_t *create_button(button_options_t options,
     button->is_clicked = is_button_clicked;
     button->is_hover = is_button_hover;
     button->action = action;
-    button->hover = hover;
-    button->options = options;
+    create_btn_set_value(options, hover, button);
     if (options.text)
         if (!create_text_button(options, button))
             return NULL;
@@ -68,23 +75,32 @@ button_t *create_button(button_options_t options,
 
 bool is_button_clicked(button_t *button, sfMouseButtonEvent *event)
 {
-    sfFloatRect rect = sfRectangleShape_getGlobalBounds(button->rect);
-    sfBool is_clicked = sfFloatRect_contains(&rect, event->x, event->y);
+    sfFloatRect rect;
+    bool is_clicked;
 
+    if (button == NULL || event == NULL || button->rect == NULL ||
+        button->state == NONE)
+        return false;
+    rect = sfRectangleShape_getGlobalBounds(button->rect);
+    is_clicked = sfFloatRect_contains(&rect, event->x, event->y);
     if (is_clicked && event->type == sfEvtMouseButtonPressed) {
         button->state = PRESSED;
         return true;
-    } else {
-        button->state = NONE;
-        return false;
     }
+    button->state = NONE;
+    return false;
 }
 
 bool is_button_hover(button_t *button, sfMouseMoveEvent *event)
 {
-    sfFloatRect rect = sfRectangleShape_getGlobalBounds(button->rect);
-    sfBool is_hover = sfFloatRect_contains(&rect, event->x, event->y);
+    sfFloatRect rect;
+    sfBool is_hover;
 
+    if (button == NULL || event == NULL || button->rect == NULL ||
+        event->type != sfEvtMouseMoved)
+        return false;
+    rect = sfRectangleShape_getGlobalBounds(button->rect);
+    is_hover = sfFloatRect_contains(&rect, event->x, event->y);
     if (is_hover && button->state != PRESSED) {
         button->state = HOVER;
         if (button->hover)
@@ -120,11 +136,13 @@ void render_button(my_paint_t *my_paint, button_t *button)
 
 static void handle_button_state(my_paint_t *my_paint, button_t *button)
 {
-    if (button->state == HOVER || button->state == PRESSED
-        || button->state == RELEASED) {
+    if (my_paint == NULL || button == NULL)
+        return;
+    if (button->state == HOVER || button->state == PRESSED ||
+        button->state == RELEASED) {
         my_paint->can_draw = false;
     }
-    if (button->state == HOVER) {
+    if (button->state && button->state == HOVER) {
         if (button->hover)
             button->hover(button);
         sfRectangleShape_setOutlineThickness(button->rect, 2);
