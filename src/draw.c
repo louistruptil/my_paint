@@ -145,6 +145,26 @@ static void drawing_loop_two(my_paint_t *my_paint, sfBool *was_mouse_pressed,
     }
 }
 
+static int undo_save(my_paint_t *my_paint)
+{
+    if (my_paint->undoredo.actual == 10) {
+        free(my_paint->undoredo.canva_pixels[0]);
+        for (int i = 0; i < 9; i++) {
+            my_paint->undoredo.canva_pixels[i] =
+            my_paint->undoredo.canva_pixels[i + 1];
+        }
+        my_paint->undoredo.canva_pixels[9] = malloc(1920 * 1080 * 4);
+        my_memcpy(my_paint->undoredo.canva_pixels[9],
+        my_paint->canva.canva_pixels, 1920 * 1080 * 4);
+    } else {
+        my_paint->undoredo.canva_pixels[my_paint->undoredo.actual] =
+        malloc(1920 * 1080 * 4);
+        my_memcpy(my_paint->undoredo.canva_pixels[my_paint->undoredo.actual],
+        my_paint->canva.canva_pixels, 1920 * 1080 * 4);
+        my_paint->undoredo.actual++;
+    }
+}
+
 void drawing_loop(my_paint_t *my_paint, sfEvent event)
 {
     static sfBool was_mouse_pressed = sfFalse;
@@ -159,6 +179,7 @@ void drawing_loop(my_paint_t *my_paint, sfEvent event)
         my_paint->canva.curr_mouse_pos.x = mouse_pos.x * scale.x;
         my_paint->canva.curr_mouse_pos.y = mouse_pos.y * scale.y;
         if (was_mouse_pressed) {
+            undo_save(my_paint);
             drawing_loop_two(my_paint, &was_mouse_pressed, event);
         } else
             draw_not_pressed(my_paint);

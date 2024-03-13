@@ -89,7 +89,7 @@ int save_files(my_paint_t *my_paint, sfEvent event)
     char *new_filename;
 
     if (my_strchr(filename, '.') == NULL) {
-        new_filename = malloc(strlen(filename) + 5);
+        new_filename = malloc(my_strlen(filename) + 5);
         if (new_filename == NULL) {
             return -1;
         }

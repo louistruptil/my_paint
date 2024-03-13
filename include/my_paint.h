@@ -169,6 +169,11 @@ typedef struct tools_s {
     copy_t copy;
 } tools_t;
 
+typedef struct undoredo_s {
+    sfUint8* canva_pixels[10];
+    int actual;
+} undoredo_t;
+
 typedef struct my_paint_s {
     window_t window;
     gui_t gui;
@@ -176,6 +181,7 @@ typedef struct my_paint_s {
     draw_params_t draw_params;
     interface_t interface;
     tools_t tools;
+    undoredo_t undoredo;
     bool can_draw;
 } my_paint_t;
 

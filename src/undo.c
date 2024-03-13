@@ -9,7 +9,14 @@
 
 static void undo_act(my_paint_t *my_paint, button_t *button)
 {
-    my_putstr("Undo\n");
+    if (my_paint->undoredo.actual > 0) {
+        my_paint->undoredo.actual--;
+        my_memcpy(my_paint->canva.canva_pixels,
+        my_paint->undoredo.canva_pixels[my_paint->undoredo.actual],
+        1920 * 1080 * 4);
+    } else {
+        my_putstr("There's nothing to undo\n");
+    }
 }
 
 void btn_undo(my_paint_t *my_paint)
