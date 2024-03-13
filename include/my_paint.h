@@ -23,14 +23,14 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 9
+    #define BUTTON_COUNT 10
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
     #define SELECT_RECT my_paint->tools.selection.rect
 
-    #define min(a, b) ((a) < (b) ? (a) : (b))
-    #define max(a, b) ((a) > (b) ? (a) : (b))
+    #define MIN(a, b) ((a) < (b) ? (a) : (b))
+    #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 enum e_gui_state {
     NONE = 0,
@@ -218,6 +218,9 @@ void update_button_size(sfRectangleShape *rect, sfVector2f *buttonSize,
 void update_button_position(sfRectangleShape *rect,
     sfVector2f *buttonPos, sfVector2f scale, sfVector2f pos);
 void draw_at_point_square(my_paint_t *my_paint, int x, int y);
+void draw_rectangle(my_paint_t *my_paint, sfEvent event,
+    sfRenderWindow* window);
+void update_pixel(my_paint_t *my_paint, int xi, int yj);
 
 void btn_pen(my_paint_t *my_paint);
 void btn_bucket(my_paint_t *my_paint);
@@ -241,6 +244,7 @@ int create_popup_open(my_paint_t *my_paint);
 int create_popup_save(my_paint_t *my_paint);
 void write_for_popupopen(my_paint_t *my_paint, sfEvent event);
 void write_for_popupsave(my_paint_t *my_paint, sfEvent event);
+void btn_recta(my_paint_t *my_paint);
 
 bool init_selection_tool(my_paint_t *my_paint);
 void selection_tool(my_paint_t *my_paint, sfEvent event);
