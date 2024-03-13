@@ -40,11 +40,17 @@ static void initialize_popup(my_paint_t *my_paint)
     sfFont *font = sfFont_createFromFile("assets/font.ttf");
     sfVector2f textPosition = {popup_position.x + (popup_size.x - 200) / 2,
         popup_position.y + (popup_size.y - 24) / 2};
+    sfVector2f text_position2 = {popup_position.x + popup_size.x / 2,
+        popup_position.y + popup_size.y / 4};
 
     my_paint->window.popup_size.popup = create_popup_rectangle(popup_size,
                                                     popup_position, color);
     my_paint->window.popup_size.popup_text = create_popup_text(textPosition,
     font, 24, sfWhite);
+    my_paint->window.popup_size.popup_expl = create_popup_text(text_position2,
+    font, 18, sfWhite);
+    sfText_setString(my_paint->window.popup_size.popup_expl,
+        "Enter brush size (1-99) and press enter");
 }
 
 static void cleanup_popup(my_paint_t *my_paint)

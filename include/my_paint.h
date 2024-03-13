@@ -110,6 +110,7 @@ typedef struct popup_size_s {
     sfRectangleShape *popup;
     sfText *popup_text;
     char *popup_text_str;
+    sfText *popup_expl;
 } popup_size_t;
 
 typedef struct popup_open_s {
@@ -117,6 +118,7 @@ typedef struct popup_open_s {
     sfRectangleShape *popup;
     sfText *popup_text;
     char *popup_text_str;
+    sfText *popup_expl;
 } popup_open_t;
 
 typedef struct popup_save_s {
@@ -124,6 +126,7 @@ typedef struct popup_save_s {
     sfRectangleShape *popup;
     sfText *popup_text;
     char *popup_text_str;
+    sfText *popup_expl;
 } popup_save_t;
 
 typedef struct window_s {

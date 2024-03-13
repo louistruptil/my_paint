@@ -42,17 +42,23 @@ static void initialize_popup(my_paint_t *my_paint)
 {
     sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
     sfVector2f popup_size = {300, 200};
-    sfVector2f popupPosition = {window_size.x / 2.0f - popup_size.x / 2.0f,
+    sfVector2f popup_position = {window_size.x / 2.0f - popup_size.x / 2.0f,
         window_size.y / 2.0f - popup_size.y / 2.0f};
     sfColor color = sfColor_fromRGB(85, 98, 120);
     sfFont *font = sfFont_createFromFile("assets/font.ttf");
-    sfVector2f text_position = {popupPosition.x + (popup_size.x - 200) / 2,
-        popupPosition.y + (popup_size.y - 24) / 2};
+    sfVector2f text_position = {popup_position.x + (popup_size.x - 200) / 2,
+        popup_position.y + (popup_size.y - 24) / 2};
+    sfVector2f text_position2 = {popup_position.x + popup_size.x / 2,
+        popup_position.y + popup_size.y / 4};
 
     my_paint->window.popup_save.popup = create_popup_rectangle(popup_size,
-        popupPosition, color);
+        popup_position, color);
     my_paint->window.popup_save.popup_text = create_popup_text(text_position,
     font, 24, sfWhite);
+    my_paint->window.popup_save.popup_expl = create_popup_text(text_position2,
+    font, 18, sfWhite);
+    sfText_setString(my_paint->window.popup_save.popup_expl,
+        "Enter the name of the file and press enter");
 }
 
 static void cleanup_popup(my_paint_t *my_paint)
