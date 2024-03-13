@@ -98,11 +98,11 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
         if (event.type == sfEvtResized)
             sfRenderWindow_setView(window, sfView_createFromRect((sfFloatRect)
             {0, 0, event.size.width, event.size.height}));
-        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyC)
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyP)
             zoom_canvas(my_paint, NULL);
-        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyX)
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyO)
             dezoom_canvas(my_paint, NULL);
-        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyL)
+        if (event.type == sfEvtKeyReleased && event.key.code == sfKeyI)
             color_picker(my_paint, event);
         button_loop(event, my_paint);
         dropdown_loop(event, my_paint);
