@@ -228,8 +228,8 @@ void add_item_to_dropdown(drop_down_t *dropdown, button_options_t options,
 void display_dropdown(my_paint_t *my_paint, drop_down_t *dropdown);
 int color_picker(my_paint_t *my_paint, sfEvent event);
 void color_bucket(my_paint_t *my_paint, sfEvent event);
-void zoom_canvas(my_paint_t *my_paint);
-void dezoom_canvas(my_paint_t *my_paint);
+void zoom_canvas(my_paint_t *my_paint, button_t *button);
+void dezoom_canvas(my_paint_t *my_paint, button_t *button);
 void if_line(my_paint_t *my_paint, sfBool *was_mouse_pressed);
 
 void drawing_loop(my_paint_t *my_paint, sfEvent event);
@@ -259,11 +259,11 @@ void btn_bucket(my_paint_t *my_paint);
 void btn_picker(my_paint_t *my_paint);
 void btn_size(my_paint_t *my_paint);
 void btn_eraser(my_paint_t *my_paint);
-void tool_eq_bucket(my_paint_t *my_paint);
-void tool_eq_picker(my_paint_t *my_paint);
-void tool_eq_eraser(my_paint_t *my_paint);
-void tool_eq_pen(my_paint_t *my_paint);
-int save_canva(my_paint_t *my_paint, sfEvent event);
+void tool_eq_bucket(my_paint_t *my_paint, button_t *button);
+void tool_eq_picker(my_paint_t *my_paint, button_t *button);
+void tool_eq_eraser(my_paint_t *my_paint, button_t *button);
+void tool_eq_pen(my_paint_t *my_paint, button_t *button);
+void save_canva(my_paint_t *my_paint, button_t *button);
 void btn_help(my_paint_t *my_paint);
 void btn_edition(my_paint_t *my_paint);
 void btn_file(my_paint_t *my_paint);

@@ -7,7 +7,7 @@
 
 #include "my_paint.h"
 
-static void rect_act(my_paint_t *my_paint)
+static void rect_act(my_paint_t *my_paint, button_t *button)
 {
     my_paint->tools.actual_tools = 0;
     my_paint->tools.square = 3;

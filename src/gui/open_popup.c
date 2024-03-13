@@ -53,7 +53,7 @@ static int open_files(my_paint_t *my_paint, sfEvent event)
     sfRenderTexture * renderTexture;
 
     if (!image)
-        return;
+        return 0;
     sprite = create_sprite(image);
     renderTexture = sfRenderTexture_create(1920, 1080, sfFalse);
     sfRenderTexture_drawSprite(renderTexture, sprite, NULL);

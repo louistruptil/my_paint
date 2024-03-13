@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "my_paint.h"
 
-int save_canva(my_paint_t *my_paint, sfEvent event)
+void save_canva(my_paint_t *my_paint, button_t *button)
 {
     if (my_paint->window.popup_save.display_popup == 0)
         my_paint->window.popup_save.display_popup = 1;

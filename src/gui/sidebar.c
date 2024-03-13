@@ -12,19 +12,19 @@ static void hover_action(button_t *button)
     (void)button;
 }
 
-static int set_square(my_paint_t *my_paint)
+static void set_square(my_paint_t *my_paint, button_t *button)
 {
     my_paint->tools.actual_tools = 0;
     my_paint->tools.square = 1;
 }
 
-static int set_circle(my_paint_t *my_paint)
+static void set_circle(my_paint_t *my_paint, button_t *button)
 {
     my_paint->tools.actual_tools = 0;
     my_paint->tools.square = 0;
 }
 
-static int set_size(my_paint_t *my_paint)
+static void set_size(my_paint_t *my_paint, button_t *button)
 {
     if (my_paint->window.popup_size.display_popup == 0)
         my_paint->window.popup_size.display_popup = 1;

@@ -69,13 +69,13 @@ static void dropdown_loop(sfEvent event, my_paint_t *my_paint)
     }
 }
 
-void zoom_canvas(my_paint_t *my_paint)
+void zoom_canvas(my_paint_t *my_paint, button_t *button)
 {
     my_paint->tools.canva_scale.x = 960;
     my_paint->tools.canva_scale.y = 540;
 }
 
-void dezoom_canvas(my_paint_t *my_paint)
+void dezoom_canvas(my_paint_t *my_paint, button_t *button)
 {
     my_paint->tools.canva_scale.x = 1920;
     my_paint->tools.canva_scale.y = 1080;
@@ -100,9 +100,9 @@ void event_loop(sfRenderWindow *window, sfEvent event, my_paint_t *my_paint)
             sfRenderWindow_setView(window, sfView_createFromRect((sfFloatRect)
             {0, 0, event.size.width, event.size.height}));
         if (event.type == sfEvtKeyReleased && event.key.code == sfKeyC)
-            zoom_canvas(my_paint);
+            zoom_canvas(my_paint, NULL);
         if (event.type == sfEvtKeyReleased && event.key.code == sfKeyX)
-            dezoom_canvas(my_paint);
+            dezoom_canvas(my_paint, NULL);
         if (event.type == sfEvtKeyReleased && event.key.code == sfKeyL)
             color_picker(my_paint, event);
         button_loop(event, my_paint);

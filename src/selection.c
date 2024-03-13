@@ -88,7 +88,7 @@ void selection_tool(my_paint_t *my_paint, sfEvent event)
     selection_tool_part_two(my_paint, event, mousePos);
 }
 
-static void tool_eq_selection(my_paint_t *my_paint)
+static void tool_eq_selection(my_paint_t *my_paint, button_t *button)
 {
     my_paint->tools.actual_tools = 4;
 }
