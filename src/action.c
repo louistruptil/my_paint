@@ -90,7 +90,7 @@ void write_for_popup(my_paint_t *my_paint, sfEvent event)
     }
     if (event.type == sfEvtKeyPressed && event.key.code == sfKeyReturn) {
         my_paint->tools.size =
-        atoi(my_paint->window.popup_size.popup_text_str);
+        my_atoi(my_paint->window.popup_size.popup_text_str);
         my_paint->window.popup_size.popup_text_str[0] = '\0';
         my_paint->window.popup_size.display_popup = 0;
     }
