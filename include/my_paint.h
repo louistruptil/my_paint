@@ -291,5 +291,7 @@ void paste(my_paint_t *my_paint, sfEvent event);
 void delete_selection_from_canvas(my_paint_t *my_paint,
     selection_t select);
 bool error_handling(my_paint_t *my_paint);
+void destroy_dropdown(drop_down_t *dropdown);
+void destroy_color_selector(my_paint_t *my_paint);
 
 #endif //MY_PAINT_MY_PAINT_H

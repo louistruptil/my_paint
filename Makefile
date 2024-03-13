@@ -42,6 +42,7 @@ SRCS = ./src/main.c \
 	   ./src/line.c \
 	   ./src/rectangle.c \
 	   ./src/circle.c \
+	   ./src/destroy.c \
 	   ./src/simpleline.c \
 	   ./src/error_handling.c
 

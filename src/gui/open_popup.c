@@ -7,7 +7,7 @@
 
 #include "my_paint.h"
 
-void my_cpy(sfUint8* dest, const sfUint8* src, int n)
+void my_cpy(sfUint8 *dest, const sfUint8 *src, int n)
 {
     for (int i = 0; i < n; i++)
         dest[i] = src[i];

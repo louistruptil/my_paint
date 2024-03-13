@@ -56,3 +56,18 @@ void display_dropdown(my_paint_t *my_paint, drop_down_t *dropdown)
         tmp_items = tmp_items->next;
     }
 }
+
+void destroy_dropdown(drop_down_t *dropdown)
+{
+    drop_down_item_t *tmp = dropdown->items;
+    drop_down_item_t *next;
+
+    destroy_button(dropdown->button);
+    while (tmp != NULL) {
+        next = tmp->next;
+        destroy_button(tmp->button);
+        free(tmp);
+        tmp = next;
+    }
+    free(dropdown);
+}

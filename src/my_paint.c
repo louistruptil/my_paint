@@ -11,6 +11,11 @@ void destroy(my_paint_t *my_paint)
 {
     for (int i = 0; i < BUTTON_COUNT; i++)
         destroy_button(my_paint->gui.button[i]);
+    for (int i = 0; i < DROPDOWN_COUNT; i++)
+        destroy_dropdown(my_paint->gui.dropdown[i]);
+    sfRectangleShape_destroy(my_paint->tools.selection.rect);
+    destroy_color_selector(my_paint);
+    sfView_destroy(my_paint->window.view);
     sfRenderWindow_destroy(WINDOW);
     free(my_paint);
 }
