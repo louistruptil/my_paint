@@ -18,7 +18,6 @@ static void undo_act(my_paint_t *my_paint, button_t *button)
         my_memcpy(my_paint->undoredo.canva_pixels[my_paint->undoredo.actual],
         my_paint->canva.canva_pixels, 1920 * 1080 * 4);
         my_paint->undoredo.actual--;
-        printf("udo %d\n", my_paint->undoredo.actual);
         my_memcpy(my_paint->canva.canva_pixels,
         my_paint->undoredo.canva_pixels[my_paint->undoredo.actual],
         1920 * 1080 * 4);
