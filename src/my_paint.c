@@ -125,6 +125,7 @@ static void init_tool_tab(my_paint_t *my_paint)
     my_paint->tools.color_selector = false;
     my_paint->tools.copy.canva = malloc(1920 * 1080 * 4);
     my_paint->undoredo.actual = 0;
+    my_paint->help.display_help = 0;
 }
 
 bool my_paint(void)

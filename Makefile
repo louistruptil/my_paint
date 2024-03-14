@@ -48,6 +48,7 @@ SRCS = ./src/main.c \
 	   ./src/undo.c \
 	   ./src/removebg.c \
 	   ./src/redo.c \
+	   ./src/help.c \
 
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
 OBJDIR = obj

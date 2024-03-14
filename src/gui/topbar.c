@@ -67,6 +67,16 @@ void btn_file(my_paint_t *my_paint)
     btn_file_two(my_paint);
 }
 
+static void btnrot(my_paint_t *my_paint)
+{
+    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
+        {200, 8},
+        {70, 20},
+        sfColor_fromRGB(85, 98, 120),
+        "rotate",
+    }, rotate_selection, hover_action);
+}
+
 void btn_edition_two(my_paint_t *my_paint)
 {
     add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
@@ -87,6 +97,7 @@ void btn_edition_two(my_paint_t *my_paint)
         sfColor_fromRGB(85, 98, 120),
         "paste",
     }, tool_paste, hover_action);
+    btnrot(my_paint);
 }
 
 void btn_edition(my_paint_t *my_paint)
@@ -131,5 +142,5 @@ void btn_help(my_paint_t *my_paint)
         {70, 20},
         sfColor_fromRGB(85, 98, 120),
         "help"
-    }, open_file, hover_action);
+    }, help_btn_act, hover_action);
 }

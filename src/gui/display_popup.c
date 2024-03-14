@@ -171,4 +171,5 @@ void display_popup(my_paint_t *my_paint)
         update_popup_position_save(my_paint, window_size);
         draw_popup_save(my_paint);
     }
+    display_help(my_paint);
 }

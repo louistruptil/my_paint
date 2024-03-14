@@ -174,6 +174,12 @@ typedef struct undoredo_s {
     int actual;
 } undoredo_t;
 
+typedef struct help_s {
+    sfSprite* sprite;
+    sfTexture* texture;
+    int display_help;
+} help_t;
+
 typedef struct my_paint_s {
     window_t window;
     gui_t gui;
@@ -183,6 +189,7 @@ typedef struct my_paint_s {
     tools_t tools;
     undoredo_t undoredo;
     bool can_draw;
+    help_t help;
 } my_paint_t;
 
 enum e_assets_type {
@@ -311,5 +318,10 @@ void btn_removebg(my_paint_t *my_paint);
 void tool_copy(my_paint_t *my_paint, button_t *button);
 void tool_cut(my_paint_t *my_paint, button_t *button);
 void tool_paste(my_paint_t *my_paint, button_t *button);
+void rotate_selection(my_paint_t *my_paint, button_t *button);
+void create_help(my_paint_t *my_paint);
+void display_help(my_paint_t *my_paint);
+void help_btn_act(my_paint_t *my_paint, button_t *button);
+static void update_help_position(my_paint_t *my_paint);
 
 #endif //MY_PAINT_MY_PAINT_H

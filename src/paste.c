@@ -77,3 +77,36 @@ void paste(my_paint_t *my_paint, sfEvent event)
         copy_pixels_without_bounds(my_paint, start_pixel);
     }
 }
+
+static void rotate(selection_t selection, sfUint8* rotated_pixels,
+    my_paint_t *my_paint, int y)
+{
+    int selection_width = selection.size.x;
+    int selection_height = selection.size.y;
+    int src_index;
+    int dst_index;
+
+    for (int x = 0; x < selection_width; ++x) {
+        src_index = 4 * ((selection.pos.y + y) * 1920 + (selection.pos.x + x));
+        dst_index = 4 * ((selection.pos.y + x) * 1920 + (selection.pos.x +
+        selection_height - 1 - y));
+        if (dst_index >= 0 && dst_index < 1920 * 1080 * 4) {
+            my_memcpy(rotated_pixels + dst_index, my_paint->canva.canva_pixels
+            + src_index, 4);
+        }
+    }
+}
+
+void rotate_selection(my_paint_t *my_paint, button_t *button)
+{
+    selection_t selection = my_paint->tools.selection;
+    sfUint8* rotated_pixels = malloc(1920 * 1080 * 4);
+    int selection_height = selection.size.y;
+
+    for (int y = 0; y < selection_height; ++y) {
+        rotate(selection, rotated_pixels, my_paint, y);
+    }
+    my_memcpy(my_paint->canva.canva_pixels, rotated_pixels,
+    1920 * 1080 * 4);
+    free(rotated_pixels);
+}
