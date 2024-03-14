@@ -10,7 +10,8 @@
 static void undo_act(my_paint_t *my_paint, button_t *button)
 {
     if (my_paint->undoredo.actual > 0) {
-        if (my_paint->undoredo.canva_pixels[my_paint->undoredo.actual] == NULL) {
+        if (my_paint->undoredo.canva_pixels[my_paint->undoredo.actual]
+        == NULL) {
             my_paint->undoredo.canva_pixels[my_paint->undoredo.actual] =
             malloc(1920 * 1080 * 4);
         }
