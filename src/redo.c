@@ -9,12 +9,15 @@
 
 static void redo_act(my_paint_t *my_paint, button_t *button)
 {
+    printf("%p\n", my_paint->
+    undoredo.canva_pixels[my_paint->undoredo.actual + 1]);
     if (my_paint->undoredo.actual < 9 && my_paint->
     undoredo.canva_pixels[my_paint->undoredo.actual + 1] != NULL) {
-        my_memcpy(my_paint->canva.canva_pixels,
-        my_paint->undoredo.canva_pixels[my_paint->undoredo.actual + 1],
-        1920 * 1080 * 4);
+        printf("redo %d\n", my_paint->undoredo.actual);
         my_paint->undoredo.actual++;
+        my_memcpy(my_paint->canva.canva_pixels,
+        my_paint->undoredo.canva_pixels[my_paint->undoredo.actual],
+        1920 * 1080 * 4);
     } else {
         my_putstr("There's nothing to redo\n");
     }
