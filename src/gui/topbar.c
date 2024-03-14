@@ -67,6 +67,28 @@ void btn_file(my_paint_t *my_paint)
     btn_file_two(my_paint);
 }
 
+void btn_edition_two(my_paint_t *my_paint)
+{
+    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
+    {200, 8},
+    {70, 20},
+    sfColor_fromRGB(85, 98, 120),
+    "cut",
+    }, tool_cut, hover_action);
+    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
+        {200, 8},
+        {70, 20},
+        sfColor_fromRGB(85, 98, 120),
+        "copy",
+    }, tool_copy, hover_action);
+    add_item_to_dropdown(my_paint->gui.dropdown[1], (button_options_t){
+        {200, 8},
+        {70, 20},
+        sfColor_fromRGB(85, 98, 120),
+        "paste",
+    }, tool_paste, hover_action);
+}
+
 void btn_edition(my_paint_t *my_paint)
 {
     my_paint->gui.dropdown[1] = create_dropdown((button_options_t){
@@ -87,6 +109,7 @@ void btn_edition(my_paint_t *my_paint)
         sfColor_fromRGB(85, 98, 120),
         "eraser",
     }, tool_eq_eraser, hover_action);
+    btn_edition_two(my_paint);
 }
 
 void btn_help(my_paint_t *my_paint)

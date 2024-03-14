@@ -23,7 +23,7 @@
     #define CANVA_WIDTH 1920
     #define CANVA_HEIGHT 1080
 
-    #define BUTTON_COUNT 14
+    #define BUTTON_COUNT 15
     #define DROPDOWN_COUNT 4
 
     #define WINDOW my_paint->window.window
@@ -306,5 +306,10 @@ void delete_selection_from_canvas(my_paint_t *my_paint,
 bool error_handling(my_paint_t *my_paint);
 void destroy_dropdown(drop_down_t *dropdown);
 void destroy_color_selector(my_paint_t *my_paint);
+void remove_background(my_paint_t *my_paint, button_t *button);
+void btn_removebg(my_paint_t *my_paint);
+void tool_copy(my_paint_t *my_paint, button_t *button);
+void tool_cut(my_paint_t *my_paint, button_t *button);
+void tool_paste(my_paint_t *my_paint, button_t *button);
 
 #endif //MY_PAINT_MY_PAINT_H

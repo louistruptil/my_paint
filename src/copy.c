@@ -64,6 +64,25 @@ static void copy_selection_from_canvas(my_paint_t *my_paint,
     copy_pixels_from_selection(my_paint, select);
 }
 
+void tool_copy(my_paint_t *my_paint, button_t *button)
+{
+    selection_t selection = my_paint->tools.selection;
+    sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
+
+    adjust_selection_coordinates(&selection, window_size);
+    copy_selection_from_canvas(my_paint, selection);
+}
+
+void tool_cut(my_paint_t *my_paint, button_t *button)
+{
+    selection_t selection = my_paint->tools.selection;
+    sfVector2u window_size = sfRenderWindow_getSize(my_paint->window.window);
+
+    adjust_selection_coordinates(&selection, window_size);
+    copy_selection_from_canvas(my_paint, selection);
+    delete_selection_from_canvas(my_paint, selection);
+}
+
 void copy_selection(my_paint_t *my_paint, sfEvent event)
 {
     selection_t selection = my_paint->tools.selection;

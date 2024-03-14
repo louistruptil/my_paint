@@ -57,6 +57,14 @@ static void copy_pixels_without_bounds(my_paint_t *my_paint,
     }
 }
 
+void tool_paste(my_paint_t *my_paint, button_t *button)
+{
+    sfVector2i start_pixel;
+
+    calculate_copy_area(my_paint, &start_pixel.x, &start_pixel.y);
+    copy_pixels_without_bounds(my_paint, start_pixel);
+}
+
 void paste(my_paint_t *my_paint, sfEvent event)
 {
     sfVector2i start_pixel;

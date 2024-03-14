@@ -120,6 +120,7 @@ static int create_interface_buttons(my_paint_t *my_paint)
     btn_pen(my_paint);
     btn_eraser(my_paint);
     btn_size(my_paint);
+    btn_removebg(my_paint);
     btn_picker(my_paint);
     btn_bucket(my_paint);
     btn_color_palette(my_paint);

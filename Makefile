@@ -46,6 +46,7 @@ SRCS = ./src/main.c \
 	   ./src/simpleline.c \
 	   ./src/error_handling.c \
 	   ./src/undo.c \
+	   ./src/removebg.c \
 	   ./src/redo.c \
 
 OBJS = $(SRCS:./src/%.c=./obj/%.o)
