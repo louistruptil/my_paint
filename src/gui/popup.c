@@ -63,6 +63,7 @@ static void cleanup_popup(my_paint_t *my_paint)
 int create_popup(my_paint_t *my_paint)
 {
     create_help(my_paint);
+    create_about(my_paint);
     my_paint->window.popup_size.display_popup = 0;
     initialize_popup(my_paint);
     sfText_setString(my_paint->window.popup_size.popup_text, "");

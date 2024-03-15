@@ -172,4 +172,5 @@ void display_popup(my_paint_t *my_paint)
         draw_popup_save(my_paint);
     }
     display_help(my_paint);
+    display_about(my_paint);
 }

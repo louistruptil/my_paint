@@ -136,7 +136,7 @@ void btn_help(my_paint_t *my_paint)
         {70, 20},
         sfColor_fromRGB(85, 98, 120),
         "about"
-    }, new_file, hover_action);
+    }, about_btn_act, hover_action);
     add_item_to_dropdown(my_paint->gui.dropdown[2], (button_options_t){
         {300, 8},
         {70, 20},

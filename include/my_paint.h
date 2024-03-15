@@ -180,6 +180,12 @@ typedef struct help_s {
     int display_help;
 } help_t;
 
+typedef struct about_s {
+    sfSprite* sprite;
+    sfTexture* texture;
+    int display_about;
+} about_t;
+
 typedef struct my_paint_s {
     window_t window;
     gui_t gui;
@@ -190,6 +196,7 @@ typedef struct my_paint_s {
     undoredo_t undoredo;
     bool can_draw;
     help_t help;
+    about_t about;
 } my_paint_t;
 
 enum e_assets_type {
@@ -323,5 +330,10 @@ void create_help(my_paint_t *my_paint);
 void display_help(my_paint_t *my_paint);
 void help_btn_act(my_paint_t *my_paint, button_t *button);
 static void update_help_position(my_paint_t *my_paint);
+
+void about_btn_act(my_paint_t *my_paint, button_t *button);
+static void update_about_position(my_paint_t *my_paint);
+void display_about(my_paint_t *my_paint);
+void create_about(my_paint_t *my_paint);
 
 #endif //MY_PAINT_MY_PAINT_H
